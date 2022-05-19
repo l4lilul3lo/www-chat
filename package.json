@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "helmet": "^5.0.2",
+    "pg": "^8.7.3",
+    "socket.io": "^4.5.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^6.3.1",
+    "concurrently": "^7.2.0",
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.16"
+  },
+  "scripts": {
+    "start": "node -r dotenv/config index.js",
+    "dev": "concurrently -n 'server,client' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\"",
+    "create-tables": "node -r dotenv/config ./db/createTables.js",
+    "populate-tables": "node -r dotenv/config ./db/populateTables.js",
+    "reset-tables": "node -r dotenv/config ./db/resetTables.js"
+  }
+}

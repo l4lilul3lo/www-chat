@@ -1,0 +1,5 @@
+.nav {
+  display: flex;
+  background: blue;
+  justify-content: space-between;
+}

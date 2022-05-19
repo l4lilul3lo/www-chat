@@ -124,7 +124,7 @@ async function createTables() {
     await db.query(addUUIDExtenstion);
     console.log("uuid-ossp extension added.");
 
-    await createTable(createRoomsText, "rooms");
+    await createTable("rooms", createRoomsText);
     // add required main room.
     await db.query(`INSERT INTO rooms (name, password) VALUES ($1, $2)`, [
       "cafe",

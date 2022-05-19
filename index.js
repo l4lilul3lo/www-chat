@@ -14,8 +14,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-const { getLastFourty } = require("./models/messages/messages");
-
 // uncomment for production
 // global.root = path.resolve(__dirname);
 // app.use(express.static(`${root}/frontend/build`));
@@ -37,37 +35,11 @@ app.use(
   })
 );
 
-getMessages();
-
-let olderMessages = [];
-const messages = [];
-
-function addMessageToMemory(message, messages, olderMessages) {
-  if (olderMessages.length >= 10) {
-    // store overflow.
-    // reset overflow.
-  }
-  if (messages.length > 10) {
-    const oldMessage = messages.shift();
-    olderMessages.push(oldMessage);
-  } else {
-    messages.push(message);
-  }
-  console.log("messages", messages);
-  console.log("olderMessages", olderMessages);
-}
-
-// check time since last message was sent.
 io.on("connection", (socket) => {
-  // if db.getOverflow.rows.length > 0
-  // get requested scrolled result.
-  // else get olderMessages array.
   console.log(socket.id);
 
-  socket.emit("initialize", messages);
   socket.on("message", (msg) => {
     console.log("msg", msg);
-    addMessageToMemory(msg, messages, olderMessages);
     io.emit("message", msg);
   });
 });

@@ -10,4 +10,12 @@ async function addRoomDB(name, password = "") {
   );
 }
 
-module.exports = { addRoomDB };
+async function getRoomsDB() {
+  const res = await db.query(`
+    SELECT * FROM rooms
+  `);
+
+  return res.rows;
+}
+
+module.exports = { addRoomDB, getRoomsDB };

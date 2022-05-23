@@ -7,12 +7,19 @@ const http = require("http");
 const server = http.createServer(app);
 const port = process.env.PORT || 9000;
 const session = require("express-session");
+// no cors in production for socket.
 const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });
+
+const { isAuth } = require("./middleware/isAuth");
+const { register, login, getUser } = require("./controllers/user");
+const { getRooms } = require("./controllers/rooms");
+const { getMessages } = require("./controllers/messages");
+const { getUsers } = require("./controllers/users");
 
 // uncomment for production
 // global.root = path.resolve(__dirname);
@@ -35,8 +42,17 @@ app.use(
   })
 );
 
+app.post("/register", register);
+app.post("/login", login);
+app.get("/getUser", isAuth, getUser);
+
+app.get("/getUsers", getUsers);
+app.get("/getRooms", getRooms);
+app.get("/getMessages", getMessages);
+
 io.on("connection", (socket) => {
   console.log(socket.id);
+  console.log(socket.current_room);
 
   socket.on("message", (msg) => {
     console.log("msg", msg);

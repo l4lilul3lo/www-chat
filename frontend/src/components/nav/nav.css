@@ -2,4 +2,12 @@
   display: flex;
   background: blue;
   justify-content: space-between;
+  align-items: center;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  justify-content: space-between;
 }

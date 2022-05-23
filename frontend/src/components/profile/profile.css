@@ -1,0 +1,20 @@
+.profile {
+  display: flex;
+}
+
+.profile img {
+  border-radius: 50%;
+  max-width: 100px;
+  max-height: 100px;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-modal {
+  position: absolute;
+  z-index: 2;
+  width: 200px;
+  height: 200px;
+  background: gray;
+}
+

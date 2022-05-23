@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   name VARCHAR(32) NOT NULL CHECK (length(name) >= 2),
   password VARCHAR(255) NOT NULL,
+  image VARCHAR(255),
   created_at TIMESTAMP DEFAULT DATE_TRUNC('minute', CURRENT_TIMESTAMP)
 );
 `;

@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 const db = require("./dbConfig");
-const { addUserDB } = require("../models/users/user");
+const { addUserDB } = require("../models/users/users");
 const { addRoomDB } = require("../models/rooms/rooms");
 
 function createUsername() {

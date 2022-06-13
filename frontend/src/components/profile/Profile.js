@@ -1,36 +1,33 @@
-import ReactCrop from "react-image-crop";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import "react-image-crop/dist/ReactCrop.css";
+import { useSelector, useDispatch } from "react-redux";
+import Settings from "../settings/Settings";
 import "./profile.css";
-import { selectUser } from "../../features/user/userSlice";
+import { selectUser, setUser } from "../../features/user/userSlice";
+import { useState, useEffect } from "react";
 
-const Modal = () => {};
 const Profile = () => {
-  const [modal, setModal] = useState(false);
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  function toggleModal() {
-    setModal(!modal);
+  const [display, toggleDisplay] = useState(false);
+
+  async function getUser() {
+    const response = await fetch("user/getUser");
+    const data = await response.json();
+    console.log("getUser response in Nav Component", data);
+    dispatch(setUser(data));
   }
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
-    <div className="profile">
-      {user ? <h1>{user.name}</h1> : <h1>Anonymous</h1>}
-      <img
-        src={
-          user
-            ? user.image
-            : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-        }
-        onClick={toggleModal}
-      />
-      {modal && (
-        <div className="profile-modal">
-          <h1 onClick={toggleModal}>X</h1>
-          <h1>profile-image</h1>
-        </div>
-      )}
+    <div className="profile" onClick={() => toggleDisplay(!display)}>
+      <div className="img-container">
+        <img src={user.image ? user.image : "anon-avatar.svg"} />
+        <span className="material-symbols-outlined">settings</span>
+      </div>
+      {display && <Settings />}
     </div>
   );
 };

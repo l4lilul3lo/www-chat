@@ -1,5 +1,11 @@
-const { getUserDB } = require("../models/users/user");
+const {
+  getUserDB,
+  getUserByNameDB,
+  addUserDB,
+} = require("../models/users/users");
+const { addUserSettingsDB } = require("../models/users_settings/usersSettings");
 const { getUserSettingsDB } = require("../models/users_settings/usersSettings");
+const { getRoomIdDB } = require("../models/rooms/rooms");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
@@ -11,7 +17,8 @@ const register = async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await addUserDB(name, hashedPassword);
+  const user_id = await addUserDB(name, hashedPassword);
+  await addUserSettingsDB(user_id);
   return res.json({ message: "Registration Successful" });
 };
 
@@ -32,18 +39,32 @@ const login = async (req, res) => {
       .json({ message: "username or password is incorrect" });
   }
 
-  req.session.user_id = user.id;
-  const userSettings = await getUserSettingsDB(user.id);
+  req.session.userId = user.id;
 
-  return res.json({
-    user: { name: user.name, image: user.image, settings: userSettings },
-  });
+  return res.json({ message: "login success" });
+};
+
+const checkAuth = async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ isAuth: false });
+  }
+
+  res.json({ isAuth: true });
 };
 
 const getUser = async (req, res) => {
-  const { user_id } = req.session;
-  const user = await getUserDB(user_id);
-  res.json(user);
+  const userId = req.session.userId;
+  const user = await getUserDB(userId);
+
+  res.json({
+    id: user.id,
+    name: user.name,
+    image: user.image,
+    settings: {
+      messageBackground: user.message_background,
+      messageColor: user.message_color,
+    },
+  });
 };
 
-module.exports = { login, register, getUser };
+module.exports = { login, register, getUser, checkAuth };

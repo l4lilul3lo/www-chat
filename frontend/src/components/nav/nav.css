@@ -1,13 +1,25 @@
 .nav {
   display: flex;
-  background: blue;
+  background: #3E66F1;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.nav-right {
+  display: flex;
   align-items: center;
 }
 
-.settings {
-  display: flex;
-  align-items: center;
-  width: 100px;
-  justify-content: space-between;
+
+
+.nav-links {
+  padding-right: 10px;
 }
+
+.nav-links a {
+  padding-left: 10px;
+}
+

@@ -12,10 +12,30 @@ async function addRoomDB(name, password = "") {
 
 async function getRoomsDB() {
   const res = await db.query(`
-    SELECT * FROM rooms
+    SELECT id, name FROM rooms
   `);
 
   return res.rows;
 }
 
-module.exports = { addRoomDB, getRoomsDB };
+async function getRoomIdDB(roomName) {
+  const res = await db.query(
+    `
+    SELECT id from rooms
+    WHERE name = $1
+  `,
+    [roomName]
+  );
+
+  return res.rows[0].id;
+}
+
+async function getCafeIdDB() {
+  const res = await db.query(`
+    SELECT id from rooms
+    WHERE name = 'cafe'
+  `);
+  return res.rows[0].id;
+}
+
+module.exports = { addRoomDB, getRoomsDB, getRoomIdDB, getCafeIdDB };

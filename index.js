@@ -7,6 +7,11 @@ const http = require("http");
 const server = http.createServer(app);
 const port = process.env.PORT || 9000;
 const session = require("express-session");
+let RedisStore = require("connect-redis")(session);
+const Redis = require("ioredis");
+let redisClient = new Redis();
+const { addMessageDB, getMessagesDB } = require("./models/messages/messages");
+const { getCafeIdDB } = require("./models/rooms/rooms");
 // no cors in production for socket.
 const io = require("socket.io")(server, {
   cors: {
@@ -15,11 +20,14 @@ const io = require("socket.io")(server, {
   },
 });
 
+const userRoute = require("./routes/userRoute");
+
 const { isAuth } = require("./middleware/isAuth");
 const { register, login, getUser } = require("./controllers/user");
 const { getRooms } = require("./controllers/rooms");
-const { getMessages } = require("./controllers/messages");
+const { getMessages, addMessage } = require("./controllers/messages");
 const { getUsers } = require("./controllers/users");
+const { getChatState } = require("./controllers/getChatState");
 
 // uncomment for production
 // global.root = path.resolve(__dirname);
@@ -33,33 +41,62 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true, maxAge: 1000 * 60 * 60 },
-  })
-);
+const sessionMiddleware = session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: new RedisStore({ client: redisClient }),
+  cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 },
+});
 
-app.post("/register", register);
-app.post("/login", login);
-app.get("/getUser", isAuth, getUser);
+app.use(sessionMiddleware);
 
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next);
+io.use(wrap(sessionMiddleware));
+
+// user register login getUser, checkAuth
+app.use("/user", userRoute);
+
+// users getUsers
 app.get("/getUsers", getUsers);
+
+//rooms get rooms, add room
 app.get("/getRooms", getRooms);
-app.get("/getMessages", getMessages);
+// app.post("/addRoom", addRoom);
+// messages
+app.post("/getMessages", getMessages);
+app.post("/addMessage", addMessage);
+
+app.get("/checkAuth", (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ isAuth: false });
+  }
+
+  res.json({ isAuth: true });
+});
+
+// close the socket and open a new one for joining new room.
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
-  console.log(socket.current_room);
+  socket.join("cafe");
 
   socket.on("message", (msg) => {
-    console.log("msg", msg);
-    io.emit("message", msg);
+    const { userId, roomName, roomId, content, color, background } = msg;
+    // add message to room table based on room name I guess...
+    addMessageDB(userId, roomId, content, color, background);
+    io.emit("broadcast", msg);
+  });
+
+  socket.on("join room", async (room) => {
+    socket.join(room);
+    const messages = await getMessagesDB(room.id);
+    socket.emit("joined room", "room");
   });
 });
 
 server.listen(port, () => {
   console.log("app is listening");
 });
+
+// move

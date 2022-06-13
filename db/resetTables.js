@@ -8,5 +8,7 @@ const { createTables } = require("./dbSetup");
   await db.query(`DROP TABLE IF EXISTS rooms_users CASCADE`);
   await db.query(`DROP TABLE IF EXISTS users_settings CASCADE`);
   await db.query(`DROP TABLE IF EXISTS messages CASCADE`);
+  await db.query(`DROP TABLE IF EXISTS user_settings CASCADE`);
+  await db.query(`DROP TABLE IF EXISTS not_used CASCADE`);
   await createTables();
 })();

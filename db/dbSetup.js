@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS messages (
   user_id uuid REFERENCES users(id) NOT NULL,
   room_id uuid REFERENCES rooms(id) NOT NULL,
   content VARCHAR(255) NOT NULL,
+  color VARCHAR(255) NOT NULL,
+  background VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT DATE_TRUNC('minute', CURRENT_TIMESTAMP)
 );
 `;

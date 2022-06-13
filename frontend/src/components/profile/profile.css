@@ -1,13 +1,21 @@
 .profile {
   display: flex;
+  align-items: center;
+  
+}
+
+.profile:hover {
+  cursor: pointer;
+}
+
+.img-container {
+  width: 60px;
+  height: 60px;
+  position: relative;
 }
 
 .profile img {
-  border-radius: 50%;
-  max-width: 100px;
-  max-height: 100px;
-  width: 100px;
-  height: 100px;
+  width: 100%;
 }
 
 .profile-modal {
@@ -16,5 +24,12 @@
   width: 200px;
   height: 200px;
   background: gray;
+}
+
+.img-container span {
+  position: absolute;
+  bottom: -10px;
+  right: 0px;
+  font-size: 15px;
 }
 

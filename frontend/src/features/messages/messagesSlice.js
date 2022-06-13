@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  messages: {},
+  messages: [],
 };
 
 export const messagesSlice = createSlice({
@@ -11,10 +11,14 @@ export const messagesSlice = createSlice({
     setMessages: (state, action) => {
       state.messages = action.payload;
     },
+
+    addMessage: (state, action) => {
+      state.messages.push(action.payload);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setMessages } = messagesSlice.actions;
-
+export const { setMessages, addMessage } = messagesSlice.actions;
+export const selectMessages = (state) => state.messages.messages;
 export default messagesSlice.reducer;

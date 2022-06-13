@@ -1,38 +1,24 @@
-import { useState, useEffect } from "react";
-import { socket } from "../../socket/socket";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { WebSocketContext } from "../socket/WebSocketProvider";
+import {
+  addMessage,
+  selectMessages,
+  setMessages,
+} from "../../features/messages/messagesSlice";
+import { selectUser } from "../../features/user/userSlice";
+import { selectRoom, setRoom } from "../../features/room/roomSlice";
+import { useContext } from "react";
 import Message from "../message/Message";
-
 import "./messages.css";
 const Messages = () => {
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log(socket.id);
-    });
-
-    socket.on("message", (msg) => {
-      console.log("msg", msg);
-      setMessages((prev) => {
-        console.log(prev);
-        let newMessages;
-        if (prev.length >= 40) {
-          const slicedPrev = prev.slice(0, 10);
-          newMessages = [...slicedPrev, msg];
-          return newMessages;
-        } else {
-          newMessages = [...prev, msg];
-          return newMessages;
-        }
-      });
-    });
-  }, []);
-
+  const messages = useSelector(selectMessages);
+  const ws = useContext(WebSocketContext);
   return (
     <div className="messages">
-      {messages.map((message, i) => {
-        return <Message message={message} key={i} />;
-      })}
+      {messages.map((message, i) => (
+        <Message message={message} key={i} />
+      ))}
     </div>
   );
 };

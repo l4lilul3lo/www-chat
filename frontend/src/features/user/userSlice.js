@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: {},
+  user: {
+    name: "",
+    id: "",
+    image: "",
+    messageSettings: {
+      messageColor: "black",
+      messageBackground: "none",
+    },
+  },
 };
 
 export const userSlice = createSlice({
@@ -16,5 +24,5 @@ export const userSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { setUser } = userSlice.actions;
-export const selectUser = (state) => state.user;
+export const selectUser = (state) => state.user.user;
 export default userSlice.reducer;

@@ -9,3 +9,15 @@ async function getUserSettingsDB(user_id) {
   );
   return res.rows[0];
 }
+
+async function addUserSettingsDB(user_id) {
+  await db.query(
+    `
+    INSERT INTO users_settings (user_id) 
+    VALUES ($1)
+  `,
+    [user_id]
+  );
+}
+
+module.exports = { addUserSettingsDB };

@@ -1,7 +1,9 @@
+import "./message.css";
 const Message = ({ message }) => {
   return (
     <div className="message">
-      <h1>{message}</h1>
+      <div className="username">{message.name}:&nbsp;</div>
+      <div className="content">{message.content}</div>
     </div>
   );
 };

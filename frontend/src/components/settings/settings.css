@@ -1,0 +1,8 @@
+.settings {
+  position: absolute;
+  right: 0;
+  top: 100px;
+  height: 60%;
+  width: 60%;
+  background: blue;
+}

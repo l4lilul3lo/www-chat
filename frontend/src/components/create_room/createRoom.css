@@ -1,0 +1,6 @@
+.create-room-container {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  background: gray;
+}

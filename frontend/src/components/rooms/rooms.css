@@ -1,5 +1,36 @@
-.rooms {
+.rooms-container {
   width: 200px;
   height: 100%;
-  background: green;
+  background: #888D8D;
 }
+
+.rooms-header {
+  display: flex;
+  background-color: #DFDCDC;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  align-items: center;
+  
+}
+
+.rooms-header span:hover {
+  cursor: pointer;
+}
+
+.room {
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #3E66F1;
+}
+
+.room:hover {
+  cursor: pointer;
+}
+
+
+
+
+
+

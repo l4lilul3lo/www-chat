@@ -1,5 +1,4 @@
-.messenger {
-  height: 100%;
- 
-  width: 100%;
+.messages {
+  overflow-y: auto;
+  padding-left: 10px;
 }

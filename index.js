@@ -24,7 +24,7 @@ const userRoute = require("./routes/userRoute");
 
 const { isAuth } = require("./middleware/isAuth");
 const { register, login, getUser } = require("./controllers/user");
-const { getRooms } = require("./controllers/rooms");
+const { getRooms, getCafeId } = require("./controllers/rooms");
 const { getMessages, addMessage } = require("./controllers/messages");
 const { getUsers } = require("./controllers/users");
 const { getChatState } = require("./controllers/getChatState");
@@ -76,22 +76,26 @@ app.get("/checkAuth", (req, res) => {
   res.json({ isAuth: true });
 });
 
+app.get("/getCafeId", getCafeId);
+
 // close the socket and open a new one for joining new room.
 
 io.on("connection", (socket) => {
-  socket.join("cafe");
-
   socket.on("message", (msg) => {
-    const { userId, roomName, roomId, content, color, background } = msg;
-    // add message to room table based on room name I guess...
+    const { userId, roomId, content, color, background } = msg;
+    console.log("message on message event", msg);
     addMessageDB(userId, roomId, content, color, background);
-    io.emit("broadcast", msg);
+    io.to(roomId).emit("broadcast message", msg);
   });
 
-  socket.on("join room", async (room) => {
-    socket.join(room);
-    const messages = await getMessagesDB(room.id);
-    socket.emit("joined room", "room");
+  socket.on("join room", async (userName, roomId) => {
+    console.log("roomId in join room", roomId);
+    socket.roomId = roomId;
+    socket.join(roomId);
+    const messages = await getMessagesDB(roomId);
+    console.log("messages", messages);
+    socket.emit("joined room", messages);
+    io.to(roomId).emit("user joined", userName);
   });
 });
 

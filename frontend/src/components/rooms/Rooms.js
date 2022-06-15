@@ -39,7 +39,7 @@ const Rooms = () => {
         </span>
       </div>
       {rooms.map((room, i) => (
-        <Room room={room} />
+        <Room room={room} key={i} />
       ))}
     </div>
   );

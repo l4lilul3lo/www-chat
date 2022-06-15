@@ -1,11 +1,22 @@
 const db = require("../../db/dbConfig");
 
-const text = `SELECT users.image, users.name, messages.color, messages.background, messages.content, messages.created_at FROM messages
+const text = `SELECT users.image, users.name as author, messages.color, messages.background, messages.content, messages.created_at FROM messages
 JOIN users ON users.id = messages.user_id
 WHERE messages.room_id = $1
 ORDER BY messages.created_at DESC
 LIMIT 40
 `;
+
+// CREATE TABLE IF NOT EXISTS messages (
+//   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+//   user_id uuid REFERENCES users(id) NOT NULL,
+//   room_id uuid REFERENCES rooms(id) NOT NULL,
+//   content VARCHAR(255) NOT NULL,
+//   color VARCHAR(255) NOT NULL,
+//   background VARCHAR(255) NOT NULL,
+//   created_at TIMESTAMP DEFAULT DATE_TRUNC('minute', CURRENT_TIMESTAMP)
+// );
+// const rightText = `SELECT user.name, room.name`
 
 async function getMessagesDB(room_id) {
   const res = await db.query(text, [room_id]);

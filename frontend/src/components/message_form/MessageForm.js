@@ -19,6 +19,7 @@ const MessageForm = () => {
     console.log("content", content);
     console.log("userBackground", user.settings.messageBackground);
     const messageObj = {
+      userName: user.name,
       userId: user.id,
       roomId: room.id,
       roomName: room.name,
@@ -38,7 +39,7 @@ const MessageForm = () => {
   return (
     <form className="message-form" onSubmit={handleSubmit}>
       <input type="text" value={content} onChange={handleChange} />
-      {console.log("user in message form", user)}
+
       <input type="submit" />
     </form>
   );

@@ -9,21 +9,19 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { Provider, useDispatch } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { WebSocketProvider } from "./components/socket/WebSocketProvider";
+
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
-      <WebSocketProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
-          </Routes>
-        </BrowserRouter>
-      </WebSocketProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   </Provider>
 );

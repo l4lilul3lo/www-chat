@@ -2,14 +2,13 @@ import "./App.css";
 import Nav from "./components/nav/Nav";
 import Main from "./components/main/Main";
 import { Navigate } from "react-router-dom";
-
 import { useQuery } from "react-query";
+import { WebSocketProvider } from "./components/socket/WebSocketProvider";
 function App() {
   async function checkAuth() {
     try {
       const response = await fetch("user/checkAuth");
       const data = await response.json();
-      console.log("data", data);
       return data;
     } catch (err) {
       console.log("error has occured");
@@ -27,8 +26,10 @@ function App() {
   if (data.isAuth) {
     return (
       <div className="App">
-        <Nav />
-        <Main />
+        <WebSocketProvider>
+          <Nav />
+          <Main />
+        </WebSocketProvider>
       </div>
     );
   } else {

@@ -8,19 +8,24 @@
     "helmet": "^5.0.2",
     "ioredis": "^5.0.5",
     "pg": "^8.7.3",
+    "sequelize": "^6.21.0",
     "socket.io": "^4.5.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.3.1",
+    "colors": "^1.4.0",
     "concurrently": "^7.2.0",
     "cors": "^2.8.5",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "puppeteer": "^15.1.1"
   },
   "scripts": {
     "start": "node -r dotenv/config index.js",
     "dev": "concurrently -n 'server,client' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\"",
     "create-tables": "node -r dotenv/config ./db/createTables.js",
     "populate-tables": "node -r dotenv/config ./db/populateTables.js",
-    "reset-tables": "node -r dotenv/config ./db/resetTables.js"
+    "reset-tables": "node -r dotenv/config ./db/resetTables.js",
+    "drop-tables": "node -r dotenv/config ./db/dropTables.js",
+    "seed-db": "node -r dotenv/config ./db/seedDB.js"
   }
 }

@@ -2,48 +2,70 @@ import React, { createContext } from "react";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
 import { addMessage, setMessages } from "../../features/messages/messagesSlice";
+import { setUsers } from "../../features/users/usersSlice";
 
 const WebSocketContext = createContext(null);
 
-const WebSocketProvider = ({ children }) => {
+const WebSocketProvider = ({ children, userId, username, roomId }) => {
   const dispatch = useDispatch();
   const socket = io("ws://localhost:9000");
 
-  socket.on("connect", async () => {
-    console.log("socket connected. socket id: ", socket.id);
-  });
+  socket.on("connect", async () => {});
 
   socket.on("broadcast message", (messageObj) => {
-    console.log("broadcasted message", messageObj);
     dispatch(addMessage(messageObj));
   });
 
-  socket.on("joined room", (messagesArr) => {
-    dispatch(setMessages(messagesArr));
+  socket.on("joined room", (roomId) => {
+    localStorage.setItem("room", roomId);
   });
+
+  socket.on("room added", (rooms) => {});
 
   socket.on("user joined", (username) => {
     dispatch(
       addMessage({
         type: "userJoined",
-        author: username,
+        user: {
+          name: username,
+        },
       })
     );
+  });
+
+  socket.on("getUsersInRoom response", (users) => {
+    dispatch(setUsers(users));
   });
 
   function sendMessage(messageObj) {
     socket.emit("message", messageObj);
   }
 
-  function joinRoom(userName, roomId) {
-    console.log("JOIN ROOM CALL", roomId);
-    socket.emit("join room", userName, roomId);
+  function joinRoom(user, roomId) {
+    socket.emit("join room", user, roomId);
+  }
+
+  function getUsersInRoom(roomId) {
+    socket.emit("getUsersInRoom", roomId);
+  }
+
+  function watsupServerInstance(userId, username, roomId) {
+    // get roomId from localStorage if it exists.
+    // then userId and username should not change. No need to worry about re-render.
+    socket.emit("watsup server", userId, username, roomId);
+  }
+
+  function addRoom(roomName, password) {
+    socket.emit("add room", roomName, password);
   }
 
   const ws = {
     socket,
     sendMessage,
     joinRoom,
+    watsupServerInstance,
+    addRoom,
+    getUsersInRoom,
   };
 
   return (

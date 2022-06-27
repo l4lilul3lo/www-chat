@@ -12,32 +12,48 @@ import { useContext } from "react";
 import Message from "../message/Message";
 import "./messages.css";
 const Messages = () => {
+  const dispatch = useDispatch();
   const messages = useSelector(selectMessages);
   const user = useSelector(selectUser);
   const ws = useContext(WebSocketContext);
 
   async function getCafeId() {
-    const response = await fetch("/getCafeId");
+    const response = await fetch("rooms/getCafeId");
     const data = await response.json();
     return data.cafeId;
   }
 
+  async function getMessages(roomId) {
+    const response = await fetch("messages/getMessages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ roomId }),
+    });
+    const data = await response.json();
+    return data.messages;
+  }
+
   async function startInRoom() {
-    const storedRoom = localStorage.getItem("cafeId");
-    console.log("start in room called");
-    console.log("username", user.name);
-    if (!storedRoom) {
+    const storedRoomId = localStorage.getItem("storedRoomId");
+
+    if (!storedRoomId) {
       const cafeId = await getCafeId();
-      console.log("not stored room call", cafeId);
-      ws.joinRoom(user.name, cafeId);
+      ws.joinRoom(user.id, user.name, cafeId);
+
+      const messages = await getMessages(cafeId);
+      dispatch(setMessages(messages));
     } else {
-      ws.joinRoom(user.name, storedRoom);
+      ws.joinRoom(user.id, user.name, storedRoomId);
+      const messages = getMessages(storedRoomId);
+      dispatch(setMessages(messages));
     }
   }
 
-  useEffect(() => {
-    startInRoom();
-  }, []);
+  // socket should be connected to room first, then messages should be loaded.
+
+  useEffect(() => {}, []);
 
   return (
     <div className="messages">

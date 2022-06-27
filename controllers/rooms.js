@@ -1,4 +1,9 @@
-const { getRoomsDB, getCafeIdDB } = require("../models/rooms/rooms");
+const { getRoomsDB, getCafeInfoDB } = require("../models/room");
+
+const addRoom = async (req, res) => {
+  const { roomName, password } = req.body;
+  await addRoomDB(roomName, password);
+};
 
 const getRooms = async (req, res) => {
   const rooms = await getRoomsDB();
@@ -6,9 +11,10 @@ const getRooms = async (req, res) => {
   res.json({ rooms });
 };
 
-const getCafeId = async (req, res) => {
-  const cafeId = await getCafeIdDB();
-  res.json({ cafeId });
+const getCafeInfo = async (req, res) => {
+  const cafeInfo = await getCafeInfoDB();
+
+  res.json({ cafeInfo });
 };
 
-module.exports = { getRooms, getCafeId };
+module.exports = { getRooms, getCafeInfo };

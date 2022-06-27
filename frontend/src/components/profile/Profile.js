@@ -2,23 +2,25 @@ import { useSelector, useDispatch } from "react-redux";
 import Settings from "../settings/Settings";
 import "./profile.css";
 import { selectUser, setUser } from "../../features/user/userSlice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { WebSocketContext } from "../socket/WebSocketProvider";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const ws = useContext(WebSocketContext);
 
   const [display, toggleDisplay] = useState(false);
 
   async function getUser() {
-    const response = await fetch("user/getUser");
+    const response = await fetch("users/getUser");
     const data = await response.json();
-    console.log("getUser response in Nav Component", data);
+
     dispatch(setUser(data));
   }
 
   useEffect(() => {
-    getUser();
+    // getUser();
   }, []);
 
   return (

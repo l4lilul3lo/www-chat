@@ -3,23 +3,23 @@ import { selectRooms, setRooms } from "../../features/rooms/roomsSlice";
 import { selectUser } from "../../features/user/userSlice";
 import { setRoom, selectRoom } from "../../features/room/roomSlice";
 import { useEffect, useState } from "react";
-import { joinRoom, socket } from "../../socket/socket";
+
 import CreateRoom from "../create_room/CreateRoom";
-import SocketContext from "../../providers/SocketProvider";
+
 import Room from "../room/Room";
 import { useContext } from "react";
 import "./rooms.css";
 const Rooms = () => {
-  const socket = useContext(SocketContext);
   const dispatch = useDispatch();
   const rooms = useSelector(selectRooms);
-  // we are subscribed to rooms so when socket provider updates rooms, this component will properly re-render. good.
+  // should we move all logic pertaining to users,
+  // messages, and rooms here? Make this the controlling component. The mastermind of all.
   const [display, toggleDisplay] = useState(false);
 
   async function getRooms() {
-    const response = await fetch("getRooms");
+    const response = await fetch("rooms/getRooms");
     const data = await response.json();
-    console.log("rooms response in rooms component", data.rooms);
+
     dispatch(setRooms(data.rooms));
   }
 
@@ -31,10 +31,15 @@ const Rooms = () => {
 
   return (
     <div className="rooms-container">
-      {display && <CreateRoom />}
+      {display && (
+        <CreateRoom toggleDisplay={toggleDisplay} display={display} />
+      )}
       <div className="rooms-header">
         <div>Rooms</div>
-        <span className="material-symbols-outlined" onClick={createRoom}>
+        <span
+          className="material-symbols-outlined"
+          onClick={() => toggleDisplay(!display)}
+        >
           add
         </span>
       </div>

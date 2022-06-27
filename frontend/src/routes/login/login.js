@@ -18,7 +18,7 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch("user/login", {
+      const response = await fetch("users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,13 +26,11 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      console.log(response.ok);
+
       if (response.status === 200) {
         navigate("/");
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 
   function handleChange(e) {

@@ -1,3 +1,35 @@
 .message {
   display: flex;
+  margin-top: 15px;
 }
+
+.message:hover {
+  background:  #ede9de;
+}
+
+.avatar {
+  width: 20%;
+  max-width: 50px;
+  min-width: 50px;
+}
+
+.avatar img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  width: 80%;
+}
+
+.info {
+  display: flex;
+}
+
+.created-at {
+  margin-left: 15px;
+}
+

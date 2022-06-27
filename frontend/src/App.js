@@ -4,15 +4,14 @@ import Main from "./components/main/Main";
 import { Navigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { WebSocketProvider } from "./components/socket/WebSocketProvider";
+
 function App() {
   async function checkAuth() {
     try {
-      const response = await fetch("user/checkAuth");
+      const response = await fetch("/checkAuth");
       const data = await response.json();
       return data;
-    } catch (err) {
-      console.log("error has occured");
-    }
+    } catch (err) {}
   }
 
   const { isLoading, error, data } = useQuery("checkAuth", checkAuth, {

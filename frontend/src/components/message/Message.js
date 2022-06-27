@@ -1,18 +1,25 @@
 import "./message.css";
 const Message = ({ message }) => {
-  console.log("message", message);
-  if (message.type === "userJoined") {
-    return (
-      <div className="message">
-        <div className="user-joined">{message.author}&nbsp;joined</div>
-      </div>
-    );
-  }
+  const author = message.user;
+  const content = message.content;
 
   return (
     <div className="message">
-      <div className="username">{message.author}:&nbsp;</div>
-      <div className="content">{message.content}</div>
+      <div className="avatar">
+        <img src={message.user.image} />
+      </div>
+      <div className="details">
+        <div className="info">
+          <div className="username">{message.user.name}</div>
+          <div className="created-at">sometime</div>
+        </div>
+        <div
+          className="content"
+          style={{ color: message.color, background: message.background }}
+        >
+          {message.content}
+        </div>
+      </div>
     </div>
   );
 };

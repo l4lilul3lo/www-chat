@@ -1,14 +1,7 @@
-const { Pool } = require("pg");
+const { Sequelize } = require("sequelize");
 
-const isProduction = process.env.DATABASE_URL;
+const connectionString = `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
-const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
-const pool = new Pool({
-  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-});
+const sequelize = new Sequelize(connectionString, { logging: false });
 
-module.exports = {
-  query: (text, params) => {
-    return pool.query(text, params);
-  },
-};
+module.exports = { sequelize };

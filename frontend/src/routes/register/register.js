@@ -9,7 +9,7 @@ const Register = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch("user/register", {
+    const response = await fetch("users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +19,7 @@ const Register = () => {
 
     const data = await response.json();
     setMessage(data.message);
-    console.log("register response", data);
+
     // response will be html or json
   }
   function handleChange(e) {

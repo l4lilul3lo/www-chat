@@ -1,19 +1,16 @@
-const { getMessagesDB, addMessageDB } = require("../models/messages/messages");
-const { getRoomIdDB } = require("../models/rooms/rooms");
+const { addMessageDB, getMessagesDB } = require("../models/message");
 
-const getMessages = async (req, res) => {
+async function addMessage(req, res) {
+  const { messageObj } = req.body;
+  await addMessage(messageObj);
+  res.send("message succesfully sent");
+}
+
+async function getMessages(req, res) {
   const { roomId } = req.body;
-
   const messages = await getMessagesDB(roomId);
 
   res.json({ messages });
-};
+}
 
-const addMessage = async (req, res) => {
-  const { userId, roomId, content, color, background } = req.body;
-
-  await addMessageDB(userId, roomId, content, color, background);
-  res.send("message sent");
-};
-
-module.exports = { getMessages, addMessage };
+module.exports = { addMessage, getMessages };

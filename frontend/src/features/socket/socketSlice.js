@@ -10,8 +10,8 @@
 //   initialState,
 //   reducers: {
 //     sendMessage: (state, action) => {
-//       console.log("sending in reducer");
-//       console.log("message", action.payload);
+//
+//
 //       state.socket.emit("message", action.payload);
 //     },
 //     setSocket: (state, action) => {

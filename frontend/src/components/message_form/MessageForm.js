@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { socket, sendMessage } from "../../socket/socket";
+
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
@@ -14,10 +14,7 @@ const MessageForm = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("roomId", room.id);
-    console.log("userId", user.id);
-    console.log("content", content);
-    console.log("userBackground", user.settings.messageBackground);
+
     const messageObj = {
       userName: user.name,
       userId: user.id,
@@ -32,7 +29,6 @@ const MessageForm = () => {
   }
 
   function handleChange(e) {
-    console.log("current input state", content);
     setContent(e.target.value);
   }
 

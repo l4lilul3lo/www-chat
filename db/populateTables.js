@@ -2,7 +2,7 @@ const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 const db = require("./dbConfig");
 const { addUserDB } = require("../models/users/users");
-const { addRoomDB } = require("../models/rooms/rooms");
+const { addRoomDB } = require("../models/room");
 
 function createUsername() {
   const randomName = faker.name.findName();
@@ -17,7 +17,7 @@ async function createPassword() {
 
 async function createMessage() {
   const randomMessage = faker.lorem.text();
-  console.log(randomMessage);
+
   return randomMessage;
 }
 
@@ -32,9 +32,8 @@ async function addUsers(amt) {
     const password = await createPassword();
     await addUserDB(username, password);
   }
-  console.log("added users to the database");
+
   const users = await db.query(`select * from users`);
-  console.log(users.rows);
 }
 
 async function addRooms(amt) {
@@ -43,9 +42,8 @@ async function addRooms(amt) {
     const password = i % 2 === 0 ? "" : await createPassword();
     await addRoomDB(roomName, password);
   }
-  console.log("added rooms to the database");
+
   const rooms = await db.query(`select * from rooms`);
-  console.log(rooms.rows);
 }
 
 addUsers(4);

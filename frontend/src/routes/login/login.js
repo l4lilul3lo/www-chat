@@ -48,7 +48,7 @@ const Login = () => {
             <input
               type="text"
               name="name"
-              id="name"
+              id="username"
               value={formData.name || ""}
               onChange={handleChange}
               required
@@ -67,7 +67,7 @@ const Login = () => {
               autoComplete="on"
             />
           </div>
-          <input type="submit" />
+          <input id="login-submit-btn" type="submit" />
         </form>
         <p>
           Don't have an account? You can sign-up{" "}

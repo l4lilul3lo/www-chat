@@ -16,13 +16,11 @@ const MessageForm = () => {
     e.preventDefault();
 
     const messageObj = {
-      userName: user.name,
-      userId: user.id,
-      roomId: room.id,
-      roomName: room.name,
+      user_id: user.id,
+      room_id: room.id,
       content: content,
-      background: user.settings.messageBackground,
       color: user.settings.messageColor,
+      background: user.settings.messageBackground,
     };
     ws.sendMessage(messageObj);
     setContent("");

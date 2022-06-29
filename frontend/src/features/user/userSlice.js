@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {
-    name: "",
     id: "",
+    name: "",
     image: "",
     messageSettings: {
       messageColor: "black",

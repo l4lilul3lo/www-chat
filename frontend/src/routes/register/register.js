@@ -23,27 +23,30 @@ const Register = () => {
     // response will be html or json
   }
   function handleChange(e) {
+    console.log(e.target.value)
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <label for="name">Username</label>
+        <label for="username">Username</label>
         <input
           type="text"
           name="name"
-          value={formData.name}
+          id="username"
+          
           onChange={handleChange}
         />
         <label for="password">Password</label>
         <input
           type="password"
           name="password"
-          value={formData.password}
+          id="password"
+          
           onChange={handleChange}
         />
-        <input type="submit" />
+        <input id="register-submit-btn" type="submit" />
       </form>
     </div>
   );

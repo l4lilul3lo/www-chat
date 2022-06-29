@@ -19,8 +19,8 @@ const Room = sequelize.define(
   { underscored: true }
 );
 
-async function addRoomDB(name, password = "") {
-  Room.create({ name, password });
+async function createRoomDB(roomObj) {
+  Room.create(roomObj);
 }
 
 async function getRoomsDB() {
@@ -49,4 +49,10 @@ async function getCafeInfoDB() {
   return res[0].dataValues;
 }
 
-module.exports = { Room, addRoomDB, getRoomsDB, getRoomByIdDB, getCafeInfoDB };
+module.exports = {
+  Room,
+  createRoomDB,
+  getRoomsDB,
+  getRoomByIdDB,
+  getCafeInfoDB,
+};

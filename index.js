@@ -3,7 +3,12 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-require("./io.js")(server);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
 // session setup
 const session = require("express-session");
@@ -35,25 +40,24 @@ app.use(express.urlencoded({ extended: false }));
 const userRoute = require("./routes/userRoute");
 const roomsRoute = require("./routes/roomsRoute");
 const messagesRoute = require("./routes/messagesRoute");
-// user register, login, getUser, checkAuth
+
 app.use("/users", userRoute);
 app.use("/rooms", roomsRoute);
 app.use("/messages", messagesRoute);
 
-// //rooms get rooms, add room
-// app.get("/getRooms", getRooms);
-// // app.post("/addRoom", addRoom);
-// // messages
-// app.post("/getMessages", getMessages);
-// app.post("/addMessage", addMessage);
+// import and register socket handlers
+const registerUserHandlers = require("./socketHandlers/userHandler");
+const registerRoomHandlers = require("./socketHandlers/roomHandler");
+const registerMessageHandlers = require("./socketHandlers/messageHandler");
 
-app.get("/checkAuth", (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ isAuth: false });
-  }
+const onConnection = (socket) => {
+  registerUserHandlers(io, socket);
+  registerRoomHandlers(io, socket);
+  registerMessageHandlers(io, socket);
+};
 
-  res.json({ isAuth: true });
-});
+io.on("connection", onConnection);
 
+// start server
 const port = process.env.PORT || 9000;
 server.listen(port, () => {});

@@ -22,6 +22,7 @@
   "scripts": {
     "start": "node -r dotenv/config index.js",
     "dev": "concurrently -n 'server,client' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\"",
+    "dev-sim": "concurrently -n 'server,client,puppets' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\" \"node puppets.js\"",
     "create-tables": "node -r dotenv/config ./db/createTables.js",
     "populate-tables": "node -r dotenv/config ./db/populateTables.js",
     "reset-tables": "node -r dotenv/config ./db/resetTables.js",

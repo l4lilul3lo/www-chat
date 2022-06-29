@@ -12,7 +12,7 @@ function createUsername() {
   return randomName;
 }
 
-function createPassword() {
+function createHashedPassword() {
   const password = faker.random.word();
   const hashedPassword = bcrypt.hashSync(password, 10);
   return hashedPassword;
@@ -32,7 +32,7 @@ function createImage() {
 function createUsers(n) {
   const users = [...new Array(n)].map((x) => {
     const name = createUsername();
-    const password = createPassword();
+    const password = createHashedPassword();
     const image = createImage();
     return { name, password, image };
   });
@@ -45,7 +45,7 @@ function createRooms(n) {
   const otherRooms = [...new Array(n - 1)].map((x, i) => {
     const name = createRoomName();
     if ([1, 3, 5].includes(i)) {
-      return { name, password: createPassword() };
+      return { name, password: createHashedPassword() };
     }
     return { name };
   });
@@ -71,4 +71,4 @@ function createMessages(userIds, roomIds, n) {
 
 createRooms(3);
 
-module.exports = { createUsers, createRooms, createMessages };
+module.exports = { createUsers, createRooms, createMessages, createUsername, createPassword };

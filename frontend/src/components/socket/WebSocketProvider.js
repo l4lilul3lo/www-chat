@@ -12,6 +12,10 @@ const WebSocketProvider = ({ children, userId, username, roomId }) => {
 
   socket.on("connect", async () => {});
 
+  socket.on("user connected", (users) => {
+    dispatch(setUsers(users))
+  })
+
   socket.on("broadcast message", (messageObj) => {
     dispatch(addMessage(messageObj));
   });
@@ -49,6 +53,10 @@ const WebSocketProvider = ({ children, userId, username, roomId }) => {
     socket.emit("getUsersInRoom", roomId);
   }
 
+  function userConnecting(userId, username, userImage, roomId) {
+    socket.emit("user connecting", userId, username, userImage, roomId);
+  }
+
   function watsupServerInstance(userId, username, roomId) {
     // get roomId from localStorage if it exists.
     // then userId and username should not change. No need to worry about re-render.
@@ -66,6 +74,7 @@ const WebSocketProvider = ({ children, userId, username, roomId }) => {
     watsupServerInstance,
     addRoom,
     getUsersInRoom,
+    userConnecting
   };
 
   return (

@@ -41,8 +41,11 @@ const Main = () => {
     const user = await fetchUser();
     dispatch(setUser(user));
     const room = await determineRoom();
-
-    ws.joinRoom(user, room.id);
+    console.log('userId', user.id);
+    console.log('username', user.name);
+    console.log('userImage', user.image);
+    console.log('roomId', room.id);
+    ws.userConnecting(user.id, user.name, user.image, room.id);
     const rooms = await fetchRooms();
     dispatch(setRooms(rooms));
     const messages = await fetchMessages(room.id);

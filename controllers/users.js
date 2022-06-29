@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   const { name, password } = req.body;
+  console.log('username in register controller', name);
+  console.log('password in register controller', password)
   const user = await getUserByNameDB(name);
 
   if (user) {

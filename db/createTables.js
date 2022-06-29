@@ -1,3 +1,3 @@
-const { createTables } = require("./dbSetup");
+const { createTables } = require("./dbFunctions");
 
 createTables();

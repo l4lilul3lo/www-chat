@@ -8,7 +8,7 @@ import { WebSocketProvider } from "./components/socket/WebSocketProvider";
 function App() {
   async function checkAuth() {
     try {
-      const response = await fetch("/checkAuth");
+      const response = await fetch("users/checkAuth");
       const data = await response.json();
       return data;
     } catch (err) {}

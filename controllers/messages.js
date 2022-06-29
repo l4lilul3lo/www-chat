@@ -1,10 +1,4 @@
-const { addMessageDB, getMessagesDB } = require("../models/message");
-
-async function addMessage(req, res) {
-  const { messageObj } = req.body;
-  await addMessage(messageObj);
-  res.send("message succesfully sent");
-}
+const { getMessagesDB } = require("../models/message");
 
 async function getMessages(req, res) {
   const { roomId } = req.body;
@@ -13,4 +7,4 @@ async function getMessages(req, res) {
   res.json({ messages });
 }
 
-module.exports = { addMessage, getMessages };
+module.exports = { getMessages };

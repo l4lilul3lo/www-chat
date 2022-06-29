@@ -6,7 +6,7 @@ const { RoomsUsers } = require("../models/roomsUsers");
 const { Room } = require("../models/room");
 const { Message } = require("../models/message");
 const { Settings } = require("../models/settings");
-const { createUsers, createRooms, createMessages } = require("./dataGenerator");
+const { createUsers, createRooms, createMessages } = require("../utils/dataGenerator");
 const { arrRandom } = require("../utils/general");
 const colors = require("colors");
 

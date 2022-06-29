@@ -2,7 +2,7 @@ const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 const db = require("./dbConfig");
 const { addUserDB } = require("../models/users/users");
-const { addRoomDB } = require("../models/room");
+const { createRoomDB } = require("../models/room");
 
 function createUsername() {
   const randomName = faker.name.findName();
@@ -38,9 +38,9 @@ async function addUsers(amt) {
 
 async function addRooms(amt) {
   for (let i = 0; i <= amt; i++) {
-    const roomName = createRoomName();
+    const name = createRoomName();
     const password = i % 2 === 0 ? "" : await createPassword();
-    await addRoomDB(roomName, password);
+    await createRoomDB({ name, password });
   }
 
   const rooms = await db.query(`select * from rooms`);

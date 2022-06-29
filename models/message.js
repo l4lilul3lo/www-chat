@@ -32,31 +32,18 @@ Room.hasMany(Message);
 Message.belongsTo(Room);
 
 async function getMessagesDB(roomId) {
-  console.log("roomId in getMessagesDB", roomId);
   const messages = await Message.findAll({
     include: [{ model: User, attributes: ["name", "image"] }],
     where: { room_id: roomId },
-    order: [["color", "DESC"]],
+    order: [["created_at", "DESC"]],
     limit: 40,
   });
-  messages.forEach((message) => console.log(message.dataValues.color));
+
   return messages;
 }
 
-async function addMessageDB(userId, roomId, content, color, background) {
-  console.log("room id: ", roomId);
-  console.log("user id: ", userId);
-  console.log("content", content);
-  console.log("color: ", color);
-  console.log("background", background);
-
-  await Message.create({
-    user_id: userId,
-    room_id: roomId,
-    content,
-    color,
-    background,
-  });
+async function addMessageDB(messageObj) {
+  await Message.create(messageObj);
 }
 
 module.exports = { Message, addMessageDB, getMessagesDB };

@@ -12,8 +12,6 @@ import "./rooms.css";
 const Rooms = () => {
   const dispatch = useDispatch();
   const rooms = useSelector(selectRooms);
-  // should we move all logic pertaining to users,
-  // messages, and rooms here? Make this the controlling component. The mastermind of all.
   const [display, toggleDisplay] = useState(false);
 
   async function getRooms() {
@@ -51,5 +49,3 @@ const Rooms = () => {
 };
 
 export default Rooms;
-
-// if there is no stored room, cafe details should be fetched.

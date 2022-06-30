@@ -18,7 +18,6 @@ export const messagesSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setMessages, addMessage } = messagesSlice.actions;
 export const selectMessages = (state) => state.messages.messages;
 export default messagesSlice.reducer;

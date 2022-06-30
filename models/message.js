@@ -4,25 +4,21 @@ const { uuidPrimaryKey } = require("./sharedColumns");
 const { Room } = require("./room");
 const { User } = require("./user");
 // a message has one user, and one room.
-const Message = sequelize.define(
-  "message",
-  {
-    id: uuidPrimaryKey,
-    content: {
-      type: DataTypes.STRING(2000),
-      allowNull: false,
-    },
-    color: {
-      type: DataTypes.STRING,
-      defaultValue: "black",
-    },
-    background: {
-      type: DataTypes.STRING,
-      defaultValue: "none",
-    },
+const Message = sequelize.define("message", {
+  id: uuidPrimaryKey,
+  content: {
+    type: DataTypes.STRING(2000),
+    allowNull: false,
   },
-  { underscored: true }
-);
+  color: {
+    type: DataTypes.STRING,
+    defaultValue: "black",
+  },
+  background: {
+    type: DataTypes.STRING,
+    defaultValue: "none",
+  },
+});
 
 // reference user
 User.hasMany(Message);
@@ -33,17 +29,20 @@ Message.belongsTo(Room);
 
 async function getMessagesDB(roomId) {
   const messages = await Message.findAll({
+    raw: true,
+    nest: true,
     include: [{ model: User, attributes: ["name", "image"] }],
-    where: { room_id: roomId },
-    order: [["created_at", "DESC"]],
+    where: { roomId },
+    attributes: ["content", "color", "background", "createdAt"],
+    order: [["createdAt", "DESC"]],
     limit: 40,
   });
 
   return messages;
 }
 
-async function addMessageDB(messageObj) {
+async function createMessageDB(messageObj) {
   await Message.create(messageObj);
 }
 
-module.exports = { Message, addMessageDB, getMessagesDB };
+module.exports = { Message, createMessageDB, getMessagesDB };

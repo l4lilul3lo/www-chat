@@ -1,39 +1,51 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/dbConfig");
 const { uuidPrimaryKey } = require("./sharedColumns");
+const { Settings, createSettingsDB } = require("./settings");
 
-const User = sequelize.define(
-  "user",
-  {
-    id: uuidPrimaryKey,
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [2, 32],
-      },
-    },
-    password: { type: DataTypes.STRING, allowNull: false },
-    image: {
-      type: DataTypes.STRING,
+const User = sequelize.define("user", {
+  id: uuidPrimaryKey,
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: [2, 32],
     },
   },
-  { underscored: true }
-);
+  password: { type: DataTypes.STRING, allowNull: false },
+  image: {
+    type: DataTypes.STRING,
+  },
+});
 
-async function addUserDB(username, password) {
-  await User.create({ name: username, password: password });
+User.hasOne(Settings, { as: "settings", foreignKey: "userId" });
+Settings.belongsTo(User);
+
+async function createUserDB(username, password) {
+  const user = await User.create({ name: username, password: password });
+  const userId = user.dataValues.id;
+  await createSettingsDB(userId);
 }
 
 async function getUserByIdDB(user_id) {
-  const res = await User.findAll({
+  const user = await User.findAll({
+    raw: true,
+    nest: true,
+    include: [
+      {
+        model: Settings,
+        as: "settings",
+        attributes: ["message_color", "message_background"],
+      },
+    ],
     where: {
       id: user_id,
     },
     attributes: ["id", "name", "image"],
   });
 
-  return res[0]?.dataValues;
+  console.log("user in getuserbyid", user[0]);
+  return user[0];
 }
 
 async function getUserByNameDB(username) {
@@ -52,4 +64,4 @@ async function getUsersDB() {
   });
 }
 
-module.exports = { User, addUserDB, getUserByIdDB, getUserByNameDB };
+module.exports = { User, createUserDB, getUserByIdDB, getUserByNameDB };

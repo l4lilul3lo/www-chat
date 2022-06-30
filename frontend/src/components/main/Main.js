@@ -8,6 +8,7 @@ import { setUsers } from "../../features/users/usersSlice";
 import { useDispatch } from "react-redux";
 import { useContext, useEffect } from "react";
 import { WebSocketContext } from "../socket/WebSocketProvider";
+import { setRoom } from "../../features/room/roomSlice";
 import {
   fetchUser,
   fetchUsers,
@@ -31,7 +32,6 @@ const Main = () => {
     const storedRoom = false;
     if (!storedRoom) {
       const cafeInfo = await fetchCafeInfo();
-
       return cafeInfo;
     }
     return storedRoom;
@@ -39,19 +39,16 @@ const Main = () => {
 
   async function initialize() {
     const user = await fetchUser();
+    console.log("USER IN INITIALIZE", user);
     dispatch(setUser(user));
     const room = await determineRoom();
-    console.log('userId', user.id);
-    console.log('username', user.name);
-    console.log('userImage', user.image);
-    console.log('roomId', room.id);
-    ws.userConnecting(user.id, user.name, user.image, room.id);
+    ws.userConnecting(user, room);
     const rooms = await fetchRooms();
     dispatch(setRooms(rooms));
     const messages = await fetchMessages(room.id);
     dispatch(setMessages(messages));
-    const users = await fetchUsers(room.id);
-    dispatch(setUsers(users));
+    // const users = await fetchUsers(room.id);
+    // dispatch(setUsers(users));
   }
 
   useEffect(() => {

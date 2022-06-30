@@ -6,7 +6,12 @@ const { RoomsUsers } = require("../models/roomsUsers");
 const { Room } = require("../models/room");
 const { Message } = require("../models/message");
 const { Settings } = require("../models/settings");
-const { createUsers, createRooms, createMessages } = require("../utils/dataGenerator");
+const {
+  createUsers,
+  createRooms,
+  createMessages,
+  createHashedPassword,
+} = require("../utils/dataGenerator");
 const { arrRandom } = require("../utils/general");
 const colors = require("colors");
 
@@ -57,7 +62,6 @@ async function createTable(model) {
 
 async function dropTables() {
   await sequelize.drop();
-  await sequelize.close();
 }
 
 async function createTables() {
@@ -67,31 +71,33 @@ async function createTables() {
     await createTable(Message);
     await createTable(RoomsUsers);
     await createTable(Settings);
-
-    await sequelize.close();
   } catch (err) {}
 }
 
 async function populateTable(model, dataArray) {
   try {
     const res = await model.bulkCreate(dataArray);
-
+    console.log("RES", res);
     const rowIds = res.map((x) => x.dataValues.id);
+    console.log("ROW IDS", rowIds);
     return rowIds;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function seedDB() {
   const users = createUsers(10);
+  console.log("USERS", users);
   const userIds = await populateTable(User, users);
 
   const rooms = createRooms(4);
+  console.log("ROOMS", rooms);
   const roomIds = await populateTable(Room, rooms);
-
+  console.log("USER IDS", userIds);
+  console.log("ROOM IDS", roomIds);
   const messages = createMessages(userIds, roomIds, 30);
   const messageIds = await populateTable(Message, messages);
-
-  await sequelize.close();
 }
 
 async function resetDB() {
@@ -101,6 +107,7 @@ async function resetDB() {
   console.log("tables created");
   await seedDB();
   console.log("tables populated");
+  await sequelize.close();
 }
 
 module.exports = { createTables, dropTables, seedDB, resetDB };

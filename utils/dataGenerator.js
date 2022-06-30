@@ -69,6 +69,10 @@ function createMessages(userIds, roomIds, n) {
   return messages;
 }
 
-createRooms(3);
-
-module.exports = { createUsers, createRooms, createMessages, createUsername, createPassword };
+module.exports = {
+  createUsers,
+  createRooms,
+  createMessages,
+  createUsername,
+  createHashedPassword,
+};

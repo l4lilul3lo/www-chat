@@ -1,0 +1,21 @@
+.room-not-selected {
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #3e66f1;
+}
+
+.room-not-selected:hover {
+  cursor: pointer;
+}
+
+.room-selected {
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: red;
+}
+
+.room-selected:hover {
+  cursor: pointer;
+}

@@ -3,63 +3,76 @@ import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
 import { addMessage, setMessages } from "../../features/messages/messagesSlice";
 import { setUsers } from "../../features/users/usersSlice";
-
+import { setRoom } from "../../features/room/roomSlice";
+import { useRef, useEffect } from "react";
 const WebSocketContext = createContext(null);
 
-const WebSocketProvider = ({ children, userId, username, roomId }) => {
+const WebSocketProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const socket = io("ws://localhost:9000");
+  let socket = io("ws://localhost:9000");
 
-  socket.on("connect", async () => {});
-
-  socket.on("user connected", (users) => {
-    dispatch(setUsers(users))
-  })
-
-  socket.on("broadcast message", (messageObj) => {
-    dispatch(addMessage(messageObj));
-  });
-
-  socket.on("joined room", (roomId) => {
-    localStorage.setItem("room", roomId);
-  });
-
-  socket.on("room added", (rooms) => {});
-
-  socket.on("user joined", (username) => {
-    dispatch(
-      addMessage({
-        type: "userJoined",
-        user: {
-          name: username,
-        },
-      })
-    );
-  });
-
-  socket.on("getUsersInRoom response", (users) => {
-    dispatch(setUsers(users));
-  });
-
-  function sendMessage(messageObj) {
-    socket.emit("message", messageObj);
+  const renderCounter = useRef(0);
+  renderCounter.current = renderCounter.current + 1;
+  {
+    console.log("websocket renders", renderCounter.current);
   }
 
-  function joinRoom(user, roomId) {
-    socket.emit("join room", user, roomId);
+  useEffect(() => {
+    socket.on("connect", async () => {});
+
+    socket.on("user connected", (users) => {
+      dispatch(setUsers(users));
+    });
+
+    socket.on("message:created", (messageObj, user) => {
+      console.log("message obj in message:created", messageObj);
+      dispatch(addMessage({ ...messageObj, user }));
+    });
+
+    socket.on("joined room", (roomId) => {
+      localStorage.setItem("room", roomId);
+    });
+
+    socket.on("room added", (rooms) => {});
+
+    socket.on("user:joinedRoom", (users, room) => {
+      console.log("USERs IN SOCKET", users);
+      console.log("ROOM IN SOCKET", room);
+      dispatch(setUsers(users));
+      dispatch(setRoom(room));
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.log("socket disconnected:", reason);
+    });
+
+    socket.on("user:userJoined", (username) => {
+      console.log("user name in user:userJoined");
+      dispatch(addMessage({ username }));
+    });
+
+    socket.on("getUsersInRoom response", (users) => {
+      dispatch(setUsers(users));
+    });
+  }, []);
+
+  function sendMessage(messageObj, user) {
+    socket.emit("message:create", messageObj, user);
+  }
+
+  function joinRoom(user, room) {
+    socket.emit("user:joinRoom", user, room);
   }
 
   function getUsersInRoom(roomId) {
     socket.emit("getUsersInRoom", roomId);
   }
 
-  function userConnecting(userId, username, userImage, roomId) {
-    socket.emit("user connecting", userId, username, userImage, roomId);
+  function userConnecting(user, room) {
+    socket.emit("user:connecting", user, room);
   }
 
   function watsupServerInstance(userId, username, roomId) {
-    // get roomId from localStorage if it exists.
-    // then userId and username should not change. No need to worry about re-render.
     socket.emit("watsup server", userId, username, roomId);
   }
 
@@ -74,7 +87,7 @@ const WebSocketProvider = ({ children, userId, username, roomId }) => {
     watsupServerInstance,
     addRoom,
     getUsersInRoom,
-    userConnecting
+    userConnecting,
   };
 
   return (

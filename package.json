@@ -21,12 +21,13 @@
   },
   "scripts": {
     "start": "node -r dotenv/config index.js",
-    "dev": "concurrently -n 'server,client' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\"",
+    "dev": "concurrently -n 'server,client' -c 'yellow,blue' \"nodemon -r dotenv/config index.js\" \"cd frontend && nodemon start\"",
     "dev-sim": "concurrently -n 'server,client,puppets' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\" \"node puppets.js\"",
     "create-tables": "node -r dotenv/config ./db/createTables.js",
     "populate-tables": "node -r dotenv/config ./db/populateTables.js",
     "reset-tables": "node -r dotenv/config ./db/resetTables.js",
     "drop-tables": "node -r dotenv/config ./db/dropTables.js",
-    "seed-db": "node -r dotenv/config ./db/seedDB.js"
+    "seed-db": "node -r dotenv/config ./db/seedDB.js",
+    "reset-db": "node -r dotenv/config ./db/resetDB.js"
   }
 }

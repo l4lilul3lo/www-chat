@@ -14,7 +14,6 @@ export const settingsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { toggleSettingsHidden } = settingsSlice.actions;
 export const selectSettings = (state) => state.settings;
 export default settingsSlice.reducer;

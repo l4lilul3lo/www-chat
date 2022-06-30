@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 const db = require("./dbConfig");
-const { addUserDB } = require("../models/users/users");
+const { createUserDB } = require("../models/users/users");
 const { createRoomDB } = require("../models/room");
 
 function createUsername() {
@@ -30,7 +30,7 @@ async function addUsers(amt) {
   for (let i = 0; i <= amt; i++) {
     const username = createUsername();
     const password = await createPassword();
-    await addUserDB(username, password);
+    await createUserDB(username, password);
   }
 
   const users = await db.query(`select * from users`);

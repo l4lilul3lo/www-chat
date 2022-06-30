@@ -11,7 +11,9 @@ function App() {
       const response = await fetch("users/checkAuth");
       const data = await response.json();
       return data;
-    } catch (err) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const { isLoading, error, data } = useQuery("checkAuth", checkAuth, {

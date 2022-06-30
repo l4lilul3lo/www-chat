@@ -1,12 +1,16 @@
-const { getUserByIdDB, getUserByNameDB, addUserDB } = require("../models/user");
+const {
+  getUserByIdDB,
+  getUserByNameDB,
+  createUserDB,
+} = require("../models/user");
 
 const { getRoomByIdDB } = require("../models/room");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   const { name, password } = req.body;
-  console.log('username in register controller', name);
-  console.log('password in register controller', password)
+  console.log("username in register controller", name);
+  console.log("password in register controller", password);
   const user = await getUserByNameDB(name);
 
   if (user) {
@@ -14,7 +18,7 @@ const register = async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user_id = await addUserDB(name, hashedPassword);
+  const user_id = await createUserDB(name, hashedPassword);
 
   return res.json({ message: "Registration Successful" });
 };

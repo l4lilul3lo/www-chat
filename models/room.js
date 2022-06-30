@@ -1,23 +1,19 @@
 const { sequelize } = require("../db/dbConfig");
 const { uuidPrimaryKey } = require("./sharedColumns");
 const { DataTypes } = require("sequelize");
-const Room = sequelize.define(
-  "room",
-  {
-    id: uuidPrimaryKey,
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [2, 32],
-      },
-    },
-    password: {
-      type: DataTypes.STRING,
+const Room = sequelize.define("room", {
+  id: uuidPrimaryKey,
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: [2, 32],
     },
   },
-  { underscored: true }
-);
+  password: {
+    type: DataTypes.STRING,
+  },
+});
 
 async function createRoomDB(roomObj) {
   Room.create(roomObj);

@@ -51,6 +51,7 @@ const registerRoomHandlers = require("./socketHandlers/roomHandler");
 const registerMessageHandlers = require("./socketHandlers/messageHandler");
 
 const onConnection = (socket) => {
+  console.log("socket connected", socket.id);
   registerUserHandlers(io, socket);
   registerRoomHandlers(io, socket);
   registerMessageHandlers(io, socket);
@@ -61,3 +62,4 @@ io.on("connection", onConnection);
 // start server
 const port = process.env.PORT || 9000;
 server.listen(port, () => {});
+// think about moving user info back into session and attaching that to socket on connection.

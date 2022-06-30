@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   room: {
-    name: "cafe",
-    id: "df6cfeeb-59e1-4f48-9534-5bcb57e4d573",
+    name: "",
+    id: "",
   },
 };
 
@@ -13,11 +13,11 @@ export const roomSlice = createSlice({
   reducers: {
     setRoom: (state, action) => {
       state.room = action.payload;
+      localStorage.setItem("storedRoom", action.payload);
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setRoom } = roomSlice.actions;
 export const selectRoom = (state) => state.room.room;
 export default roomSlice.reducer;

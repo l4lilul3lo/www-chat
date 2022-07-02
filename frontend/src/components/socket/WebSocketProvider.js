@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
-import { addMessage, setMessages } from "../../features/messages/messagesSlice";
-import { setUsers } from "../../features/users/usersSlice";
+import { addMessage } from "../../features/messages/messagesSlice";
+import { setUsers, addUser } from "../../features/users/usersSlice";
 import { setRoom } from "../../features/room/roomSlice";
 import { addRoom } from "../../features/rooms/roomsSlice";
 import { useRef, useEffect } from "react";
@@ -19,44 +19,30 @@ const WebSocketProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    //
-    socket.on("connect", async () => {});
+    socket.on("connect", async () => {
+      console.log("socket connected: ", socket.id);
+    });
 
-    socket.on("user connected", (users) => {
+    socket.on("user:joinedRoom", (users, room) => {
       dispatch(setUsers(users));
+      dispatch(setRoom(room));
+    });
+
+    socket.on("user:userJoined", (user) => {
+      dispatch(addMessage({ username: user.name }));
+      dispatch(addUser(user));
     });
 
     socket.on("message:created", (messageObj, user) => {
-      console.log("message obj in message:created", messageObj);
       dispatch(addMessage({ ...messageObj, user }));
-    });
-
-    socket.on("joined room", (roomId) => {
-      localStorage.setItem("room", roomId);
     });
 
     socket.on("room:created", (room) => {
       dispatch(addRoom(room));
     });
 
-    socket.on("user:joinedRoom", (users, room) => {
-      console.log("USERs IN SOCKET", users);
-      console.log("ROOM IN SOCKET", room);
-      dispatch(setUsers(users));
-      dispatch(setRoom(room));
-    });
-
     socket.on("disconnect", (reason) => {
       console.log("socket disconnected:", reason);
-    });
-
-    socket.on("user:userJoined", (username) => {
-      console.log("user name in user:userJoined");
-      dispatch(addMessage({ username }));
-    });
-
-    socket.on("getUsersInRoom response", (users) => {
-      dispatch(setUsers(users));
     });
   }, []);
 
@@ -68,30 +54,27 @@ const WebSocketProvider = ({ children }) => {
     socket.emit("user:joinRoom", user, room);
   }
 
-  function getUsersInRoom(roomId) {
-    socket.emit("getUsersInRoom", roomId);
-  }
-
   function userConnecting(user, room) {
     socket.emit("user:connecting", user, room);
-  }
-
-  function watsupServerInstance(userId, username, roomId) {
-    socket.emit("watsup server", userId, username, roomId);
   }
 
   function createRoom(room) {
     socket.emit("room:create", room);
   }
 
+  function leaveRoom(roomId) {
+    socket.emit("user:leaveRoom", roomId);
+  }
+
   const ws = {
     socket,
     sendMessage,
     joinRoom,
-    watsupServerInstance,
+
     createRoom,
-    getUsersInRoom,
+
     userConnecting,
+    leaveRoom,
   };
 
   return (
@@ -100,3 +83,7 @@ const WebSocketProvider = ({ children }) => {
 };
 
 export { WebSocketProvider, WebSocketContext };
+
+// user connect should be separate. The reason why is that we're getting users connected to socket which includes self.
+
+// only later should we have a user joined method separately.

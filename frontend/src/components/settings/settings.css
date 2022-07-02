@@ -6,6 +6,7 @@
   width: 60%;
   background: gray;
   padding: 10px;
+  z-index: 3;
 }
 
 .user-info {
@@ -23,6 +24,7 @@
 .image-upload {
   position: relative;
 }
+
 .image-upload-icon {
   position: absolute;
   top: 0;

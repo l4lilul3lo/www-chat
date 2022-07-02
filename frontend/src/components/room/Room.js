@@ -19,6 +19,7 @@ const Room = ({ room }) => {
     if (currentRoom.id !== room.id) {
       const messages = await fetchMessages(room.id);
       dispatch(setMessages(messages));
+      ws.leaveRoom(currentRoom.id);
       ws.joinRoom(user, room);
       localStorage.setItem("room", JSON.stringify(room));
     }

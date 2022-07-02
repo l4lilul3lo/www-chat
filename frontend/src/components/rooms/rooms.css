@@ -1,17 +1,17 @@
 .rooms-container {
-  width: 200px;
+  width: 20%;
   height: 100%;
-  background: #888D8D;
+  background: #888d8d;
+  max-width: 200px;
 }
 
 .rooms-header {
   display: flex;
-  background-color: #DFDCDC;
+  background-color: #dfdcdc;
   justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
   align-items: center;
-  
 }
 
 .rooms-header span:hover {
@@ -22,15 +22,9 @@
   margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  background: #3E66F1;
+  background: #3e66f1;
 }
 
 .room:hover {
   cursor: pointer;
 }
-
-
-
-
-
-

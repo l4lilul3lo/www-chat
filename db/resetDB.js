@@ -1,3 +1,6 @@
+const { sequelize } = require("./dbConfig");
 const { resetDB } = require("./dbFunctions");
-
-resetDB();
+(async () => {
+  await resetDB();
+  await sequelize.close();
+})();

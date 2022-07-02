@@ -1,17 +1,11 @@
 import "./avatar.css";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
-const Avatar = () => {
-  const user = useSelector(selectUser);
+
+const Avatar = ({ url }) => {
   return (
     <div className="avatar-container">
-      <img
-        src={
-          user.image
-            ? user.image
-            : "https://imagehostingserver.l4lilul3lo.repl.co/images/default-avatar.webp"
-        }
-      />
+      <img src={"default-avatar.webp"} />
     </div>
   );
 };

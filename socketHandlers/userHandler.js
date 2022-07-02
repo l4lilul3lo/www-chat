@@ -1,23 +1,33 @@
 module.exports = (io, socket) => {
   async function joinRoom(user, room) {
-    console.log("ROOM IN JOIN ROOM", room);
-    socket.join(room.id);
+    // get all sockets in selected room.
     const sockets = await io.in(room.id).fetchSockets();
-    console.log("SOCKETS WHEN USER JOINS ROOM", sockets.length);
+
+    // get all user information attached to sockets in room.
     const users = sockets.map((socket) => socket.user);
-    console.log("USERS IN CURRENT ROOM", users);
+
+    // send all users in current room to calling socket.
     socket.emit("user:joinedRoom", users, room);
 
-    io.to(room.id).emit("user:userJoined", user.name);
+    // join the socket to the room.
+    socket.join(room.id);
+
+    // send the joining users information to all sockets in the current room, including the joining user.
+    io.to(room.id).emit("user:userJoined", user);
+  }
+
+  function leaveRoom(roomId) {
+    socket.leave(roomId);
   }
 
   function userConnecting(user, room) {
+    // attach user information to socket.
     socket.user = user;
-    setTimeout(() => {
-      joinRoom(user, room);
-    }, 500);
+    // join socket to room.
+    joinRoom(user, room);
   }
 
   socket.on("user:connecting", userConnecting);
   socket.on("user:joinRoom", joinRoom);
+  socket.on("user:leaveRoom", leaveRoom);
 };

@@ -1,0 +1,9 @@
+.users {
+  width: 20%;
+  max-width: 200px;
+}
+
+.users-user {
+  display: flex;
+  width: 100px;
+}

@@ -14,17 +14,6 @@ const Rooms = () => {
   const rooms = useSelector(selectRooms);
   const [display, toggleDisplay] = useState(false);
 
-  async function getRooms() {
-    const response = await fetch("rooms/getRooms");
-    const data = await response.json();
-
-    dispatch(setRooms(data.rooms));
-  }
-
-  useEffect(() => {
-    getRooms();
-  }, []);
-
   async function createRoom(e) {}
 
   return (

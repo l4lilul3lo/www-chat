@@ -1,7 +1,7 @@
 .messenger {
   height: 100%;
   width: 100%;
-  background: #F9F7F3;
+  background: #f9f7f3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

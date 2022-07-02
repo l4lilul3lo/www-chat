@@ -5,6 +5,10 @@ const initialState = {
     id: "",
     name: "",
     image: "",
+    settings: {
+      messageColor: "black",
+      messageBackground: "none",
+    },
   },
 };
 

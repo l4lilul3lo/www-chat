@@ -1,0 +1,11 @@
+.avatar-container {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.avatar-container img {
+  width: 100%;
+  border-radius: 50%;
+  background: white;
+}

@@ -1,0 +1,21 @@
+.image-upload-form input[type="file"] {
+  display: none;
+}
+
+.custom-image-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.image-upload-form {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 20%;
+  width: 100%;
+  background: blue;
+  padding: 10px;
+  z-index: 3;
+}

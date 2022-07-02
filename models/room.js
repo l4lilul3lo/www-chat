@@ -16,7 +16,9 @@ const Room = sequelize.define("room", {
 });
 
 async function createRoomDB(roomObj) {
-  Room.create(roomObj);
+  const res = await Room.create(roomObj);
+  const { id, name } = res.dataValues;
+  return { id, name };
 }
 
 async function getRoomsDB() {

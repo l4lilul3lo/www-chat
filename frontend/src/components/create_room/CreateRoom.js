@@ -4,18 +4,20 @@ import { useContext } from "react";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 const CreateRoom = ({ toggleDisplay, display }) => {
   const ws = useContext(WebSocketContext);
-  const [inputs, setInputs] = useState({
+  const [room, setRoom] = useState({
     name: "",
     password: "",
   });
+
   async function handleSubmit(e) {
     e.preventDefault();
-
-    ws.addRoom(inputs.name, inputs.password);
+    console.log("room on submit", room);
+    ws.createRoom(room);
   }
 
   function handleChange(e) {
-    setInputs((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    console.log(e.target.id, e.target.value);
+    setRoom((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   }
 
   return (

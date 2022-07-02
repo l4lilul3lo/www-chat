@@ -4,5 +4,31 @@
   top: 100px;
   height: 60%;
   width: 60%;
-  background: blue;
+  background: gray;
+  padding: 10px;
+}
+
+.user-info {
+  display: flex;
+}
+
+.user-info h1 {
+  margin-left: 10px;
+}
+
+.user-info h1 {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.image-upload {
+  position: relative;
+}
+.image-upload-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background: #3e66f1;
+  color: white;
+  border-radius: 50%;
 }

@@ -4,11 +4,11 @@ const { uuidPrimaryKey } = require("./sharedColumns");
 
 const Settings = sequelize.define("settings", {
   id: uuidPrimaryKey,
-  message_color: {
+  messageColor: {
     type: DataTypes.STRING,
     defaultValue: "black",
   },
-  message_background: {
+  messageBackground: {
     type: DataTypes.STRING,
     defaultValue: "none",
   },

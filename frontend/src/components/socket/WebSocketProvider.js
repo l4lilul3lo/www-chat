@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addMessage, setMessages } from "../../features/messages/messagesSlice";
 import { setUsers } from "../../features/users/usersSlice";
 import { setRoom } from "../../features/room/roomSlice";
+import { addRoom } from "../../features/rooms/roomsSlice";
 import { useRef, useEffect } from "react";
 const WebSocketContext = createContext(null);
 
@@ -18,6 +19,7 @@ const WebSocketProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    //
     socket.on("connect", async () => {});
 
     socket.on("user connected", (users) => {
@@ -33,7 +35,9 @@ const WebSocketProvider = ({ children }) => {
       localStorage.setItem("room", roomId);
     });
 
-    socket.on("room added", (rooms) => {});
+    socket.on("room:created", (room) => {
+      dispatch(addRoom(room));
+    });
 
     socket.on("user:joinedRoom", (users, room) => {
       console.log("USERs IN SOCKET", users);
@@ -76,8 +80,8 @@ const WebSocketProvider = ({ children }) => {
     socket.emit("watsup server", userId, username, roomId);
   }
 
-  function addRoom(roomName, password) {
-    socket.emit("add room", roomName, password);
+  function createRoom(room) {
+    socket.emit("room:create", room);
   }
 
   const ws = {
@@ -85,7 +89,7 @@ const WebSocketProvider = ({ children }) => {
     sendMessage,
     joinRoom,
     watsupServerInstance,
-    addRoom,
+    createRoom,
     getUsersInRoom,
     userConnecting,
   };

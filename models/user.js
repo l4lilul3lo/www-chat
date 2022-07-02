@@ -35,7 +35,7 @@ async function getUserByIdDB(user_id) {
       {
         model: Settings,
         as: "settings",
-        attributes: ["message_color", "message_background"],
+        attributes: ["messageColor", "messageBackground"],
       },
     ],
     where: {

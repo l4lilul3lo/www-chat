@@ -1,4 +1,3 @@
-const db = require("./dbConfig");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("./dbConfig");
 const { User } = require("../models/user");
@@ -10,9 +9,8 @@ const {
   createUsers,
   createRooms,
   createMessages,
-  createHashedPassword,
 } = require("../utils/dataGenerator");
-const { arrRandom } = require("../utils/general");
+
 const colors = require("colors");
 
 const selectExistsText = `
@@ -41,6 +39,7 @@ WHERE
       type: QueryTypes.SELECT,
     }
   );
+  return schema;
 }
 
 async function tableExists(tableName) {
@@ -53,15 +52,21 @@ async function tableExists(tableName) {
 }
 
 async function createTable(model) {
-  const exists = await tableExists(model.tableName);
+  const tableName = model.tableName;
+  const exists = await tableExists(tableName);
   if (exists) {
+    console.log(`${tableName} already exists`);
   } else {
     await model.sync();
+    const schema = await getSchema(tableName);
+    console.log(`${tableName} table created.`.magenta);
+    console.log(schema);
   }
 }
 
 async function dropTables() {
   await sequelize.drop();
+  console.log("tables dropped".magenta);
 }
 
 async function createTables() {
@@ -71,43 +76,35 @@ async function createTables() {
     await createTable(Message);
     await createTable(RoomsUsers);
     await createTable(Settings);
-  } catch (err) {}
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
 async function populateTable(model, dataArray) {
   try {
     const res = await model.bulkCreate(dataArray);
-    console.log("RES", res);
     const rowIds = res.map((x) => x.dataValues.id);
-    console.log("ROW IDS", rowIds);
     return rowIds;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    throw new Error(err);
   }
 }
 
-async function seedDB() {
+async function populateTables() {
   const users = createUsers(10);
-  console.log("USERS", users);
   const userIds = await populateTable(User, users);
-
   const rooms = createRooms(4);
-  console.log("ROOMS", rooms);
   const roomIds = await populateTable(Room, rooms);
-  console.log("USER IDS", userIds);
-  console.log("ROOM IDS", roomIds);
   const messages = createMessages(userIds, roomIds, 30);
-  const messageIds = await populateTable(Message, messages);
+  await populateTable(Message, messages);
+  console.log("tables populated".magenta);
 }
 
 async function resetDB() {
   await dropTables();
-  console.log("tables dropped");
   await createTables();
-  console.log("tables created");
-  await seedDB();
-  console.log("tables populated");
-  await sequelize.close();
+  await populateTables();
 }
 
-module.exports = { createTables, dropTables, seedDB, resetDB };
+module.exports = { resetDB };

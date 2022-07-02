@@ -1,35 +1,18 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import Avatar from "../avatar/Avatar";
 import Settings from "../settings/Settings";
 import "./profile.css";
-import { selectUser, setUser } from "../../features/user/userSlice";
-import { useState, useEffect, useContext } from "react";
-import { WebSocketContext } from "../socket/WebSocketProvider";
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const ws = useContext(WebSocketContext);
-
   const [display, toggleDisplay] = useState(false);
-
-  async function getUser() {
-    const response = await fetch("users/getUser");
-    const data = await response.json();
-
-    dispatch(setUser(data));
-  }
-
-  useEffect(() => {
-    // getUser();
-  }, []);
 
   return (
     <div className="profile" onClick={() => toggleDisplay(!display)}>
-      <div className="img-container">
-        <img src={user.image ? user.image : "anon-avatar.svg"} />
+      <div className="profile-toggle">
+        <Avatar />
         <span className="material-symbols-outlined">settings</span>
       </div>
-      {display && <Settings />}
+      {true && <Settings />}
     </div>
   );
 };

@@ -34,7 +34,7 @@ async function getMessagesDB(roomId) {
     include: [{ model: User, attributes: ["name", "image"] }],
     where: { roomId },
     attributes: ["content", "color", "background", "createdAt"],
-    order: [["createdAt", "DESC"]],
+    order: [["createdAt", "ASC"]],
     limit: 40,
   });
 

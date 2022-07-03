@@ -6,10 +6,22 @@ const ImageUploader = () => {
   const user = useSelector(selectUser);
   const [previewSrc, setPreviewSrc] = useState("");
   const [file, setFile] = useState(null);
+  console.log("previewsrc", previewSrc);
+  console.log("file", file);
 
   function loadFile(e) {
     console.log("file", e.target.files[0]);
     setFile(e.target.files[0]);
+  }
+
+  async function updateUserImage(imageUrl) {
+    const response = await fetch("users/updateUserImage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ imageUrl }),
+    });
   }
 
   async function handleSubmit(e) {
@@ -17,10 +29,9 @@ const ImageUploader = () => {
     const formData = new FormData();
     const fileExtension = file.type.replace(/(.*)\//g, "");
     const fileName = user.id;
-    formData.append("fileName", user.id);
+    formData.append("fileName", fileName);
     formData.append("fileExtension", fileExtension);
     formData.append("uploaded-file", file);
-
     const response = await fetch(
       "https://imagehostingserver.l4lilul3lo.repl.co/upload",
       {
@@ -30,7 +41,10 @@ const ImageUploader = () => {
     );
     const data = await response.json();
     if (data.message === "success") {
-      // await updateUserImage(user.id, )
+      // update in database
+      await updateUserImage(
+        `https://imagehostingserver.l4lilul3lo.repl.co/images/${fileName}.webp`
+      );
     }
     console.log("image post response", data);
   }
@@ -42,8 +56,13 @@ const ImageUploader = () => {
     const objectUrl = URL.createObjectURL(file);
     setPreviewSrc(objectUrl);
 
-    return () => URL.revokeObjectURL(objectUrl);
+    return () => {
+      console.log("fired");
+      URL.revokeObjectURL(objectUrl);
+      // setFile(null);
+    };
   }, [file]);
+
   return (
     <form className="image-upload-form">
       <label for="image-upload" className="custom-image-upload">

@@ -16,7 +16,7 @@ const Settings = () => {
           className="image-upload"
           onClick={() => setDisplayImageUploader(!displayImageUploader)}
         >
-          <Avatar url={user.image} />
+          <Avatar id="hello" url={user.image} />
           <span className="material-symbols-outlined image-upload-icon">
             add_photo_alternate
           </span>

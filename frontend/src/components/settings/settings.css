@@ -34,3 +34,10 @@
   color: white;
   border-radius: 50%;
 }
+
+#hello:hover {
+  background: red;
+  color: white;
+  font-size: 20px;
+  border-radius: 100% !important;
+}

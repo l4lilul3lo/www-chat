@@ -53,15 +53,27 @@ async function getUserByNameDB(username) {
     where: {
       name: username,
     },
+    attributes: ["id", "name", "image", "password"],
   });
 
   return res[0]?.dataValues;
 }
-async function getUsersDB() {
-  User.findAll({
-    attributes: ["id", "name", "image"],
-    where: {},
-  });
+
+async function updateUserImageDB(url, userId) {
+  await User.update(
+    { image: url },
+    {
+      where: {
+        id: userId,
+      },
+    }
+  );
 }
 
-module.exports = { User, createUserDB, getUserByIdDB, getUserByNameDB };
+module.exports = {
+  User,
+  createUserDB,
+  getUserByIdDB,
+  getUserByNameDB,
+  updateUserImageDB,
+};

@@ -1,40 +1,37 @@
+const bcrypt = require("bcrypt");
 const {
   getUserByIdDB,
   getUserByNameDB,
   createUserDB,
+  updateUserImageDB,
 } = require("../models/user");
-
-const { getRoomByIdDB } = require("../models/room");
-const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   const { name, password } = req.body;
-  console.log("username in register controller", name);
-  console.log("password in register controller", password);
-  const user = await getUserByNameDB(name);
 
+  const user = await getUserByNameDB(name);
   if (user) {
     return res.json({ message: "Username Taken" });
   }
-
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user_id = await createUserDB(name, hashedPassword);
-
-  return res.json({ message: "Registration Successful" });
+  await createUserDB(name, hashedPassword);
+  return res.json({ message: "success" });
 };
 
 const login = async (req, res) => {
   const { name, password } = req.body;
-  // get user by username,  if it doesn't exist username or password is incorrect.
+  console.log("username in login route", name);
+  console.log("password in login route", password);
   const user = await getUserByNameDB(name);
-
+  console.log(user);
   if (!user) {
     return res
       .status(401)
       .json({ message: "username or password is incorrect" });
   }
 
-  let isCorrectPassword = await bcrypt.compare(password, user.password);
+  const isCorrectPassword = await bcrypt.compare(password, user.password);
+
   if (!isCorrectPassword) {
     return res
       .status(401)
@@ -43,7 +40,7 @@ const login = async (req, res) => {
 
   req.session.userId = user.id;
 
-  return res.json({ id: user.id, name: user.name, image: user.image });
+  return res.json({ message: "success" });
 };
 
 const checkAuth = async (req, res) => {
@@ -56,14 +53,16 @@ const checkAuth = async (req, res) => {
 
 const getUser = async (req, res) => {
   const userId = req.session.userId;
-
   const user = await getUserByIdDB(userId);
-  console.log("USER IN USER CONTROLLER", user);
   res.json({ user });
 };
 
-const getUsers = async (req, res) => {
-  const { roomId } = req.body;
+const updateUserImage = async (req, res) => {
+  const userId = req.session.userId;
+  const { imageUrl } = req.body;
+  console.log("image url in update user image", imageUrl);
+  await updateUserImageDB(imageUrl, userId);
+  res.json({ message: "success" });
 };
 
-module.exports = { login, register, getUser, checkAuth, getUsers };
+module.exports = { login, register, getUser, checkAuth, updateUserImage };

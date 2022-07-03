@@ -5,7 +5,7 @@ const {
   login,
   getUser,
   checkAuth,
-  getUsers,
+  updateUserImage,
 } = require("../controllers/users");
 const { isAuth } = require("../middleware/isAuth");
 // import controllers here.
@@ -14,7 +14,7 @@ const { isAuth } = require("../middleware/isAuth");
 router.post("/register", register);
 router.post("/login", login);
 router.get("/getUser", isAuth, getUser);
-router.post("/getUsers", getUsers);
 router.get("/checkAuth", checkAuth);
+router.post("/updateUserImage", updateUserImage);
 
 module.exports = router;

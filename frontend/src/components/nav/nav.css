@@ -1,19 +1,23 @@
 .nav {
   display: flex;
-  background: #3E66F1;
+  background: #3e66f1;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding-left: 10px;
   padding-right: 10px;
+  width: 100%;
+}
+
+.nav-left {
+  width: 50%;
 }
 
 .nav-right {
   display: flex;
-  align-items: center;
+  width: 50%;
+  justify-content: right;
 }
-
-
 
 .nav-links {
   padding-right: 10px;
@@ -22,4 +26,3 @@
 .nav-links a {
   padding-left: 10px;
 }
-

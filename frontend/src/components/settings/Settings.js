@@ -10,27 +10,34 @@ const Settings = () => {
   const [displayImageUploader, setDisplayImageUploader] = useState(false);
 
   return (
-    <div className="settings">
-      <div className="user-info">
-        <div
-          className="image-upload"
-          onClick={() => setDisplayImageUploader(!displayImageUploader)}
-        >
-          <Avatar id="hello" url={user.image} />
-          <span className="material-symbols-outlined image-upload-icon">
-            add_photo_alternate
-          </span>
+    <div className="settings-container">
+      <div className="settings">
+        <div className="user-info">
+          <div
+            className="image-upload"
+            onClick={() => setDisplayImageUploader(!displayImageUploader)}
+          >
+            <Avatar url={user.image} />
+            <span className="material-symbols-outlined image-upload-icon">
+              add_photo_alternate
+            </span>
+          </div>
+
+          <h1>{user.name}</h1>
         </div>
 
-        <h1>{user.name}</h1>
-      </div>
+        <div className="message-settings">
+          <h1>{user.settings.messageColor}</h1>
+          <h1>{user.settings.messageBackground}</h1>
+        </div>
 
-      <div className="message-settings">
-        <h1>{user.settings.messageColor}</h1>
-        <h1>{user.settings.messageBackground}</h1>
+        {displayImageUploader && (
+          <ImageUploader
+            displayImageUploader={displayImageUploader}
+            setDisplayImageUploader={setDisplayImageUploader}
+          />
+        )}
       </div>
-
-      {displayImageUploader && <ImageUploader />}
     </div>
   );
 };

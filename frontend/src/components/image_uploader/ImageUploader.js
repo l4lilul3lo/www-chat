@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
+
 import "./image_uploader.css";
-const ImageUploader = () => {
+const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
   const user = useSelector(selectUser);
-  const [previewSrc, setPreviewSrc] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
   const [file, setFile] = useState(null);
-  console.log("previewsrc", previewSrc);
+  const [height, setHeight] = useState();
+  const [width, setWidth] = useState();
+  console.log("previewsrc", previewImage?.height);
   console.log("file", file);
 
   function loadFile(e) {
@@ -53,8 +56,14 @@ const ImageUploader = () => {
     if (!file) {
       return;
     }
+    const image = new Image();
     const objectUrl = URL.createObjectURL(file);
-    setPreviewSrc(objectUrl);
+    image.src = objectUrl;
+    image.onload = () => {
+      setWidth(image.width);
+      setHeight(image.height);
+    };
+    setPreviewImage(image);
 
     return () => {
       console.log("fired");
@@ -62,14 +71,21 @@ const ImageUploader = () => {
       // setFile(null);
     };
   }, [file]);
+  console.log("height", height);
+  console.log("width", width);
 
   return (
-    <form className="image-upload-form">
-      <label for="image-upload" className="custom-image-upload">
-        <span className="material-symbols-outlined image-upload-icon-large">
-          add_photo_alternate
-        </span>
-      </label>
+    <div className="image-upload-container">
+      <div className="preview-container">
+        <img
+          className="preview"
+          src={previewImage.src ? previewImage.src : "image-upload.png"}
+          style={{
+            height: `${height > width ? "auto" : "100%"}`,
+            width: `${height > width ? "100%" : "auto"}`,
+          }}
+        />
+      </div>
       <input
         id="image-upload"
         type="file"
@@ -77,11 +93,14 @@ const ImageUploader = () => {
         name="uploaded-file"
         onChange={loadFile}
       />
-      <div className="preview">
-        <img id="output" src={previewSrc} />
+
+      <div className="confirm-cancel">
         <button onClick={handleSubmit}>Confirm</button>
+        <button onClick={() => setDisplayImageUploader(!displayImageUploader)}>
+          Cancel
+        </button>
       </div>
-    </form>
+    </div>
   );
 };
 

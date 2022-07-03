@@ -1,9 +1,9 @@
-import "./App.css";
 import Nav from "./components/nav/Nav";
 import Main from "./components/main/Main";
 import { Navigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { WebSocketProvider } from "./components/socket/WebSocketProvider";
+import "./App.css";
 
 function App() {
   async function checkAuth() {

@@ -1,9 +1,9 @@
-.settings {
+.settings-container {
   position: absolute;
   right: 0;
   top: 100px;
-  height: 60%;
   width: 60%;
+  max-width: 300px;
   background: gray;
   padding: 10px;
   z-index: 3;
@@ -25,6 +25,10 @@
   position: relative;
 }
 
+.image-upload:hover {
+  cursor: pointer;
+}
+
 .image-upload-icon {
   position: absolute;
   top: 0;
@@ -33,11 +37,4 @@
   background: #3e66f1;
   color: white;
   border-radius: 50%;
-}
-
-#hello:hover {
-  background: red;
-  color: white;
-  font-size: 20px;
-  border-radius: 100% !important;
 }

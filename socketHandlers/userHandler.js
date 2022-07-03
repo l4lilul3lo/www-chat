@@ -1,19 +1,19 @@
+const {
+  arrUniqueByObjectValue,
+  arrCheckObjectValueExists,
+} = require("../utils/general");
+
 module.exports = (io, socket) => {
   async function joinRoom(user, room) {
-    // get all sockets in selected room.
     const sockets = await io.in(room.id).fetchSockets();
-
-    // get all user information attached to sockets in room.
     const users = sockets.map((socket) => socket.user);
-
-    // send all users in current room to calling socket.
-    socket.emit("user:joinedRoom", users, room);
-
-    // join the socket to the room.
+    const uniqueUsers = arrUniqueByObjectValue(users, "id");
+    const userDuplicate = arrCheckObjectValueExists(users, "id", user.id);
+    socket.emit("user:joinedRoom", uniqueUsers, room);
     socket.join(room.id);
-
-    // send the joining users information to all sockets in the current room, including the joining user.
-    io.to(room.id).emit("user:userJoined", user);
+    if (!userDuplicate) {
+      io.to(room.id).emit("user:userJoined", user);
+    }
   }
 
   function leaveRoom(roomId) {
@@ -21,9 +21,7 @@ module.exports = (io, socket) => {
   }
 
   function userConnecting(user, room) {
-    // attach user information to socket.
     socket.user = user;
-    // join socket to room.
     joinRoom(user, room);
   }
 

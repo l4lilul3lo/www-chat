@@ -33,15 +33,6 @@ async function fetchMessages(roomId) {
   return messages;
 }
 
-async function fetchUsers(roomId) {
-  const { users } = await post("users/getUsers", {
-    name: "roomId",
-    data: roomId,
-  });
-
-  return users;
-}
-
 async function fetchCafeInfo() {
   const { cafeInfo } = await get("rooms/getCafeInfo");
 
@@ -54,10 +45,12 @@ async function fetchUser() {
   return user;
 }
 
+async function updateUserImage(url) {}
+
 module.exports = {
   fetchMessages,
   fetchRooms,
-  fetchUsers,
+
   fetchCafeInfo,
   fetchUser,
 };

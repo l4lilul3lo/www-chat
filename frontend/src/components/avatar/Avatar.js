@@ -3,9 +3,12 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
 
 const Avatar = ({ url }) => {
+  {
+    console.log("image url", url);
+  }
   return (
     <div className="avatar-container">
-      <img src={"default-avatar.webp"} />
+      <img src={url ? url : "default-avatar.webp"} />
     </div>
   );
 };

@@ -9,13 +9,7 @@ import { useDispatch } from "react-redux";
 import { useContext, useEffect } from "react";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import { setRoom } from "../../features/room/roomSlice";
-import {
-  fetchUser,
-  fetchUsers,
-  fetchMessages,
-  fetchRooms,
-  fetchCafeInfo,
-} from "../../api";
+import { fetchUser, fetchMessages, fetchRooms, fetchCafeInfo } from "../../api";
 import "./main.css";
 
 const Main = () => {
@@ -50,9 +44,6 @@ const Main = () => {
       { id: user.id, name: user.name, image: user.image },
       room
     );
-
-    // const users = await fetchUsers(room.id);
-    // dispatch(setUsers(users));
   }
 
   useEffect(() => {

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/user/userSlice";
 import "./image_uploader.css";
 const ImageUploader = () => {
+  const user = useSelector(selectUser);
   const [previewSrc, setPreviewSrc] = useState("");
   const [file, setFile] = useState(null);
 
@@ -12,7 +15,10 @@ const ImageUploader = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("hello", "goodbye");
+    const fileExtension = file.type.replace(/(.*)\//g, "");
+    const fileName = user.id;
+    formData.append("fileName", user.id);
+    formData.append("fileExtension", fileExtension);
     formData.append("uploaded-file", file);
 
     const response = await fetch(
@@ -23,6 +29,9 @@ const ImageUploader = () => {
       }
     );
     const data = await response.json();
+    if (data.message === "success") {
+      // await updateUserImage(user.id, )
+    }
     console.log("image post response", data);
   }
 

@@ -10,7 +10,11 @@ const Message = ({ message }) => {
     return (
       <div className="message">
         <div className="avatar">
-          <img src={message.user.image} />
+          <img
+            src={
+              message.user.image ? message.user.image : "default-avatar.webp"
+            }
+          />
         </div>
         <div className="details">
           <div className="info">

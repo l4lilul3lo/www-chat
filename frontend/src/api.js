@@ -50,7 +50,6 @@ async function updateUserImage(url) {}
 module.exports = {
   fetchMessages,
   fetchRooms,
-
   fetchCafeInfo,
   fetchUser,
 };

@@ -6,6 +6,8 @@ const {
   updateUserImageDB,
 } = require("../models/user");
 
+const { updateSettingsDB } = require("../models/settings");
+
 const register = async (req, res) => {
   const { name, password } = req.body;
 
@@ -65,4 +67,19 @@ const updateUserImage = async (req, res) => {
   res.json({ message: "success" });
 };
 
-module.exports = { login, register, getUser, checkAuth, updateUserImage };
+const updateSettings = async (req, res) => {
+  const userId = req.session.userId;
+  const { settings } = req.body;
+  console.log("settings in settings controller", settings);
+  await updateSettingsDB(userId, settings);
+  res.json({ message: "success" });
+};
+
+module.exports = {
+  login,
+  register,
+  getUser,
+  checkAuth,
+  updateUserImage,
+  updateSettings,
+};

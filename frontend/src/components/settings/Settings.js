@@ -5,9 +5,17 @@ import { selectUser } from "../../features/user/userSlice";
 import { useState } from "react";
 import Avatar from "../avatar/Avatar";
 import ImageUploader from "../image_uploader/ImageUploader.js";
+import ColorPicker from "../color_picker/ColorPicker";
 const Settings = () => {
   const user = useSelector(selectUser);
   const [displayImageUploader, setDisplayImageUploader] = useState(false);
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const [background, setBackground] = useState();
+  const [color, setColor] = useState();
+
+  const handleChangeComplete = (color) => {
+    setBackground(color.hex);
+  };
 
   return (
     <div className="settings-container">
@@ -27,14 +35,34 @@ const Settings = () => {
         </div>
 
         <div className="message-settings">
-          <h1>{user.settings.messageColor}</h1>
-          <h1>{user.settings.messageBackground}</h1>
+          <b>Your current message style</b>
+
+          <div className="current-message-style">
+            <div
+              style={{
+                color: user.settings.messageColor,
+                background: user.settings.messageBackground,
+              }}
+            >
+              example text
+            </div>
+          </div>
+          <button onClick={() => setDisplayColorPicker(!displayColorPicker)}>
+            edit
+          </button>
         </div>
 
         {displayImageUploader && (
           <ImageUploader
             displayImageUploader={displayImageUploader}
             setDisplayImageUploader={setDisplayImageUploader}
+          />
+        )}
+
+        {displayColorPicker && (
+          <ColorPicker
+            displayColorPicker={displayColorPicker}
+            setDisplayColorPicker={setDisplayColorPicker}
           />
         )}
       </div>

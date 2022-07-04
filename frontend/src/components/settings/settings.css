@@ -3,6 +3,7 @@
   right: 0;
   top: 100px;
   width: 60%;
+  height: 400px;
   max-width: 300px;
   background: gray;
   padding: 10px;
@@ -37,4 +38,17 @@
   background: #3e66f1;
   color: white;
   border-radius: 50%;
+}
+
+.current-message-style {
+  background: white;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.message-settings button {
+  height: 30px;
+  width: 60px;
+  margin-top: 5px;
 }

@@ -19,8 +19,8 @@ const MessageForm = () => {
       userId: user.id,
       roomId: room.id,
       content: content,
-      color: user.settings.message_color,
-      background: user.settings.message_background,
+      color: user.settings.messageColor,
+      background: user.settings.messageBackground,
     };
     ws.sendMessage(messageObj, user);
     setContent("");

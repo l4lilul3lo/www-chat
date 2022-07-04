@@ -6,11 +6,11 @@ const Settings = sequelize.define("settings", {
   id: uuidPrimaryKey,
   messageColor: {
     type: DataTypes.STRING,
-    defaultValue: "black",
+    defaultValue: "#000000",
   },
   messageBackground: {
     type: DataTypes.STRING,
-    defaultValue: "none",
+    defaultValue: "#FFFFFF",
   },
 });
 
@@ -19,4 +19,16 @@ async function createSettingsDB(userId) {
   await Settings.create({ userId });
 }
 
-module.exports = { Settings, createSettingsDB };
+async function updateSettingsDB(userId, settings) {
+  console.log("userId in update settings", userId);
+  console.log("settings in update settings", settings);
+  try {
+    await Settings.update(settings, {
+      where: { userId },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = { Settings, createSettingsDB, updateSettingsDB };

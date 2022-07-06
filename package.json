@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "node -r dotenv/config index.js",
+    "install-all": "npm install && cd frontend && npm install",
     "dev": "concurrently -n 'server,client' -c 'yellow,blue' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\"",
     "dev-sim": "concurrently -n 'server,client,puppets' \"nodemon -r dotenv/config index.js\" \"cd frontend && npm start\" \"node puppets.js\"",
     "create-tables": "node -r dotenv/config ./db/createTables.js",

@@ -1,7 +1,10 @@
 .messenger {
-  width: 100%;
   background: #f9f7f3;
   display: flex;
+  height: 100%;
+  width: 100%;
+  min-width: 350px;
   flex-direction: column;
-  justify-content: space-between;
+  overflow: hidden;
+  border: 3px solid brown;
 }

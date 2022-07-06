@@ -59,6 +59,7 @@ async function registerAndLogin(pages) {
     }, 1000);
   }
 }
+
 async function simulation() {
   const browsers = await createBrowsers(5);
 

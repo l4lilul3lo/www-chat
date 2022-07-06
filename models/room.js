@@ -13,12 +13,19 @@ const Room = sequelize.define("room", {
   password: {
     type: DataTypes.STRING,
   },
+  passwordProtected: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 async function createRoomDB(roomObj) {
-  const res = await Room.create(roomObj);
-  const { id, name } = res.dataValues;
-  return { id, name };
+  const roomInfo = roomObj.password
+    ? { ...roomObj, passwordProtected: true }
+    : roomObj;
+  const res = await Room.create(roomInfo);
+  const { id, name, passwordProtected } = res.dataValues;
+  return { id, name, passwordProtected };
 }
 
 async function getRoomsDB() {

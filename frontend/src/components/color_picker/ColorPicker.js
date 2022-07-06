@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
 import { ChromePicker } from "react-color";
 import "./color_picker.css";
-const ColorPicker = () => {
+const ColorPicker = ({ setDisplayColorPicker }) => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [background, setBackground] = useState();
@@ -16,10 +16,8 @@ const ColorPicker = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         settings: {
-          messageColor: color ? color : user.settings.messageColor,
-          messageBackground: background
-            ? background
-            : user.settings.messageBackground,
+          messageColor: determineColor(),
+          messageBackground: determineBackground(),
         },
       }),
     });
@@ -27,23 +25,22 @@ const ColorPicker = () => {
       setUser({
         ...user,
         settings: {
-          messageColor: color ? color : user.settings.messageColor,
-          messageBackground: background
-            ? background
-            : user.settings.messageBackground,
+          messageColor: determineColor(),
+          messageBackground: determineBackground(),
         },
       })
     );
   }
-  function handleColor(color) {
-    setColor(color.hex);
-  }
-
-  function handleBackground(color) {
-    setBackground(color.hex);
-  }
 
   function determineColor() {
+    return color ? color : user.settings.messageColor;
+  }
+
+  function determineBackground() {
+    return background ? background : user.settings.messageBackground;
+  }
+
+  function determinePickerColor() {
     if (selected === "color") {
       if (!color) {
         return user.settings.messageColor;
@@ -57,12 +54,6 @@ const ColorPicker = () => {
       }
       return background;
     }
-
-    // if user enters a color, color will be that current color.
-
-    // if user changes to background, color will be that background.
-
-    // if user changes background, color will be that current background.
   }
 
   function handleChange(color) {
@@ -72,22 +63,21 @@ const ColorPicker = () => {
       setBackground(color.hex);
     }
   }
+
   return (
     <div className="color-picker">
       <div className="current-message-style">
         <div
           style={{
-            color: color ? color : user.settings.messageColor,
-            background: background
-              ? background
-              : user.settings.messageBackground,
+            color: determineColor(),
+            background: determineBackground(),
           }}
         >
           example text
         </div>
       </div>
 
-      <ChromePicker color={determineColor()} onChange={handleChange} />
+      <ChromePicker color={determinePickerColor()} onChange={handleChange} />
       <div className="color-picker-buttons">
         <button
           style={{ background: selected === "color" ? "gray" : "white" }}
@@ -102,7 +92,7 @@ const ColorPicker = () => {
           background
         </button>
         <button onClick={handleSave}>save</button>
-        <button>cancel</button>
+        <button onClick={() => setDisplayColorPicker(false)}>cancel</button>
       </div>
     </div>
   );

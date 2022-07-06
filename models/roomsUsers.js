@@ -9,11 +9,11 @@ const RoomsUsers = sequelize.define("rooms_users", {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
-  is_favorite: {
+  isFavorite: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  is_blocked: {
+  isBlocked: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },

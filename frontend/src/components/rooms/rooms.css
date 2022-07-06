@@ -1,8 +1,10 @@
 .rooms-container {
-  width: 20%;
-  height: 100%;
   background: #888d8d;
-  max-width: 200px;
+  width: 100%;
+  min-width: 350px;
+  max-width: 350px;
+  height: 100%;
+  border: 2px solid purple;
 }
 
 .rooms-header {

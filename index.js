@@ -19,8 +19,9 @@ const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  rolling: true,
   store: new RedisStore({ client: redisClient }),
-  cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 },
+  cookie: { httpOnly: true, maxAge: 2 * 24 * 60 * 60 * 1000 },
 });
 app.use(sessionMiddleware);
 

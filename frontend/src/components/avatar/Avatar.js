@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
 
 const Avatar = ({ url }) => {
+  const user = useSelector(selectUser);
   {
     console.log("image url", url);
   }

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, setUser } from "../../features/user/userSlice";
 
 import "./image_uploader.css";
 const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [file, setFile] = useState(null);
   const [height, setHeight] = useState();
@@ -29,27 +30,38 @@ const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const formData = new FormData();
-    const fileExtension = file.type.replace(/(.*)\//g, "");
-    const fileName = user.id;
-    formData.append("fileName", fileName);
-    formData.append("fileExtension", fileExtension);
-    formData.append("uploaded-file", file);
-    const response = await fetch(
-      "https://imagehostingserver.l4lilul3lo.repl.co/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const data = await response.json();
-    if (data.message === "success") {
-      // update in database
-      await updateUserImage(
-        `https://imagehostingserver.l4lilul3lo.repl.co/images/${fileName}.webp`
+    try {
+      const formData = new FormData();
+      const fileExtension = file.type.replace(/(.*)\//g, "");
+      const fileName = user.id;
+      formData.append("fileName", fileName);
+      formData.append("fileExtension", fileExtension);
+      formData.append("uploaded-file", file);
+      const response = await fetch(
+        "https://imagehostingserver.l4lilul3lo.repl.co/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
       );
+      const data = await response.json();
+      if (data.message === "success") {
+        // update in database
+        await updateUserImage(
+          `https://imagehostingserver.l4lilul3lo.repl.co/images/${fileName}.webp`
+        );
+
+        const newObj = {
+          ...user,
+          image: `https://imagehostingserver.l4lilul3lo.repl.co/images/${fileName}.webp`,
+        };
+        console.log("user is newObj", user === newObj);
+        dispatch(setUser(newObj));
+      }
+      console.log("image post response", data);
+    } catch (error) {
+      console.log(error);
     }
-    console.log("image post response", data);
   }
 
   useEffect(() => {
@@ -89,7 +101,7 @@ const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
       <input
         id="image-upload"
         type="file"
-        accept="image/*"
+        accept="image/png, image/jpeg, image/jpg"
         name="uploaded-file"
         onChange={loadFile}
       />

@@ -6,6 +6,7 @@ import { setUsers, addUser } from "../../features/users/usersSlice";
 import { setRoom } from "../../features/room/roomSlice";
 import { addRoom } from "../../features/rooms/roomsSlice";
 import { useRef, useEffect } from "react";
+
 const WebSocketContext = createContext(null);
 
 const WebSocketProvider = ({ children }) => {
@@ -78,7 +79,9 @@ const WebSocketProvider = ({ children }) => {
   };
 
   return (
-    <WebSocketContext.Provider value={ws}>{children}</WebSocketContext.Provider>
+    <WebSocketContext.Provider className="yuh" value={ws}>
+      {children}
+    </WebSocketContext.Provider>
   );
 };
 

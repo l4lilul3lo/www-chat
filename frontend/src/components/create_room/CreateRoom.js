@@ -6,7 +6,7 @@ const CreateRoom = ({ toggleDisplay, display }) => {
   const ws = useContext(WebSocketContext);
   const [room, setRoom] = useState({
     name: "",
-    password: "",
+    password: null,
   });
 
   async function handleSubmit(e) {

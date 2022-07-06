@@ -4,6 +4,7 @@ import { selectUser } from "../../features/user/userSlice";
 import Avatar from "../avatar/Avatar";
 import Settings from "../settings/Settings";
 import "./profile.css";
+import { v4 as uuidv4 } from "uuid";
 
 const Profile = () => {
   const [displaySettings, toggleDisplaySettings] = useState(false);
@@ -16,7 +17,7 @@ const Profile = () => {
           className="profile-toggle"
           onClick={() => toggleDisplaySettings(!displaySettings)}
         >
-          <Avatar url={user.image} />
+          <Avatar key={uuidv4()} url={user.image} />
           <span className="material-symbols-outlined">settings</span>
         </div>
       </div>

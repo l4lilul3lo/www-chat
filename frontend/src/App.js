@@ -26,12 +26,12 @@ function App() {
 
   if (data.isAuth) {
     return (
-      <div className="App">
-        <WebSocketProvider>
+      <WebSocketProvider>
+        <div className="app">
           <Nav />
           <Main />
-        </WebSocketProvider>
-      </div>
+        </div>
+      </WebSocketProvider>
     );
   } else {
     return <Navigate to="/login" />;

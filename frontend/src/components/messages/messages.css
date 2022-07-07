@@ -1,9 +1,10 @@
 .messages {
   height: 100%;
-  width: 100%;
 
+  width: 100%;
+  padding-left: 10px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  padding-left: 10px;
+  padding-bottom: 20px;
 }

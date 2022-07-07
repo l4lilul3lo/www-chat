@@ -17,8 +17,8 @@ const Users = () => {
       {users.map((user) => {
         return (
           <div className="users-user">
-            <Avatar url={user.image} />
-            <h1>{user.name}</h1>
+            <Avatar url={user.image} width={50} height={50} />
+            <div>{user.name}</div>
           </div>
         );
       })}

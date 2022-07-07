@@ -3,6 +3,7 @@
   padding-left: 10px;
   padding-right: 10px;
   background: #3e66f1;
+  width: 100%;
 }
 
 .room-not-selected:hover {
@@ -14,6 +15,7 @@
   padding-left: 10px;
   padding-right: 10px;
   background: red;
+  width: 100%;
 }
 
 .room-selected:hover {

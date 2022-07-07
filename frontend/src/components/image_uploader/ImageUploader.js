@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
+import {
+  selectAvatarUploadIsToggled,
+  toggleAvatarUpload,
+} from "../../features/toggles/avatarUploadToggleSlice";
 
 import "./image_uploader.css";
-const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
+const ImageUploader = () => {
   const user = useSelector(selectUser);
+  const avatarUploadIsToggled = useSelector(selectAvatarUploadIsToggled);
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [file, setFile] = useState(null);
@@ -19,13 +24,15 @@ const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
   }
 
   async function updateUserImage(imageUrl) {
-    const response = await fetch("users/updateUserImage", {
+    await fetch("users/updateUserImage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ imageUrl }),
     });
+    // refresh cache
+    await fetch(imageUrl);
   }
 
   async function handleSubmit(e) {
@@ -83,8 +90,13 @@ const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
       // setFile(null);
     };
   }, [file]);
+
   console.log("height", height);
   console.log("width", width);
+
+  if (!avatarUploadIsToggled) {
+    return null;
+  }
 
   return (
     <div className="image-upload-container">
@@ -108,9 +120,7 @@ const ImageUploader = ({ displayImageUploader, setDisplayImageUploader }) => {
 
       <div className="confirm-cancel">
         <button onClick={handleSubmit}>Confirm</button>
-        <button onClick={() => setDisplayImageUploader(!displayImageUploader)}>
-          Cancel
-        </button>
+        <button onClick={() => dispatch(toggleAvatarUpload())}>Cancel</button>
       </div>
     </div>
   );

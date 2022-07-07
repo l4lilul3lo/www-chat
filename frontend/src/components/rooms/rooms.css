@@ -1,10 +1,9 @@
 .rooms-container {
   background: #888d8d;
   width: 100%;
-  min-width: 350px;
-  max-width: 350px;
+  min-width: 260px;
+  max-width: 260px;
   height: 100%;
-  border: 2px solid purple;
 }
 
 .rooms-header {
@@ -14,6 +13,7 @@
   padding-left: 10px;
   padding-right: 10px;
   align-items: center;
+  width: 100%;
 }
 
 .rooms-header span:hover {

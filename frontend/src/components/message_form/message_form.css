@@ -1,3 +1,25 @@
 .message-form {
+  height: 100%;
+  display: flex;
+  flex-basis: 5%;
+  padding-bottom: 5px;
+  background: #f5f5dc;
+  margin-right: 20px;
+  margin-left: 10px;
+  border: 1px solid black;
+}
+
+.message-form textarea {
   width: 100%;
+  border: none;
+  resize: none;
+  background: none;
+  padding-left: 10px;
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+
+.message-form textarea:focus {
+  border: none;
+  outline: none;
 }

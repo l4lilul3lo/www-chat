@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { selectMessages } from "../../features/messages/messagesSlice";
 import Message from "../message/Message";
 import "./messages.css";
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 
 const Messages = () => {
   const messages = useSelector(selectMessages);

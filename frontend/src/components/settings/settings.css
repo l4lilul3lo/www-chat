@@ -30,11 +30,15 @@
   cursor: pointer;
 }
 
+.image-upload:hover > .image-upload-hover-text {
+  display: flex;
+}
+
 .image-upload-icon {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 2;
+  z-index: 3;
   background: #3e66f1;
   color: white;
   border-radius: 50%;
@@ -51,4 +55,21 @@
   height: 30px;
   width: 60px;
   margin-top: 5px;
+}
+
+.image-upload-hover-text {
+  position: absolute;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: white;
 }

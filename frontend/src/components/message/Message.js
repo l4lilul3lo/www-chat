@@ -1,4 +1,5 @@
 import "./message.css";
+import Avatar from "../avatar/Avatar";
 const Message = ({ message }) => {
   if (!message.content) {
     const { username } = message;
@@ -9,13 +10,7 @@ const Message = ({ message }) => {
     const content = message.content;
     return (
       <div className="message">
-        <div className="avatar">
-          <img
-            src={
-              message.user.image ? message.user.image : "default-avatar.webp"
-            }
-          />
-        </div>
+        <Avatar url={message.user.image} width={50} height={50} />
         <div className="details">
           <div className="info">
             <div className="username">{message.user.name}</div>

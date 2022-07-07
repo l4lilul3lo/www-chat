@@ -6,6 +6,8 @@ import userReducer from "./features/user/userSlice";
 import authReducer from "./features/auth/authSlice";
 import roomReducer from "./features/room/roomSlice";
 import settingsReducer from "./features/settings/settingsSlice";
+import avatarUploadToggleReducer from "./features/toggles/avatarUploadToggleSlice";
+import colorPickerToggleReducer from "./features/toggles/colorPickerToggleSlice";
 import logger from "redux-logger";
 
 export const store = configureStore({
@@ -17,6 +19,8 @@ export const store = configureStore({
     messages: messagesReducer,
     auth: authReducer,
     settings: settingsReducer,
+    avatarUploadToggle: avatarUploadToggleReducer,
+    colorPickerToggle: colorPickerToggleReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

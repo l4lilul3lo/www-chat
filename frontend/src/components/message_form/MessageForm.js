@@ -1,13 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-
-import { useDispatch } from "react-redux";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
 import { selectRoom } from "../../features/room/roomSlice";
 import { useContext } from "react";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import "./message_form.css";
-const MessageForm = () => {
+const MessageForm = ({ setTextAreaHeight }) => {
   const ws = useContext(WebSocketContext);
   const user = useSelector(selectUser);
   const room = useSelector(selectRoom);
@@ -35,9 +33,16 @@ const MessageForm = () => {
 
   function handleChange(e) {
     const element = textAreaEl.current;
+    const prevHeight = element.style.height;
+    // save previous height and if previous height and new height are different, re-render messenger component so that the elements are positioned correctly.
     element.style.height = "0px";
     element.style.height = element.scrollHeight + "px";
-    console.log(element.style.height);
+    console.log(prevHeight, element.style.height);
+    if (prevHeight != element.style.height) {
+      setTextAreaHeight(element.style.height);
+      // re-render messenger
+      // set scroll of messages element to bottom every time
+    }
     console.log("Value", e.target.value);
     console.log("VALUE is newline", e.target.value === "\n");
     setContent(e.target.value === "\n" ? "" : e.target.value);
@@ -52,6 +57,7 @@ const MessageForm = () => {
         placeholder={`Send message to ${room.name}`}
         ref={textAreaEl}
       />
+
       <span class="material-symbols-outlined send-btn">send</span>
     </form>
   );

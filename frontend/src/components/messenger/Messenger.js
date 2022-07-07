@@ -1,13 +1,14 @@
 import Messages from "../messages/Messages";
 import MessageForm from "../message_form/MessageForm";
-import { useContext } from "react";
+import { useState } from "react";
 import "./messenger.css";
 
 const Messenger = () => {
+  const [textAreaHeight, setTextAreaHeight] = useState();
   return (
     <div className="messenger">
-      <Messages />
-      <MessageForm />
+      <Messages textAreaHeight={textAreaHeight} />
+      <MessageForm setTextAreaHeight={setTextAreaHeight} />
     </div>
   );
 };

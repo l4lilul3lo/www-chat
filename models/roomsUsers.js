@@ -19,8 +19,16 @@ const RoomsUsers = sequelize.define("rooms_users", {
   },
 });
 
-async function joinRoomDB(userId, roomId) {
-  RoomsUsers.create({ userId, roomId });
+async function createRoomUserDB(userId, roomId) {
+  await RoomsUsers.create({ userId, roomId });
+}
+
+async function getRoomUserInfoDB(userId, roomId) {
+  const res = await RoomsUsers.findOne({
+    where: { userId, roomId },
+  });
+  console.log("room entry exists already", res);
+  return res;
 }
 
 async function getUsersDB(roomId) {
@@ -35,6 +43,7 @@ async function getUsersDB(roomId) {
     ],
   });
 }
+
 User.belongsToMany(Room, {
   through: RoomsUsers,
 });
@@ -42,4 +51,9 @@ Room.belongsToMany(User, {
   through: RoomsUsers,
 });
 
-module.exports = { RoomsUsers, getUsersDB, joinRoomDB };
+module.exports = {
+  RoomsUsers,
+  getUsersDB,
+  getRoomUserInfoDB,
+  createRoomUserDB,
+};

@@ -17,6 +17,10 @@ const Room = ({ room }) => {
     console.log(currentRoom.id);
     console.log(room.id);
     if (currentRoom.id !== room.id) {
+      // await fetchIsBanned
+      // if (isBanned)
+      // notify and do nothing
+
       const messages = await fetchMessages(room.id);
       dispatch(setMessages(messages));
       ws.leaveRoom(currentRoom.id);

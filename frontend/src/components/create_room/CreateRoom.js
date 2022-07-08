@@ -22,6 +22,12 @@ const CreateRoom = ({ toggleDisplay, display }) => {
 
   return (
     <div className="create-room-container">
+      <div
+        className="close-create-room-btn"
+        onClick={() => toggleDisplay(!display)}
+      >
+        X
+      </div>
       <form onSubmit={handleSubmit}>
         <label for="room-name">Room Name</label>
         <input type="text" id="name" onChange={handleChange} />
@@ -34,7 +40,6 @@ const CreateRoom = ({ toggleDisplay, display }) => {
         />
         <input type="submit" value="create room" />
       </form>
-      <div onClick={() => toggleDisplay(!display)}>X</div>
     </div>
   );
 };

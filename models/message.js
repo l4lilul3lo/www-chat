@@ -31,11 +31,11 @@ async function getMessagesDB(roomId) {
   const messages = await Message.findAll({
     raw: true,
     nest: true,
-    include: [{ model: User, attributes: ["name", "image"] }],
-    where: { roomId },
-    attributes: ["content", "color", "background", "createdAt"],
-    order: [["createdAt", "ASC"]],
+    order: [["createdAt", "DESC"]],
     limit: 40,
+    attributes: ["content", "color", "background", "createdAt"],
+    where: { roomId },
+    include: [{ model: User, attributes: ["name", "image"] }],
   });
 
   return messages;

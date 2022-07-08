@@ -1,14 +1,22 @@
 import Messages from "../messages/Messages";
 import MessageForm from "../message_form/MessageForm";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./messenger.css";
 
 const Messenger = () => {
   const [textAreaHeight, setTextAreaHeight] = useState();
+  const [messagesEl, setMessagesEl] = useState(null);
+  const [messagesIsAtBottom, setMessagesIsAtBottom] = useState(null);
   return (
     <div className="messenger">
-      <Messages textAreaHeight={textAreaHeight} />
-      <MessageForm setTextAreaHeight={setTextAreaHeight} />
+      <Messages
+        setMessagesEl={setMessagesEl}
+        setMessagesIsAtBottom={setMessagesIsAtBottom}
+      />
+      <MessageForm
+        messagesEl={messagesEl}
+        messagesIsAtBottom={messagesIsAtBottom}
+      />
     </div>
   );
 };

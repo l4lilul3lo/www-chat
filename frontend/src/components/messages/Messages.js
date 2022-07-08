@@ -4,7 +4,7 @@ import { selectMessages } from "../../features/messages/messagesSlice";
 import Message from "../message/Message";
 import "./messages.css";
 
-const Messages = ({ textAreaHeight }) => {
+const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
   const messages = useSelector(selectMessages);
   const messagesEl = useRef(null);
   const isAtBottom = useRef(null);
@@ -33,6 +33,10 @@ const Messages = ({ textAreaHeight }) => {
     }
   }, [messages, textAreaHeight]);
 
+  useEffect(() => {
+    setMessagesEl(messagesEl);
+    setMessagesIsAtBottom(isAtBottom);
+  }, []);
   return (
     <div className="messages" onScroll={handleScroll} ref={messagesEl}>
       {messages.map((message, i) => (

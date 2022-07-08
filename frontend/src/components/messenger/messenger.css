@@ -6,4 +6,5 @@
   width: 100%;
   min-width: 330px;
   flex-direction: column;
+  padding-bottom: 10px;
 }

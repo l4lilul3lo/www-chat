@@ -1,6 +1,28 @@
 .create-room-container {
-  width: 50%;
-  height: 50%;
+  width: 30%;
+  height: 30%;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
   position: absolute;
-  background: gray;
+  background: blue;
+  color: white;
+  font-size: 20px;
+}
+
+.create-room-container form {
+  display: flex;
+  justify-content: space-between;
+  height: 70%;
+  flex-direction: column;
+}
+
+.close-create-room-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-create-room-btn:hover {
+  cursor: pointer;
+  color: gray;
 }

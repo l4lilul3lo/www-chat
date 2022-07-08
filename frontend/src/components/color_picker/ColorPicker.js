@@ -77,7 +77,11 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
         </div>
       </div>
 
-      <ChromePicker color={determinePickerColor()} onChange={handleChange} />
+      <ChromePicker
+        disableAlpha
+        color={determinePickerColor()}
+        onChange={handleChange}
+      />
       <div className="color-picker-buttons">
         <button
           style={{ background: selected === "color" ? "gray" : "white" }}

@@ -16,12 +16,20 @@ module.exports = (io, socket) => {
     }
   }
 
+  // okay so we need to create rooms_users entry when a user joins a room. This means every time a user joins, we're talking to the database. Does it really matter at this point?
+
+  // should we worry about it later?
+
+  // the rooms_users entry should tell us information about the users priveledge in a room.
+
+  // what if room data is attached to socket users. And when a user makes a call to
+
   function leaveRoom(roomId) {
     socket.leave(roomId);
   }
 
   function userConnecting(user, room) {
-    socket.user = user;
+    socket.user = user; // take user id and get pertinent user data. We want to do this at the start so that we can see if a user has joined a room before. Or simply, when a user clicks on a room, make an http request first.
     joinRoom(user, room);
   }
 

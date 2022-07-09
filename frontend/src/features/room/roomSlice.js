@@ -13,7 +13,7 @@ export const roomSlice = createSlice({
   reducers: {
     setRoom: (state, action) => {
       state.room = action.payload;
-      localStorage.setItem("storedRoom", action.payload);
+      localStorage.setItem("storedRoom", JSON.stringify(action.payload));
     },
   },
 });

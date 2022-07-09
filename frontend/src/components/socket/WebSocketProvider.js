@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
-import { addMessage } from "../../features/messages/messagesSlice";
+import { addMessage, setMessages } from "../../features/messages/messagesSlice";
 import { setUsers, addUser } from "../../features/users/usersSlice";
 import { setRoom } from "../../features/room/roomSlice";
 import { addRoom } from "../../features/rooms/roomsSlice";
@@ -24,8 +24,11 @@ const WebSocketProvider = ({ children }) => {
       console.log("socket connected: ", socket.id);
     });
 
-    socket.on("user:joinedRoom", (users, room) => {
+    socket.on("user:joinSuccess");
+
+    socket.on("user:joinedRoom", (users, messages, room) => {
       dispatch(setUsers(users));
+      dispatch(setMessages(messages));
       dispatch(setRoom(room));
     });
 

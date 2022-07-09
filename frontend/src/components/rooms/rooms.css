@@ -30,3 +30,26 @@
 .room:hover {
   cursor: pointer;
 }
+
+.room-loading {
+  height: 20px;
+  width: 100%;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #3e66f1;
+  animation-duration: 0.5s;
+  animation-name: roomsLoading;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes roomsLoading {
+  from {
+    background: #3e66f1;
+  }
+
+  to {
+    background: gray;
+  }
+}

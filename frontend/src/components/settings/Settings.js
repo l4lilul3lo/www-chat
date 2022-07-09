@@ -54,7 +54,7 @@ const Settings = () => {
         </button>
       </div>
 
-      <ImageUploader />
+      {/* <ImageUploader /> */}
 
       {displayColorPicker && (
         <ColorPicker

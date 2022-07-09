@@ -41,10 +41,11 @@ app.use(express.urlencoded({ extended: false }));
 const userRoute = require("./routes/userRoute");
 const roomsRoute = require("./routes/roomsRoute");
 const messagesRoute = require("./routes/messagesRoute");
-
+const roomsUsersRoute = require("./routes/roomsUsersRoute");
 app.use("/users", userRoute);
 app.use("/rooms", roomsRoute);
 app.use("/messages", messagesRoute);
+app.use("/roomsUsers", roomsUsersRoute);
 
 // import and register socket handlers
 const registerUserHandlers = require("./socketHandlers/userHandler");

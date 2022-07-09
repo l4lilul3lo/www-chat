@@ -27,8 +27,7 @@ async function getRoomUserInfoDB(userId, roomId) {
   const res = await RoomsUsers.findOne({
     where: { userId, roomId },
   });
-  console.log("room entry exists already", res);
-  return res;
+  return res.dataValues;
 }
 
 async function getUsersDB(roomId) {

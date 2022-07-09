@@ -18,6 +18,18 @@ async function get(url) {
   return data;
 }
 
+async function fetchIsBlocked(roomId) {
+  try {
+    const { isBlocked } = await post("roomsUsers/getIsBlocked", {
+      name: "roomId",
+      data: roomId,
+    });
+    return isBlocked;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 async function fetchRooms() {
   const { rooms } = await get("rooms/getRooms");
 
@@ -52,4 +64,5 @@ module.exports = {
   fetchRooms,
   fetchCafeInfo,
   fetchUser,
+  fetchIsBlocked,
 };

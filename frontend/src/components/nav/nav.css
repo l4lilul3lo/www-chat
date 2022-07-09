@@ -4,20 +4,29 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 13%;
+  height: 8%;
   width: 100%;
+  padding: 5px;
 }
 
 .nav-left {
+  display: flex;
+  align-items: center;
   width: 50%;
+
+  height: 100%;
+}
+
+.nav-left img {
+  height: 100%;
 }
 
 .nav-right {
   display: flex;
   width: 50%;
   justify-content: right;
+
+  height: 100%;
 }
 
 .nav-links {

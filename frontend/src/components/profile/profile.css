@@ -1,6 +1,7 @@
 .profile {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .profile:hover {
@@ -8,14 +9,20 @@
 }
 
 .profile-toggle {
-  width: 60px;
-  height: 60px;
+  height: 100%;
   position: relative;
 }
 
 .profile-toggle span {
+  font-size: 90%;
   position: absolute;
-  bottom: -10px;
-  right: 0px;
-  font-size: 15px;
+  z-index: 1;
+  color: black;
+  right: 0%;
+  bottom: 0%;
+}
+
+.settings-gear {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+  opacity: 0.75;
 }

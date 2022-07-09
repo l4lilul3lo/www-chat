@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectRoom } from "../../features/room/roomSlice";
 import { selectUser } from "../../features/user/userSlice";
 import { fetchMessages } from "../../api";
+import { fetchIsBlocked } from "../../api";
 import { setMessages } from "../../features/messages/messagesSlice";
 
 import "./room.css";
@@ -17,9 +18,8 @@ const Room = ({ room }) => {
     console.log(currentRoom.id);
     console.log(room.id);
     if (currentRoom.id !== room.id) {
-      // await fetchIsBanned
-      // if (isBanned)
-      // notify and do nothing
+      const isBlocked = await fetchIsBlocked(room.id);
+      console.log("isBlocked", isBlocked);
 
       const messages = await fetchMessages(room.id);
       dispatch(setMessages(messages));

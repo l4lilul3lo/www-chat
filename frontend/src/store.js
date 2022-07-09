@@ -12,7 +12,7 @@ import logger from "redux-logger";
 
 export const store = configureStore({
   reducer: {
-    rooms: roomsReducer,
+    roomsState: roomsReducer,
     room: roomReducer,
     users: usersReducer,
     user: userReducer,

@@ -1,9 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
-import { selectRooms, setRooms } from "../../features/rooms/roomsSlice";
+import {
+  selectRoomsState,
+  setRooms,
+  selectRoomsIsLoading,
+} from "../../features/rooms/roomsSlice";
 import { selectUser } from "../../features/user/userSlice";
 import { setRoom, selectRoom } from "../../features/room/roomSlice";
 import { useEffect, useState } from "react";
-
+import RoomsLoading from "./RoomsLoading";
 import CreateRoom from "../create_room/CreateRoom";
 
 import Room from "../room/Room";
@@ -11,10 +15,14 @@ import { useContext } from "react";
 import "./rooms.css";
 const Rooms = () => {
   const dispatch = useDispatch();
-  const rooms = useSelector(selectRooms);
+  const roomsState = useSelector(selectRoomsState);
   const [display, toggleDisplay] = useState(false);
 
   async function createRoom(e) {}
+  console.log("roomsstate isloading", roomsState.isLoading);
+  if (roomsState.isLoading) {
+    return <RoomsLoading />;
+  }
 
   return (
     <div className="rooms-container">
@@ -30,7 +38,7 @@ const Rooms = () => {
           add
         </span>
       </div>
-      {rooms.map((room, i) => (
+      {roomsState.rooms.map((room, i) => (
         <Room room={room} key={i} />
       ))}
     </div>

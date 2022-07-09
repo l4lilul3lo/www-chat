@@ -17,8 +17,10 @@ const Profile = () => {
           className="profile-toggle"
           onClick={() => toggleDisplaySettings(!displaySettings)}
         >
-          <Avatar key={uuidv4()} url={user.image} />
-          <span className="material-symbols-outlined">settings</span>
+          <Avatar key={uuidv4()} height={50} width={50} url={user.image} />
+          <span className="material-symbols-outlined settings-gear">
+            settings
+          </span>
         </div>
       </div>
       {displaySettings && <Settings />}

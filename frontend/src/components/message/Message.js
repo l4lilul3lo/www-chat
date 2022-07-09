@@ -10,7 +10,9 @@ const Message = ({ message }) => {
     const content = message.content;
     return (
       <div className="message">
-        <Avatar url={message.user.image} width={50} height={50} />
+        <div className="message-avatar-container">
+          <Avatar url={message.user.image} />
+        </div>
         <div className="details">
           <div className="info">
             <div className="username">{message.user.name}</div>

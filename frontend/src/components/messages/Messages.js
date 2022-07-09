@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { selectMessages } from "../../features/messages/messagesSlice";
+import { selectMessagesState } from "../../features/messages/messagesSlice";
 import Message from "../message/Message";
+import MessageLoading from "../message/MessageLoading";
 import "./messages.css";
 
 const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
-  const messages = useSelector(selectMessages);
+  const messagesState = useSelector(selectMessagesState);
   const messagesEl = useRef(null);
   const isAtBottom = useRef(null);
   async function handleScroll() {
@@ -31,17 +32,21 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [messages, textAreaHeight]);
+  }, [messagesState, textAreaHeight]);
 
   useEffect(() => {
     setMessagesEl(messagesEl);
     setMessagesIsAtBottom(isAtBottom);
   }, []);
+
+  console.log("messages is loading", messagesState.isLoading);
   return (
     <div className="messages" onScroll={handleScroll} ref={messagesEl}>
-      {messages.map((message, i) => (
-        <Message message={message} key={i} />
-      ))}
+      {messagesState.isLoading
+        ? [...new Array(40)].map((x) => <MessageLoading />)
+        : messagesState.messages.map((message, i) => (
+            <Message message={message} key={i} />
+          ))}
     </div>
   );
 };

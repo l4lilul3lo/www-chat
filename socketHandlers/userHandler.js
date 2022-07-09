@@ -16,11 +16,13 @@ async function scanRoom(io, userId, roomId) {
 }
 
 module.exports = (io, socket) => {
-  async function joinRoom(user, room) {
-    const roomUserInfo = await getRoomUserInfoDB(user.id, room.id);
+  async function joinRoom(room) {
+    const userId = socket.user.id;
+    const roomId = room.id;
+    const roomUserInfo = await getRoomUserInfoDB(userId, roomId);
 
     if (!roomUserInfo) {
-      await createRoomUserDB(user.id, room.id);
+      await createRoomUserDB(userId, roomId);
     }
 
     console.log("roomUserInfo", roomUserInfo);
@@ -31,21 +33,17 @@ module.exports = (io, socket) => {
       return;
     }
 
-    const roomMessages = await getMessagesDB(room.id);
-    const { uniqueUsers, isUserDuplicate } = await scanRoom(
-      io,
-      user.id,
-      room.id
-    );
+    const roomMessages = await getMessagesDB(roomId);
+    const { uniqueUsers, isUserDuplicate } = await scanRoom(io, userId, roomId);
     // const sockets = await io.in(room.id).fetchSockets();
     // const users = sockets.map((socket) => socket.user);
     // const uniqueUsers = arrUniqueByObjectValue(users, "id");
     // const isUserDuplicate = arrCheckObjectValueExists(users, "id", user.id);
-    socket.join(room.id);
-    socket.emit("user:joinedRoom", uniqueUsers, roomMessages, room);
+    socket.join(roomId);
+    socket.emit("user:joinRoomResponse", uniqueUsers, roomMessages, room);
 
     if (!isUserDuplicate) {
-      io.to(room.id).emit("allUsers:joinNotification", user);
+      io.to(room.id).emit("allUsers:joinNotification", socket.user.name);
     }
   }
 
@@ -61,9 +59,10 @@ module.exports = (io, socket) => {
     socket.leave(roomId);
   }
 
-  function userConnecting(user, room) {
-    socket.user = user; // take user id and get pertinent user data. We want to do this at the start so that we can see if a user has joined a room before. Or simply, when a user clicks on a room, make an http request first.
-    joinRoom(user, room);
+  function userConnecting(user) {
+    console.log("user", user);
+    socket.user = user;
+    console.log("socket user", socket.user);
   }
 
   socket.on("user:connecting", userConnecting);

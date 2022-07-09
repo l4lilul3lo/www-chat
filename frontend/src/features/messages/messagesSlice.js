@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   messages: [],
+  isLoading: true,
 };
 
 export const messagesSlice = createSlice({
-  name: "messages",
+  name: "messagesState",
   initialState,
   reducers: {
     setMessages: (state, action) => {
@@ -15,9 +16,14 @@ export const messagesSlice = createSlice({
     addMessage: (state, action) => {
       state.messages.push(action.payload);
     },
+    setMessagesIsLoading: (state, action) => {
+      console.log("set messages is loading called");
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { setMessages, addMessage } = messagesSlice.actions;
-export const selectMessages = (state) => state.messages.messages;
+export const { setMessages, addMessage, setMessagesIsLoading } =
+  messagesSlice.actions;
+export const selectMessagesState = (state) => state.messagesState;
 export default messagesSlice.reducer;

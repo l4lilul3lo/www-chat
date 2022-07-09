@@ -49,13 +49,13 @@ app.use("/roomsUsers", roomsUsersRoute);
 
 // import and register socket handlers
 const registerUserHandlers = require("./socketHandlers/userHandler");
-const registerRoomHandlers = require("./socketHandlers/roomHandler");
+const registerRoomsHandlers = require("./socketHandlers/roomsHandlers");
 const registerMessageHandlers = require("./socketHandlers/messageHandler");
 
 const onConnection = (socket) => {
   console.log("socket connected", socket.id);
   registerUserHandlers(io, socket);
-  registerRoomHandlers(io, socket);
+  registerRoomsHandlers(io, socket);
   registerMessageHandlers(io, socket);
 };
 

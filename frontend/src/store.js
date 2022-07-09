@@ -16,7 +16,7 @@ export const store = configureStore({
     room: roomReducer,
     users: usersReducer,
     user: userReducer,
-    messages: messagesReducer,
+    messagesState: messagesReducer,
     auth: authReducer,
     settings: settingsReducer,
     avatarUploadToggle: avatarUploadToggleReducer,

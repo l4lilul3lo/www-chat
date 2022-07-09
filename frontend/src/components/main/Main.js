@@ -22,31 +22,22 @@ const Main = () => {
 
   async function determineRoom() {
     const storedRoom = JSON.parse(localStorage.getItem("storedRoom"));
-    const cafeInfo = await fetchCafeInfo();
+
     if (!storedRoom) {
-      return cafeInfo;
-    }
-    const isBlocked = await fetchIsBlocked(storedRoom.id);
-    console.log(isBlocked);
-    if (isBlocked) {
+      const cafeInfo = await fetchCafeInfo();
       return cafeInfo;
     }
     return storedRoom;
   }
 
   async function initialize() {
-    const rooms = await fetchRooms();
-    dispatch(setRooms(rooms));
-    dispatch(setRoomsIsLoading(false));
     const user = await fetchUser();
+    console.log("user", user);
     dispatch(setUser(user));
     const room = await determineRoom();
-    // const messages = await fetchMessages(room.id);
-    // dispatch(setMessages(messages));
-    ws.userConnecting(
-      { id: user.id, name: user.name, image: user.image },
-      room
-    );
+    ws.userConnecting(user);
+    ws.getRooms();
+    ws.joinRoom(room);
   }
 
   // the problem right now is syncing user joined after messages. We dont' want to send messages over the wire to a user who should not join.

@@ -45,3 +45,45 @@
   height: 60px;
   width: 60px;
 }
+
+.avatar-loading,
+.username-loading,
+.created-at-loading,
+.content-loading {
+  animation-name: messageLoading;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  background: gray;
+}
+
+.avatar-loading {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.username-loading {
+  height: 20px;
+  width: 150px;
+}
+
+.created-at-loading {
+  height: 20px;
+  width: 100px;
+  margin-left: 10px;
+}
+
+.content-loading {
+  margin-top: 10px;
+  width: 100%;
+}
+
+@keyframes messageLoading {
+  from {
+    background: gray;
+  }
+
+  to {
+    background: #3e66f1;
+  }
+}

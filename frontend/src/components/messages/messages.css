@@ -8,3 +8,7 @@
   overflow-y: auto;
   padding-bottom: 20px;
 }
+
+.message-loading {
+  width: 90%;
+}

@@ -20,6 +20,8 @@ const Room = ({ room }) => {
     if (currentRoom.id !== room.id) {
       const isBlocked = await fetchIsBlocked(room.id);
       console.log("isBlocked", isBlocked);
+      if (isBlocked) {
+      }
 
       const messages = await fetchMessages(room.id);
       dispatch(setMessages(messages));

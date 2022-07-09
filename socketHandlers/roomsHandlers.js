@@ -1,4 +1,4 @@
-const { createRoomDB } = require("../models/room");
+const { createRoomDB, getRoomsDB } = require("../models/room");
 module.exports = (io, socket) => {
   async function createRoom(roomObj) {
     const room = await createRoomDB(roomObj);
@@ -6,5 +6,11 @@ module.exports = (io, socket) => {
     io.emit("room:created", room);
   }
 
+  async function getRooms() {
+    const rooms = await getRoomsDB();
+    socket.emit("rooms:getRoomsResponse", rooms);
+  }
+
   socket.on("room:create", createRoom);
+  socket.on("rooms:getRooms", getRooms);
 };

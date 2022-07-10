@@ -6,6 +6,7 @@ import { selectUser } from "../../features/user/userSlice";
 import { fetchMessages } from "../../api";
 import { fetchIsBlocked } from "../../api";
 import { setMessages } from "../../features/messages/messagesSlice";
+import { toggleRoomsSlideState } from "../../features/toggles/roomsSlideSlice";
 
 import "./room.css";
 const Room = ({ room }) => {
@@ -15,6 +16,9 @@ const Room = ({ room }) => {
   const ws = useContext(WebSocketContext);
 
   async function handleRoomClick() {
+    if (window.innerWidth <= 850) {
+      dispatch(toggleRoomsSlideState());
+    }
     console.log(currentRoom.id);
     console.log(room.id);
     if (currentRoom.id !== room.id) {
@@ -26,7 +30,7 @@ const Room = ({ room }) => {
       const messages = await fetchMessages(room.id);
       dispatch(setMessages(messages));
       ws.leaveRoom(currentRoom.id);
-      ws.joinRoom(user, room);
+      ws.joinRoom(room);
       localStorage.setItem("room", JSON.stringify(room));
     }
   }

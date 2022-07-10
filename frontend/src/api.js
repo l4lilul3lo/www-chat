@@ -59,10 +59,4 @@ async function fetchUser() {
 
 async function updateUserImage(url) {}
 
-module.exports = {
-  fetchMessages,
-  fetchRooms,
-  fetchCafeInfo,
-  fetchUser,
-  fetchIsBlocked,
-};
+export { fetchMessages, fetchRooms, fetchCafeInfo, fetchUser, fetchIsBlocked };

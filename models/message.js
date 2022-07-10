@@ -38,7 +38,7 @@ async function getMessagesDB(roomId) {
     include: [{ model: User, attributes: ["name", "image"] }],
   });
 
-  return messages;
+  return messages.reverse();
 }
 
 async function createMessageDB(messageObj) {

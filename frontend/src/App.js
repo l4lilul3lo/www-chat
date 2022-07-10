@@ -3,6 +3,7 @@ import Main from "./components/main/Main";
 import { Navigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { WebSocketProvider } from "./components/socket/WebSocketProvider";
+import InitialLoading from "./components/initial_loading/InitialLoading";
 import "./App.css";
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
     cacheTime: 0,
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <InitialLoading />;
 
   if (error) return "an error has occured";
 

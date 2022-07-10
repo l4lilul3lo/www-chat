@@ -24,6 +24,7 @@ async function createRoomUserDB(userId, roomId) {
 }
 
 async function getRoomUserInfoDB(userId, roomId) {
+  console.log("userId in roomsusers", userId);
   const res = await RoomsUsers.findOne({
     where: { userId, roomId },
   });

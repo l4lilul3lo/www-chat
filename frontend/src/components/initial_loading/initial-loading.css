@@ -1,0 +1,54 @@
+.initial-app {
+  min-height: -webkit-fill-available;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.initial-nav {
+  height: 8%;
+  width: 100%;
+  background: #3e66f1;
+}
+
+.initial-main {
+  display: flex;
+  height: 92%;
+}
+
+.initial-rooms {
+  background: #888d8d;
+  width: 100%;
+  min-width: 260px;
+  max-width: 260px;
+  height: 100%;
+}
+
+.initial-messenger {
+  background: #f9f7f3;
+  display: flex;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  min-width: 330px;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.initial-users {
+  height: 100%;
+  width: 100%;
+  min-width: 260px;
+  max-width: 260px;
+  padding-top: 8px;
+  padding-left: 8px;
+}
+
+@media only screen and (max-width: 850px) {
+  .initial-rooms {
+    display: none;
+  }
+  .initial-users {
+    display: none;
+  }
+}

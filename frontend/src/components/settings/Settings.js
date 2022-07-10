@@ -11,12 +11,7 @@ const Settings = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
-  const [background, setBackground] = useState();
-  const [color, setColor] = useState();
-
-  const handleChangeComplete = (color) => {
-    setBackground(color.hex);
-  };
+  const [displayImageUploader, setDisplayImageUploader] = useState(false);
 
   return (
     <div className="settings-container">
@@ -26,7 +21,9 @@ const Settings = () => {
           onClick={() => dispatch(toggleAvatarUpload())}
         >
           <div className="image-upload-hover-text">Change Avatar</div>
-          <Avatar url={user.image} />
+          <div className="settings-avatar-container">
+            <Avatar url={user.image} />
+          </div>
 
           <span className="material-symbols-outlined image-upload-icon">
             add_photo_alternate
@@ -54,7 +51,7 @@ const Settings = () => {
         </button>
       </div>
 
-      {/* <ImageUploader /> */}
+      {displayImageUploader && <ImageUploader />}
 
       {displayColorPicker && (
         <ColorPicker

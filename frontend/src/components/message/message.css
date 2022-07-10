@@ -51,7 +51,7 @@
 .created-at-loading,
 .content-loading {
   animation-name: messageLoading;
-  animation-duration: 0.5s;
+  animation-duration: 0.8s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   background: gray;

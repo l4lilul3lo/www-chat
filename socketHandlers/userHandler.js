@@ -18,6 +18,8 @@ async function scanRoom(io, userId, roomId) {
 module.exports = (io, socket) => {
   async function joinRoom(room) {
     const userId = socket.user.id;
+    console.log("room in ");
+    console.log("userId on join room", userId);
     const roomId = room.id;
     const roomUserInfo = await getRoomUserInfoDB(userId, roomId);
 
@@ -26,7 +28,7 @@ module.exports = (io, socket) => {
     }
 
     console.log("roomUserInfo", roomUserInfo);
-    console.log("socket user", socket.user);
+    console.log("socket user in join room", socket.user);
 
     if (roomUserInfo.isBlocked) {
       socket.emit("user:joinFailure", { reason: "You were banned" });

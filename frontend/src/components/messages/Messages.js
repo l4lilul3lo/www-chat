@@ -1,12 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { selectMessagesState } from "../../features/messages/messagesSlice";
+import { selectRoom } from "../../features/room/roomSlice";
 import Message from "../message/Message";
 import MessageLoading from "../message/MessageLoading";
 import "./messages.css";
 
 const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
   const messagesState = useSelector(selectMessagesState);
+  const room = useSelector(selectRoom);
   const messagesEl = useRef(null);
   const isAtBottom = useRef(null);
   async function handleScroll() {
@@ -33,6 +35,11 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
       }
     }
   }, [messagesState, textAreaHeight]);
+
+  useEffect(() => {
+    const element = messagesEl.current;
+    element.scrollTop = element.scrollHeight;
+  }, [room]);
 
   useEffect(() => {
     setMessagesEl(messagesEl);

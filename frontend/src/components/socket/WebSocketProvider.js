@@ -73,7 +73,7 @@ const WebSocketProvider = ({ children }) => {
 
   function joinRoom(room) {
     socket.emit("user:joinRoom", room);
-    // set loading state
+    dispatch(setMessagesIsLoading(true));
   }
 
   function userConnecting(user) {

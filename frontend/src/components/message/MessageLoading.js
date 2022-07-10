@@ -12,7 +12,12 @@ const MessageLoading = () => {
         </div>
         <div
           className="content-loading"
-          style={{ height: `${Math.floor(Math.random() * (200 - 30) + 30)}px` }}
+          style={{
+            height: `${Math.floor(Math.random() * (200 - 30) + 30)}px`,
+            animationDelay: `${Math.floor(
+              Math.random() * (800 - 150) + 150
+            )}ms`,
+          }}
         ></div>
       </div>
     </div>

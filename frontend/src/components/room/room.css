@@ -21,3 +21,23 @@
 .room-selected:hover {
   cursor: pointer;
 }
+
+.room-loading {
+  height: 20px;
+  margin-top: 10px;
+  background: #3e66f1;
+  animation-duration: 0.8s;
+  animation-name: roomLoading;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes roomLoading {
+  from {
+    background: #3e66f1;
+  }
+
+  to {
+    background: gray;
+  }
+}

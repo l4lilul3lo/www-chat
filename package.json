@@ -29,6 +29,7 @@
     "reset-tables": "node -r dotenv/config ./db/resetTables.js",
     "drop-tables": "node -r dotenv/config ./db/dropTables.js",
     "seed-db": "node -r dotenv/config ./db/seedDB.js",
-    "reset-db": "node -r dotenv/config ./db/resetDB.js"
+    "reset-db": "node -r dotenv/config ./db/resetDB.js",
+    "production": "node "
   }
 }

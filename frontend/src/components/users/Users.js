@@ -4,16 +4,18 @@ import { WebSocketContext } from "../socket/WebSocketProvider";
 import { selectRoom } from "../../features/room/roomSlice";
 import { setUsers, selectUsers } from "../../features/users/usersSlice";
 import Avatar from "../avatar/Avatar";
+import { selectUsersSlideState } from "../../features/toggles/usersSlideSlice";
 import "./users.css";
 // figure out getting user back into server sockets list on disconnect.
 const Users = () => {
   const dispatch = useDispatch();
   const ws = useContext(WebSocketContext);
   const room = useSelector(selectRoom);
+  const slideState = useSelector(selectUsersSlideState);
   const users = useSelector(selectUsers);
 
   return (
-    <div className="users">
+    <div className={`users ${slideState}`}>
       {users.map((user) => {
         return (
           <div className="users-user">

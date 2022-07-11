@@ -9,6 +9,8 @@ const io = require("socket.io")(server, {
     methods: ["GET", "POST"],
   },
 });
+const cors = require("cors");
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 // session setup
 const session = require("express-session");
@@ -24,10 +26,14 @@ const sessionMiddleware = session({
   cookie: { httpOnly: true, maxAge: 2 * 24 * 60 * 60 * 1000 },
 });
 app.use(sessionMiddleware);
+const compression = require("compression");
 
-// cors setup (production only)
-const cors = require("cors");
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// cors setup (development only)
+
+console.log(process.env.PRODUCTION);
+if (process.env.PRODUCTION) {
+  app.use(express.static(`${__dirname}/frontend/build`));
+}
 
 // helmet setup (security)
 const helmet = require("helmet");
@@ -47,6 +53,11 @@ app.use("/rooms", roomsRoute);
 app.use("/messages", messagesRoute);
 app.use("/roomsUsers", roomsUsersRoute);
 
+if (process.env.PRODUCTION) {
+  app.get("/", (req, res) => {
+    res.sendFile(`${__dirname}/frontend/build/index.html`);
+  });
+}
 // import and register socket handlers
 const registerUserHandlers = require("./socketHandlers/userHandler");
 const registerRoomsHandlers = require("./socketHandlers/roomsHandlers");

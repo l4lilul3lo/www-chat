@@ -4,7 +4,7 @@ import { setUser, selectUser } from "../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { authorize } from "../../features/auth/authSlice";
-
+import { login } from "../../api";
 import "./login.css";
 const Login = () => {
   const navigate = useNavigate();
@@ -19,19 +19,14 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch("users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
+      const message = await login(formData);
 
-      if (response.status === 200) {
+      if (message === "success") {
         navigate("/");
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function handleChange(e) {

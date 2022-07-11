@@ -27,25 +27,24 @@ module.exports = (io, socket) => {
       await createRoomUserDB(userId, roomId);
     }
 
+    if (roomUserInfo) {
+      if (roomUserInfo.isBlocked) {
+        socket.emit("user:joinFailure", { reason: "You were banned" });
+        return;
+      }
+    }
+
     console.log("roomUserInfo", roomUserInfo);
     console.log("socket user in join room", socket.user);
 
-    if (roomUserInfo.isBlocked) {
-      socket.emit("user:joinFailure", { reason: "You were banned" });
-      return;
-    }
-
     const roomMessages = await getMessagesDB(roomId);
-    const { uniqueUsers, isUserDuplicate } = await scanRoom(io, userId, roomId);
-    // const sockets = await io.in(room.id).fetchSockets();
-    // const users = sockets.map((socket) => socket.user);
-    // const uniqueUsers = arrUniqueByObjectValue(users, "id");
-    // const isUserDuplicate = arrCheckObjectValueExists(users, "id", user.id);
-    socket.join(roomId);
-    socket.emit("user:joinRoomResponse", uniqueUsers, roomMessages, room);
 
+    const { uniqueUsers, isUserDuplicate } = await scanRoom(io, userId, roomId);
+    socket.emit("user:joinRoomResponse", uniqueUsers, roomMessages, room);
+    socket.join(roomId);
     if (!isUserDuplicate) {
-      io.to(room.id).emit("allUsers:joinNotification", socket.user.name);
+      console.log("not a duplicate");
+      io.to(room.id).emit("allUsers:joinNotification", socket.user);
     }
   }
 

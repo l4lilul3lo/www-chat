@@ -53,6 +53,12 @@ const WebSocketProvider = ({ children }) => {
       dispatch(addMessage({ ...messageObj, user }));
     });
 
+    socket.on("allUsers:joinNotification", (user) => {
+      console.log("all users join notification xxxxxxxxxxxxxxxx");
+      dispatch(addMessage({ username: user.name }));
+      dispatch(addUser(user));
+    });
+
     socket.on("room:created", (room) => {
       dispatch(addRoom(room));
     });

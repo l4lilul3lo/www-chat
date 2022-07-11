@@ -24,3 +24,19 @@
   color: white;
   font-weight: bold;
 }
+
+.rooms-toggle:hover {
+  cursor: pointer;
+}
+
+.users-toggle:hover {
+  cursor: pointer;
+}
+
+.grayed-out {
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: absolute;
+  opacity: 0.6;
+}

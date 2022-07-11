@@ -6,19 +6,24 @@ import { useState } from "react";
 import Avatar from "../avatar/Avatar";
 import ImageUploader from "../image_uploader/ImageUploader.js";
 import { toggleAvatarUpload } from "../../features/toggles/avatarUploadToggleSlice";
+import { selectAvatarUploadIsToggled } from "../../features/toggles/avatarUploadToggleSlice";
 import ColorPicker from "../color_picker/ColorPicker";
 const Settings = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [displayImageUploader, setDisplayImageUploader] = useState(false);
+  const avatarUploadIsToggled = useSelector(selectAvatarUploadIsToggled);
 
   return (
     <div className="settings-container">
       <div className="user-info">
         <div
           className="image-upload"
-          onClick={() => dispatch(toggleAvatarUpload())}
+          onClick={() => {
+            console.log("clicked");
+            dispatch(toggleAvatarUpload());
+          }}
         >
           <div className="image-upload-hover-text">Change Avatar</div>
           <div className="settings-avatar-container">
@@ -51,7 +56,7 @@ const Settings = () => {
         </button>
       </div>
 
-      {displayImageUploader && <ImageUploader />}
+      {avatarUploadIsToggled && <ImageUploader />}
 
       {displayColorPicker && (
         <ColorPicker

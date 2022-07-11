@@ -16,22 +16,47 @@ const Messenger = () => {
   const [textAreaHeight, setTextAreaHeight] = useState();
   const [messagesEl, setMessagesEl] = useState(null);
   const [messagesIsAtBottom, setMessagesIsAtBottom] = useState(null);
+  const isRoomsSlideIn = roomsSlideState === "slide-in-left";
+  const isUsersSlideIn = usersSlideState === "slide-in-right";
+  const anySlideIn = isRoomsSlideIn || isUsersSlideIn;
+
+  function handleRoomsToggle() {
+    if (isUsersSlideIn) {
+      dispatch(toggleUsersSlideState());
+    }
+
+    dispatch(toggleRoomsSlideState());
+  }
+
+  function handleUsersToggle() {
+    if (isRoomsSlideIn) {
+      dispatch(toggleRoomsSlideState());
+    }
+    dispatch(toggleUsersSlideState());
+  }
+
+  function handleAnyToggle() {
+    if (isRoomsSlideIn) {
+      dispatch(toggleRoomsSlideState());
+    }
+
+    if (isUsersSlideIn) {
+      dispatch(toggleUsersSlideState());
+    }
+  }
   return (
     <div className="messenger">
       <div className="small-screen-menu">
-        <div
-          className="rooms-toggle"
-          onClick={() => dispatch(toggleRoomsSlideState())}
-        >
-          Rooms {roomsSlideState === "slide-in-left" ? "<" : ">"}
+        <div className="rooms-toggle" onClick={handleRoomsToggle}>
+          Rooms {isRoomsSlideIn ? "<" : ">"}
         </div>
-        <div
-          className="users-toggle"
-          onClick={() => dispatch(toggleUsersSlideState())}
-        >
-          {usersSlideState === "slide-in-right" ? ">" : "<"} Users
+        <div className="users-toggle" onClick={handleUsersToggle}>
+          {isUsersSlideIn === "slide-in-right" ? ">" : "<"} Users
         </div>
       </div>
+      {anySlideIn && (
+        <div className="grayed-out" onClick={handleAnyToggle}></div>
+      )}
       <Messages
         setMessagesEl={setMessagesEl}
         setMessagesIsAtBottom={setMessagesIsAtBottom}

@@ -9,7 +9,7 @@ const {
 const { updateSettingsDB } = require("../models/settings");
 
 const register = async (req, res) => {
-  const { name, password } = req.body;
+  const { name, password } = req.body.formData;
 
   const user = await getUserByNameDB(name);
   if (user) {
@@ -21,7 +21,7 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { name, password } = req.body;
+  const { name, password } = req.body.formData;
   console.log("username in login route", name);
   console.log("password in login route", password);
   const user = await getUserByNameDB(name);
@@ -41,11 +41,13 @@ const login = async (req, res) => {
   }
 
   req.session.userId = user.id;
+  console.log(req.session.userId);
 
   return res.json({ message: "success" });
 };
 
 const checkAuth = async (req, res) => {
+  console.log(req.session.userId);
   if (!req.session.userId) {
     return res.status(401).json({ isAuth: false });
   }

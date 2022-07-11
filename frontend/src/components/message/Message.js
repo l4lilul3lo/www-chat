@@ -8,6 +8,12 @@ const Message = ({ message }) => {
   } else {
     const author = message.user;
     const content = message.content;
+    const date = new Date(message.createdAt);
+    const time = date.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
     return (
       <div className="message">
         <div className="message-avatar-container">
@@ -16,7 +22,7 @@ const Message = ({ message }) => {
         <div className="details">
           <div className="info">
             <div className="username">{message.user.name}</div>
-            <div className="created-at">sometime</div>
+            <div className="created-at">{time}</div>
           </div>
           <div
             className="content"

@@ -20,6 +20,10 @@
   border-radius: 50%;
 }
 
+.username {
+  font-weight: bold;
+}
+
 .details {
   display: flex;
   flex-direction: column;

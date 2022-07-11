@@ -28,7 +28,7 @@ async function getRoomUserInfoDB(userId, roomId) {
   const res = await RoomsUsers.findOne({
     where: { userId, roomId },
   });
-  return res.dataValues;
+  return res?.dataValues;
 }
 
 async function getUsersDB(roomId) {

@@ -1,21 +1,46 @@
 // post request
-async function post(url, content) {
+
+async function fetcher(endpoint, options) {
+  const baseUrl = "http://localhost:9000/";
+  const url = baseUrl + endpoint;
+  if (options) {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } else {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+}
+
+async function post(endpoint, content) {
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ [content.name]: content.data }),
   };
-  const response = await fetch(url, options);
-  const data = await response.json();
+  const data = await fetcher(endpoint, options);
   return data;
 }
 
-async function get(url) {
-  const response = await fetch(url);
-  const data = await response.json();
+async function get(endpoint) {
+  const data = await fetcher(endpoint, {
+    credentials: "include",
+  });
   return data;
+}
+
+async function checkAuth() {
+  try {
+    const data = await get("users/checkAuth");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function fetchIsBlocked(roomId) {
@@ -57,6 +82,32 @@ async function fetchUser() {
   return user;
 }
 
+async function login(formData) {
+  const { message } = await post("users/login", {
+    name: "formData",
+    data: formData,
+  });
+  console.log("message from login", message);
+  return message;
+}
+
+async function register(formData) {
+  const { message } = await post("users/register", {
+    name: "formData",
+    data: formData,
+  });
+  return message;
+}
+
 async function updateUserImage(url) {}
 
-export { fetchMessages, fetchRooms, fetchCafeInfo, fetchUser, fetchIsBlocked };
+export {
+  fetchMessages,
+  fetchRooms,
+  fetchCafeInfo,
+  fetchUser,
+  fetchIsBlocked,
+  checkAuth,
+  login,
+  register,
+};

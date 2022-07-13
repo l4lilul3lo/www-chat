@@ -15,13 +15,10 @@ const Settings = sequelize.define("settings", {
 });
 
 async function createSettingsDB(userId) {
-  console.log("user id in create settins", userId);
   await Settings.create({ userId });
 }
 
 async function updateSettingsDB(userId, settings) {
-  console.log("userId in update settings", userId);
-  console.log("settings in update settings", settings);
   try {
     await Settings.update(settings, {
       where: { userId },

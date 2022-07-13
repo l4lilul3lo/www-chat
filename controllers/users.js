@@ -22,10 +22,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { name, password } = req.body.formData;
-  console.log("username in login route", name);
-  console.log("password in login route", password);
   const user = await getUserByNameDB(name);
-  console.log(user);
   if (!user) {
     return res
       .status(401)
@@ -41,13 +38,11 @@ const login = async (req, res) => {
   }
 
   req.session.userId = user.id;
-  console.log(req.session.userId);
 
   return res.json({ message: "success" });
 };
 
 const checkAuth = async (req, res) => {
-  console.log(req.session.userId);
   if (!req.session.userId) {
     return res.status(401).json({ isAuth: false });
   }
@@ -64,7 +59,6 @@ const getUser = async (req, res) => {
 const updateUserImage = async (req, res) => {
   const userId = req.session.userId;
   const { imageUrl } = req.body;
-  console.log("image url in update user image", imageUrl);
   await updateUserImageDB(imageUrl, userId);
   res.json({ message: "success" });
 };
@@ -72,7 +66,6 @@ const updateUserImage = async (req, res) => {
 const updateSettings = async (req, res) => {
   const userId = req.session.userId;
   const { settings } = req.body;
-  console.log("settings in settings controller", settings);
   await updateSettingsDB(userId, settings);
   res.json({ message: "success" });
 };

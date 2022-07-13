@@ -8,7 +8,7 @@ import roomReducer from "./features/room/roomSlice";
 import settingsReducer from "./features/settings/settingsSlice";
 import avatarUploadToggleReducer from "./features/toggles/avatarUploadToggleSlice";
 import colorPickerToggleReducer from "./features/toggles/colorPickerToggleSlice";
-import roomsSlideReducer from "./features/toggles/roomsSlideSlice";
+import roomClickedReducer from "./features/toggles/roomClickedSlice";
 import usersSlideReducer from "./features/toggles/usersSlideSlice";
 import logger from "redux-logger";
 
@@ -23,7 +23,7 @@ export const store = configureStore({
     settings: settingsReducer,
     avatarUploadToggle: avatarUploadToggleReducer,
     colorPickerToggle: colorPickerToggleReducer,
-    roomsSlide: roomsSlideReducer,
+    roomClicked: roomClickedReducer,
     usersSlide: usersSlideReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),

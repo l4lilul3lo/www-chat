@@ -1,6 +1,5 @@
 import "./settings.css";
 import { useSelector, useDispatch } from "react-redux";
-import { selectSettings } from "../../features/settings/settingsSlice";
 import { selectUser } from "../../features/user/userSlice";
 import { useState } from "react";
 import Avatar from "../avatar/Avatar";
@@ -12,7 +11,6 @@ const Settings = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
-  const [displayImageUploader, setDisplayImageUploader] = useState(false);
   const avatarUploadIsToggled = useSelector(selectAvatarUploadIsToggled);
 
   return (
@@ -21,7 +19,6 @@ const Settings = () => {
         <div
           className="image-upload"
           onClick={() => {
-            console.log("clicked");
             dispatch(toggleAvatarUpload());
           }}
         >

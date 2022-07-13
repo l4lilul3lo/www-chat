@@ -11,12 +11,10 @@ const CreateRoom = ({ toggleDisplay, display }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("room on submit", room);
     ws.createRoom(room);
   }
 
   function handleChange(e) {
-    console.log(e.target.id, e.target.value);
     setRoom((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   }
 

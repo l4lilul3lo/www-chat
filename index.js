@@ -9,8 +9,14 @@ const io = require("socket.io")(server, {
     methods: ["GET", "POST"],
   },
 });
+
+// cors setup (development only)
 const cors = require("cors");
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
+// helmet setup (security)
+const helmet = require("helmet");
+app.use(helmet());
 
 // session setup
 const session = require("express-session");
@@ -26,18 +32,13 @@ const sessionMiddleware = session({
   cookie: { httpOnly: true, maxAge: 2 * 24 * 60 * 60 * 1000 },
 });
 app.use(sessionMiddleware);
-const compression = require("compression");
 
-// cors setup (development only)
+// look into compressing text.
 
-console.log(process.env.PRODUCTION);
+// static serve build if in production.
 if (process.env.PRODUCTION) {
   app.use(express.static(`${__dirname}/frontend/build`));
 }
-
-// helmet setup (security)
-const helmet = require("helmet");
-app.use(helmet());
 
 // essential/additional middleware
 app.use(express.json());
@@ -75,4 +76,3 @@ io.on("connection", onConnection);
 // start server
 const port = process.env.PORT || 9000;
 server.listen(port, () => {});
-// think about moving user info back into session and attaching that to socket on connection.

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
 import { ChromePicker } from "react-color";
@@ -9,6 +9,10 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
   const [background, setBackground] = useState();
   const [color, setColor] = useState();
   const [selected, setSelected] = useState("color");
+  function handleTouchHold() {
+    const clickEvent = new Event("touchStart", { bubbles: true });
+    window.dispatchEvent(clickEvent);
+  }
 
   async function handleSave() {
     const response = await fetch("users/updateSettings", {
@@ -31,6 +35,11 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
       })
     );
   }
+
+  useEffect(() => {
+    const element = document.querySelector(".hue-horizontal");
+    element.addEventListener("mousedown", handleTouchHold);
+  }, []);
 
   function determineColor() {
     return color ? color : user.settings.messageColor;

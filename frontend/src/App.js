@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { WebSocketProvider } from "./components/socket/WebSocketProvider";
 import { checkAuth } from "./api";
 import InitialLoading from "./components/initial_loading/InitialLoading";
+import Overlay from "./components/overlay/Overlay";
 import "./App.css";
 
 function App() {
@@ -15,13 +16,14 @@ function App() {
   if (isLoading) return <InitialLoading />;
 
   if (error) return "an error has occured";
-  console.log("is auth data", data);
+
   if (data.isAuth) {
     return (
       <WebSocketProvider>
         <div className="app">
           <Nav />
           <Main />
+          <Overlay />
         </div>
       </WebSocketProvider>
     );

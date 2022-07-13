@@ -44,7 +44,6 @@ async function getUserByIdDB(user_id) {
     attributes: ["id", "name", "image"],
   });
 
-  console.log("user in getuserbyid", user[0]);
   return user[0];
 }
 

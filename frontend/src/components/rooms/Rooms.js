@@ -1,30 +1,26 @@
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectRoomsState,
-  setRooms,
-  selectRoomsIsLoading,
-} from "../../features/rooms/roomsSlice";
-import { selectUser } from "../../features/user/userSlice";
-import { setRoom, selectRoom } from "../../features/room/roomSlice";
-import { useEffect, useState } from "react";
-import { selectRoomsSlideState } from "../../features/toggles/roomsSlideSlice";
+import { useSelector } from "react-redux";
+import { useEffect, useState, useRef } from "react";
+import { selectRoomsState } from "../../features/rooms/roomsSlice";
 import CreateRoom from "../create_room/CreateRoom";
 import RoomLoading from "../room/RoomLoading";
-
 import Room from "../room/Room";
-import { useContext } from "react";
 import "./rooms.css";
-const Rooms = () => {
-  const dispatch = useDispatch();
-  const roomsState = useSelector(selectRoomsState);
-  const slideState = useSelector(selectRoomsSlideState);
-  const [display, toggleDisplay] = useState(false);
 
-  async function createRoom(e) {}
-  console.log("roomsstate isloading", roomsState.isLoading);
+const Rooms = ({ slideIn }) => {
+  const roomsState = useSelector(selectRoomsState);
+  const [display, toggleDisplay] = useState(false);
+  const renderCounter = useRef(0);
+  renderCounter.current = renderCounter.current + 1;
+  console.log("rooms renders", renderCounter.current);
+
+  useEffect(() => {
+    return () => {
+      console.log("ROOMS DISMOUNTED");
+    };
+  }, []);
 
   return (
-    <div className={`rooms-container ${slideState}`}>
+    <div className={`rooms-container ${slideIn}`}>
       {display && (
         <CreateRoom toggleDisplay={toggleDisplay} display={display} />
       )}
@@ -38,7 +34,7 @@ const Rooms = () => {
         </span>
       </div>
       {roomsState.isLoading
-        ? [...new Array(20)].map((x) => <RoomLoading />)
+        ? [...new Array(20)].map((x, i) => <RoomLoading key={i} />)
         : roomsState.rooms.map((room, i) => <Room room={room} key={i} />)}
     </div>
   );

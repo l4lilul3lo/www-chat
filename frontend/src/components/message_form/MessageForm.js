@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
 import { selectRoom } from "../../features/room/roomSlice";
@@ -6,18 +6,15 @@ import { useContext } from "react";
 import autosize from "autosize";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import "./message_form.css";
-const MessageForm = ({ setTextAreaHeight, messagesEl, messagesIsAtBottom }) => {
+const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
   const ws = useContext(WebSocketContext);
   const user = useSelector(selectUser);
   const room = useSelector(selectRoom);
   const textAreaEl = useRef(null);
   const prevHeight = useRef(null);
-  const messageFormEl = useRef(null);
   const [content, setContent] = useState("");
   autosize(textAreaEl.current);
   function handleSubmit(e) {
-    console.log("argument on submit", e);
-    console.log("content on submit", content);
     const messageObj = {
       userId: user.id,
       roomId: room.id,
@@ -66,8 +63,3 @@ const MessageForm = ({ setTextAreaHeight, messagesEl, messagesIsAtBottom }) => {
 };
 
 export default MessageForm;
-
-// set the message form height instead.
-
-// then let textarea take up 100% of it.
-// when message form is locked, text area should begin to scroll.

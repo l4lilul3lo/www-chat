@@ -10,10 +10,12 @@ const Message = ({ message }) => {
     const content = message.content;
     const date = new Date(message.createdAt);
     const time = date.toLocaleString("en-US", {
+      weekday: "long",
       hour: "numeric",
       minute: "numeric",
       hour12: true,
     });
+
     return (
       <div className="message">
         <div className="message-avatar-container">

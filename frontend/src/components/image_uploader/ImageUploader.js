@@ -15,11 +15,8 @@ const ImageUploader = () => {
   const [file, setFile] = useState(null);
   const [height, setHeight] = useState();
   const [width, setWidth] = useState();
-  console.log("previewsrc", previewImage?.height);
-  console.log("file", file);
 
   function loadFile(e) {
-    console.log("file", e.target.files[0]);
     setFile(e.target.files[0]);
   }
 
@@ -62,10 +59,9 @@ const ImageUploader = () => {
           ...user,
           image: `https://imagehostingserver.l4lilul3lo.repl.co/images/${fileName}.webp`,
         };
-        console.log("user is newObj", user === newObj);
+
         dispatch(setUser(newObj));
       }
-      console.log("image post response", data);
     } catch (error) {
       console.log(error);
     }
@@ -85,14 +81,10 @@ const ImageUploader = () => {
     setPreviewImage(image);
 
     return () => {
-      console.log("fired");
       URL.revokeObjectURL(objectUrl);
       // setFile(null);
     };
   }, [file]);
-
-  console.log("height", height);
-  console.log("width", width);
 
   if (!avatarUploadIsToggled) {
     return null;

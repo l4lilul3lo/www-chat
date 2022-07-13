@@ -12,7 +12,6 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
   const messagesEl = useRef(null);
   const isAtBottom = useRef(null);
   async function handleScroll() {
-    console.log("handle scroll fired");
     const element = messagesEl.current;
     const isScrollBottom =
       Math.abs(
@@ -22,7 +21,6 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
   }
 
   useEffect(() => {
-    console.log("useeffect fired");
     const firstLoad = isAtBottom.current === null;
     const element = messagesEl.current;
     if (firstLoad) {
@@ -46,7 +44,6 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
     setMessagesIsAtBottom(isAtBottom);
   }, []);
 
-  console.log("messages is loading", messagesState.isLoading);
   return (
     <div className="messages" onScroll={handleScroll} ref={messagesEl}>
       {messagesState.isLoading

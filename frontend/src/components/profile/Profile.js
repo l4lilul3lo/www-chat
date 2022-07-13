@@ -29,5 +29,3 @@ const Profile = () => {
 };
 
 export default Profile;
-// profile
-// settings

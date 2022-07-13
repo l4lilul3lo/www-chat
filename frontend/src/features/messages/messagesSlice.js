@@ -17,7 +17,6 @@ export const messagesSlice = createSlice({
       state.messages.push(action.payload);
     },
     setMessagesIsLoading: (state, action) => {
-      console.log("set messages is loading called");
       state.isLoading = action.payload;
     },
   },

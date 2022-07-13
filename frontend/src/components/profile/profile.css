@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   height: 100%;
+  min-width: 255px;
+  justify-content: flex-end;
 }
 
 .profile:hover {

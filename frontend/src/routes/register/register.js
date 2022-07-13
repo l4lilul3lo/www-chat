@@ -12,11 +12,9 @@ const Register = () => {
     e.preventDefault();
     const message = await register(formData);
     setMessage(message);
-
-    // response will be html or json
   }
+
   function handleChange(e) {
-    console.log(e.target.value);
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 

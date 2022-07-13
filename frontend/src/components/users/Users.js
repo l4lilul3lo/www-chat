@@ -1,21 +1,13 @@
-import { useEffect, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { WebSocketContext } from "../socket/WebSocketProvider";
-import { selectRoom } from "../../features/room/roomSlice";
-import { setUsers, selectUsers } from "../../features/users/usersSlice";
+import { useSelector } from "react-redux";
+import { selectUsers } from "../../features/users/usersSlice";
 import Avatar from "../avatar/Avatar";
-import { selectUsersSlideState } from "../../features/toggles/usersSlideSlice";
 import "./users.css";
-// figure out getting user back into server sockets list on disconnect.
-const Users = () => {
-  const dispatch = useDispatch();
-  const ws = useContext(WebSocketContext);
-  const room = useSelector(selectRoom);
-  const slideState = useSelector(selectUsersSlideState);
+
+const Users = ({ slideIn }) => {
   const users = useSelector(selectUsers);
 
   return (
-    <div className={`users ${slideState}`}>
+    <div className={`users ${slideIn}`}>
       {users.map((user) => {
         return (
           <div className="users-user">

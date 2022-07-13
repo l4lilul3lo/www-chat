@@ -7,102 +7,25 @@
 }
 
 @media only screen and (max-width: 850px) {
-  .messenger {
-    min-width: 100px;
-  }
-
-  .small-screen-menu {
-    display: flex;
+  .overlay {
+    display: block;
   }
 
   .rooms-container {
     display: none;
-    z-index: 3;
-    top: 30px;
-    height: calc(100% - 30px);
   }
+
+  .messenger {
+    min-width: 100px;
+    pointer-events: auto;
+    padding-top: 20px;
+  }
+
   .users {
     display: none;
-    height: calc(100% - 30px);
-    z-index: 10;
-    top: 30px;
   }
 
-  .slide-in-left {
-    position: absolute;
+  .slide-in {
     display: block;
-    animation-name: roomsSlideIn;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes roomsSlideIn {
-    from {
-      display: none;
-      left: -300px;
-    }
-
-    to {
-      left: 0;
-      display: block;
-    }
-  }
-
-  .slide-out-left {
-    position: absolute;
-    display: block;
-    animation-name: roomsSlideOut;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes roomsSlideOut {
-    from {
-      left: 0;
-    }
-
-    to {
-      left: -300px;
-    }
-  }
-
-  .slide-in-right {
-    position: absolute;
-    display: block;
-    animation-name: usersSlideIn;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes usersSlideIn {
-    from {
-      display: none;
-      right: -300px;
-    }
-
-    to {
-      right: 0;
-      display: block;
-    }
-  }
-
-  .slide-out-right {
-    position: absolute;
-    display: block;
-    animation-name: usersSlideOut;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes usersSlideOut {
-    from {
-      right: 0;
-      display: block;
-    }
-
-    to {
-      right: -300px;
-      display: none;
-    }
   }
 }

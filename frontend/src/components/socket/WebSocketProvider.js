@@ -54,7 +54,6 @@ const WebSocketProvider = ({ children }) => {
     });
 
     socket.on("allUsers:joinNotification", (user) => {
-      console.log("all users join notification xxxxxxxxxxxxxxxx");
       dispatch(addMessage({ username: user.name }));
       dispatch(addUser(user));
     });
@@ -98,7 +97,6 @@ const WebSocketProvider = ({ children }) => {
     socket,
     sendMessage,
     joinRoom,
-
     createRoom,
     getRooms,
     userConnecting,
@@ -113,7 +111,3 @@ const WebSocketProvider = ({ children }) => {
 };
 
 export { WebSocketProvider, WebSocketContext };
-
-// user connect should be separate. The reason why is that we're getting users connected to socket which includes self.
-
-// only later should we have a user joined method separately.

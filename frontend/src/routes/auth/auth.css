@@ -1,0 +1,36 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  justify-content: space-between;
+}
+
+.auth-container input {
+  margin-top: 5px;
+  width: 50%;
+  min-width: 150px;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-background {
+  background: #3e66f1;
+  border-radius: 3px;
+  padding: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}

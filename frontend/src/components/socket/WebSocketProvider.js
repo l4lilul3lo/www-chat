@@ -14,6 +14,7 @@ import {
   setRooms,
 } from "../../features/rooms/roomsSlice";
 import { useRef, useEffect } from "react";
+import { addNotification } from "../../features/notifications/notificationsSlice";
 
 const WebSocketContext = createContext(null);
 
@@ -54,7 +55,7 @@ const WebSocketProvider = ({ children }) => {
     });
 
     socket.on("allUsers:joinNotification", (user) => {
-      dispatch(addMessage({ username: user.name }));
+      dispatch(addNotification(`***${user.name} joined***`));
       dispatch(addUser(user));
     });
 
@@ -111,3 +112,9 @@ const WebSocketProvider = ({ children }) => {
 };
 
 export { WebSocketProvider, WebSocketContext };
+
+// when a user joins or leaves, add to sliding text state array.
+
+// then in sliding text component, listen for state changes.
+
+// the animation will run once, and on animation end, p

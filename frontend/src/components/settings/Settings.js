@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Avatar from "../avatar/Avatar";
 import ImageUploader from "../image_uploader/ImageUploader.js";
+import AvatarUploader from "../image_uploader/AvatarUploader";
 import { toggleAvatarUpload } from "../../features/toggles/avatarUploadToggleSlice";
 import { selectAvatarUploadIsToggled } from "../../features/toggles/avatarUploadToggleSlice";
 import ColorPicker from "../color_picker/ColorPicker";
@@ -57,9 +58,10 @@ const Settings = () => {
 
       <ColorPicker />
 
-      {avatarUploadIsToggled && (
-        <ImageUploader handleToggleAvatarUpload={handleToggleAvatarUpload} />
-      )}
+      <AvatarUploader
+        handleToggleAvatarUpload={handleToggleAvatarUpload}
+        avatarUploadIsToggled={avatarUploadIsToggled}
+      />
 
       {displayColorPicker && (
         <ColorPicker

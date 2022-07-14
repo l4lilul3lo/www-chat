@@ -52,7 +52,6 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
         : messagesState.messages.map((message, i) => (
             <Message message={message} key={i} />
           ))}
-      <Notifications />
     </div>
   );
 };

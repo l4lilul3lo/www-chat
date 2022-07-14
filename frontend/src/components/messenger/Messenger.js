@@ -14,7 +14,8 @@ const Messenger = () => {
         setMessagesEl={setMessagesEl}
         setMessagesIsAtBottom={setMessagesIsAtBottom}
       />
-      {/* <Notifications /> */}
+      <Notifications />
+
       <MessageForm
         messagesEl={messagesEl}
         messagesIsAtBottom={messagesIsAtBottom}

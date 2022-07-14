@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
-
+import ClipLoader from "react-spinners/ClipLoader";
 import "./image_uploader.css";
+
 const ImageUploader = ({ handleToggleAvatarUpload }) => {
   const lastFileName = useRef(null);
   const user = useSelector(selectUser);
@@ -12,6 +13,7 @@ const ImageUploader = ({ handleToggleAvatarUpload }) => {
   const [file, setFile] = useState(null);
   const [height, setHeight] = useState();
   const [width, setWidth] = useState();
+  const [loading, setLoading] = useState(false);
 
   function loadFile(e) {
     console.log(e.target.files[0]);
@@ -42,6 +44,7 @@ const ImageUploader = ({ handleToggleAvatarUpload }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       if (!file?.type) {
         return;
@@ -98,24 +101,33 @@ const ImageUploader = ({ handleToggleAvatarUpload }) => {
     };
   }, [file]);
 
+  // if (loading) {
+  //   return (
+  //     <ClipLoader
+  //       cssOverride={{ position: "absolute", top: "10px", left: "10px" }}
+  //     />
+  //   );
+  // }
+
   return (
     <div className="image-upload-container">
-      <div className="actual-image-upload">
-        <div className="close-image-upload" onClick={handleToggleAvatarUpload}>
-          X
-        </div>
+      <div className={loading ? "image-uploader-loading" : "image-uploader"}>
         <div className="preview-container">
-          <img
-            className="preview"
-            src={previewImage.src ? previewImage.src : "image-upload.png"}
-            style={{
-              height: `${height > width ? "auto" : "100%"}`,
-              width: `${height > width ? "100%" : "auto"}`,
-            }}
-          />
+          {loading ? (
+            <ClipLoader />
+          ) : (
+            <img
+              className="preview"
+              src={previewImage.src ? previewImage.src : "image-upload.png"}
+              style={{
+                height: `${height > width ? "auto" : "100%"}`,
+                width: `${height > width ? "100%" : "auto"}`,
+              }}
+            />
+          )}
         </div>
         <input
-          className="image-upload"
+          className="file-upload"
           type="file"
           accept="image/png, image/jpeg, image/jpg"
           name="uploaded-file"

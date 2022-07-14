@@ -17,8 +17,20 @@
   height: 80px;
 }
 
-.image-upload {
+.image-uploader {
   margin-bottom: 10px;
+  background: gray;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.image-uploader-loading {
+  margin-bottom: 10px;
+  background: gray;
+  width: 100%;
+  height: 100%;
+  padding: 0;
 }
 
 .image-upload-container {
@@ -29,8 +41,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
   z-index: 2;
 }
 
@@ -63,9 +73,8 @@
   user-select: none;
 }
 
-.actual-image-upload {
-  background: gray;
-  height: 30%;
-  width: 70%;
-  padding-left: 20px;
+.box1 {
+  height: 100px;
+  width: 100px;
+  background: yellow;
 }

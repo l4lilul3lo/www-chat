@@ -10,6 +10,10 @@
   padding-top: 20px;
 }
 
+.messages-container {
+  height: 100%;
+}
+
 .message-loading {
   width: 90%;
 }

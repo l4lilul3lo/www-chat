@@ -17,12 +17,12 @@
   flex-direction: column;
 }
 
-.close-create-room-btn {
+.x-close {
   display: flex;
   justify-content: flex-end;
 }
 
-.close-create-room-btn:hover {
+.x-close:hover {
   cursor: pointer;
   color: gray;
 }

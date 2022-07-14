@@ -1,7 +1,7 @@
 import "./rooms.css";
 const RoomsLoading = () => {
   return (
-    <div className="rooms-container">
+    <div className="rooms">
       <div className="rooms-header">
         <div>Rooms</div>
         <span className="material-symbols-outlined">add</span>

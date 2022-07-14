@@ -1,6 +1,7 @@
 import "./settings.css";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Avatar from "../avatar/Avatar";
 import ImageUploader from "../image_uploader/ImageUploader.js";
@@ -10,21 +11,22 @@ import ColorPicker from "../color_picker/ColorPicker";
 const Settings = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [avatarUploadIsToggled, setAvatarUploadIsToggled] = useState(false);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
-  const avatarUploadIsToggled = useSelector(selectAvatarUploadIsToggled);
+
+  function handleToggleAvatarUpload() {
+    console.log("fired");
+    console.log(avatarUploadIsToggled);
+    setAvatarUploadIsToggled(!avatarUploadIsToggled);
+  }
 
   return (
     <div className="settings-container">
       <div className="user-info">
-        <div
-          className="image-upload"
-          onClick={() => {
-            dispatch(toggleAvatarUpload());
-          }}
-        >
+        <div className="image-upload" onClick={handleToggleAvatarUpload}>
           <div className="image-upload-hover-text">Change Avatar</div>
           <div className="settings-avatar-container">
-            <Avatar url={user.image} />
+            <Avatar key={uuidv4()} url={user.image} />
           </div>
 
           <span className="material-symbols-outlined image-upload-icon">
@@ -48,12 +50,16 @@ const Settings = () => {
             example text
           </div>
         </div>
-        <button onClick={() => setDisplayColorPicker(!displayColorPicker)}>
+        {/* <button onClick={() => setDisplayColorPicker(!displayColorPicker)}>
           edit
-        </button>
+        </button> */}
       </div>
 
-      {avatarUploadIsToggled && <ImageUploader />}
+      <ColorPicker />
+
+      {avatarUploadIsToggled && (
+        <ImageUploader handleToggleAvatarUpload={handleToggleAvatarUpload} />
+      )}
 
       {displayColorPicker && (
         <ColorPicker

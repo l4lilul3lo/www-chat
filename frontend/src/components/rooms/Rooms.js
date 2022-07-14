@@ -20,7 +20,7 @@ const Rooms = ({ slideIn }) => {
   }, []);
 
   return (
-    <div className={`rooms-container ${slideIn}`}>
+    <div className={`rooms ${slideIn}`}>
       {display && (
         <CreateRoom toggleDisplay={toggleDisplay} display={display} />
       )}
@@ -33,6 +33,7 @@ const Rooms = ({ slideIn }) => {
           add
         </span>
       </div>
+
       {roomsState.isLoading
         ? [...new Array(20)].map((x, i) => <RoomLoading key={i} />)
         : roomsState.rooms.map((room, i) => <Room room={room} key={i} />)}

@@ -15,9 +15,10 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
   }
 
   async function handleSave() {
-    const response = await fetch("users/updateSettings", {
+    const response = await fetch("http://localhost:9000/users/updateSettings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         settings: {
           messageColor: determineColor(),

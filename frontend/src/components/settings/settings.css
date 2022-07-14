@@ -1,13 +1,9 @@
 .settings-container {
-  position: absolute;
-  right: 0;
-  top: 8%;
-  width: 250px;
-  height: 400px;
-  max-width: 300px;
-  background: gray;
+  background: #3e66f1;
   padding: 10px;
-  z-index: 10;
+  height: 100%;
+  position: relative;
+  color: black;
 }
 
 .user-info {
@@ -38,7 +34,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: 1;
   background: #3e66f1;
   color: white;
   border-radius: 50%;
@@ -59,7 +55,7 @@
 
 .image-upload-hover-text {
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.5);
   width: 60px;
   height: 60px;
@@ -77,4 +73,10 @@
 .settings-avatar-container {
   width: 60px;
   height: 60px;
+}
+
+.rectangle {
+  height: 200px;
+  width: 400px;
+  background: green;
 }

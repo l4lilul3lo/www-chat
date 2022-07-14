@@ -49,6 +49,15 @@ const userRoute = require("./routes/userRoute");
 const roomsRoute = require("./routes/roomsRoute");
 const messagesRoute = require("./routes/messagesRoute");
 const roomsUsersRoute = require("./routes/roomsUsersRoute");
+const checkId = (req, res, next) => {
+  if (req.session && req.session.userId) {
+    return next();
+  }
+
+  return res.send("unauthorized");
+};
+
+// app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/rooms", roomsRoute);
 app.use("/messages", messagesRoute);

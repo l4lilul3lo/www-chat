@@ -1,15 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
-import {
-  selectAvatarUploadIsToggled,
-  toggleAvatarUpload,
-} from "../../features/toggles/avatarUploadToggleSlice";
 
 import "./image_uploader.css";
-const ImageUploader = () => {
+const ImageUploader = ({ handleToggleAvatarUpload }) => {
+  const lastFileName = useRef(null);
   const user = useSelector(selectUser);
-  const avatarUploadIsToggled = useSelector(selectAvatarUploadIsToggled);
+
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [file, setFile] = useState(null);
@@ -17,24 +14,38 @@ const ImageUploader = () => {
   const [width, setWidth] = useState();
 
   function loadFile(e) {
-    setFile(e.target.files[0]);
+    console.log(e.target.files[0]);
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+      lastFileName.current = e.target.files[0].name;
+    }
   }
 
   async function updateUserImage(imageUrl) {
-    await fetch("users/updateUserImage", {
+    await fetch("http://localhost:9000/users/updateUserImage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ imageUrl }),
     });
     // refresh cache
     await fetch(imageUrl);
   }
 
+  function cancelSelection() {
+    console.log("cancel selection");
+    setFile(false);
+    setPreviewImage("");
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      if (!file?.type) {
+        return;
+      }
       const formData = new FormData();
       const fileExtension = file.type.replace(/(.*)\//g, "");
       const fileName = user.id;
@@ -61,6 +72,7 @@ const ImageUploader = () => {
         };
 
         dispatch(setUser(newObj));
+        handleToggleAvatarUpload();
       }
     } catch (error) {
       console.log(error);
@@ -86,33 +98,39 @@ const ImageUploader = () => {
     };
   }, [file]);
 
-  if (!avatarUploadIsToggled) {
-    return null;
-  }
-
   return (
     <div className="image-upload-container">
-      <div className="preview-container">
-        <img
-          className="preview"
-          src={previewImage.src ? previewImage.src : "image-upload.png"}
-          style={{
-            height: `${height > width ? "auto" : "100%"}`,
-            width: `${height > width ? "100%" : "auto"}`,
-          }}
+      <div className="actual-image-upload">
+        <div className="close-image-upload" onClick={handleToggleAvatarUpload}>
+          X
+        </div>
+        <div className="preview-container">
+          <img
+            className="preview"
+            src={previewImage.src ? previewImage.src : "image-upload.png"}
+            style={{
+              height: `${height > width ? "auto" : "100%"}`,
+              width: `${height > width ? "100%" : "auto"}`,
+            }}
+          />
+        </div>
+        <input
+          className="image-upload"
+          type="file"
+          accept="image/png, image/jpeg, image/jpg"
+          name="uploaded-file"
+          title="hahaha"
+          onChange={loadFile}
         />
-      </div>
-      <input
-        id="image-upload"
-        type="file"
-        accept="image/png, image/jpeg, image/jpg"
-        name="uploaded-file"
-        onChange={loadFile}
-      />
 
-      <div className="confirm-cancel">
-        <button onClick={handleSubmit}>Confirm</button>
-        <button onClick={() => dispatch(toggleAvatarUpload())}>Cancel</button>
+        <div className="confirm-cancel">
+          <button className="confirm" onClick={handleSubmit}>
+            Confirm
+          </button>
+          <button className="cancel" onClick={handleToggleAvatarUpload}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

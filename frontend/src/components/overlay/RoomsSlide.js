@@ -13,7 +13,7 @@ const RoomsSlide = ({ isVisible }) => {
             style={{
               height: "calc(100% - 22px)",
               position: "absolute",
-              zIndex: 2,
+              zIndex: 4,
               pointerEvents: "auto",
             }}
           >

@@ -2,6 +2,7 @@ const { getRoomUserInfoDB } = require("../models/roomsUsers");
 
 const getIsBlocked = async (req, res) => {
   const userId = req.session.userId;
+  console.log(userId);
   const { roomId } = req.body;
   const response = await getRoomUserInfoDB(userId, roomId);
   const isBlocked = response.isBlocked;

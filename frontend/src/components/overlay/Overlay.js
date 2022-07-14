@@ -1,35 +1,40 @@
 import { useState, useEffect } from "react";
-import RoomsSlide from "./RoomsSlide";
-import UsersSlide from "./UsersSlide";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectRoomClicked } from "../../features/toggles/roomClickedSlice";
+import { selectToggles } from "../../features/toggles/togglesSlice";
+import {
+  toggleRooms,
+  toggleUsers,
+  toggleSettings,
+  closeAll,
+} from "../../features/toggles/togglesSlice";
+import SmallScreen from "./SmallScreen";
+import SettingsModal from "./SettingsModal";
 import "./overlay.css";
 const Overlay = () => {
-  const [openedComponent, setOpenedComponent] = useState("");
+  const dispatch = useDispatch();
   const roomClicked = useSelector(selectRoomClicked);
+  const toggles = useSelector(selectToggles);
+  const { usersOpen, roomsOpen, settingsOpen } = toggles;
+  const anyOpen = Object.values(toggles).includes(true);
+
   function handleRoomsToggle() {
-    const value = openedComponent === "rooms" ? "" : "rooms";
-    setOpenedComponent(value);
+    dispatch(toggleRooms());
   }
 
   function handleUsersToggle() {
-    const value = openedComponent === "users" ? "" : "users";
-    setOpenedComponent(value);
+    dispatch(toggleUsers());
   }
 
   function handleSettingsToggle() {
-    const value = openedComponent === "settings" ? "" : "settings";
-    setOpenedComponent(value);
+    dispatch(toggleSettings());
   }
 
-  function handleAnyToggle() {
-    setOpenedComponent("");
+  function handleCloseAll() {
+    dispatch(closeAll());
   }
 
-  const settingsOpen = openedComponent === "settings";
-  const roomsOpen = openedComponent === "rooms";
-  const usersOpen = openedComponent === "users";
-
+  console.log("anyOpen", anyOpen);
   useEffect(() => {
     if (roomClicked !== null) {
       handleRoomsToggle();
@@ -38,23 +43,19 @@ const Overlay = () => {
 
   return (
     <div className="overlay">
-      <div className="small-screen">
-        <div className="slide-toggles">
-          <div className="rooms-toggle" onClick={handleRoomsToggle}>
-            Rooms {roomsOpen ? "<" : ">"}
-          </div>
-          <div className="users-toggle" onClick={handleUsersToggle}>
-            {usersOpen ? ">" : "<"} Users
-          </div>
-        </div>
-        <RoomsSlide isVisible={roomsOpen} />
-        <UsersSlide isVisible={usersOpen} />
-      </div>
-      {openedComponent && (
-        <div className="grayed-out" onClick={handleAnyToggle}></div>
-      )}
+      <SmallScreen
+        handleRoomsToggle={handleRoomsToggle}
+        handleUsersToggle={handleUsersToggle}
+        roomsOpen={roomsOpen}
+        usersOpen={usersOpen}
+      />
+
+      <SettingsModal isVisible={settingsOpen} />
+      {anyOpen && <div className="grayed-out" onClick={handleCloseAll}></div>}
     </div>
   );
 };
 
+// all toggles can now be put in a single feature.
+// toggleStates can be an object with properties.
 export default Overlay;

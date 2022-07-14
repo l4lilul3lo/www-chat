@@ -4,14 +4,15 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
 }
 
 @media only screen and (max-width: 850px) {
-  .overlay {
+  .small-screen {
     display: block;
   }
 
-  .rooms-container {
+  .rooms {
     display: none;
   }
 

@@ -1,5 +1,5 @@
-.rooms-container {
-  background: yellow;
+.rooms {
+  background: gray;
   width: 100%;
   min-width: 260px;
   max-width: 260px;

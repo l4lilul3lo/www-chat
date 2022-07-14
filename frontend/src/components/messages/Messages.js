@@ -4,6 +4,7 @@ import { selectMessagesState } from "../../features/messages/messagesSlice";
 import { selectRoom } from "../../features/room/roomSlice";
 import Message from "../message/Message";
 import MessageLoading from "../message/MessageLoading";
+import Notifications from "../notifications/Notifications";
 import "./messages.css";
 
 const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
@@ -51,6 +52,7 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
         : messagesState.messages.map((message, i) => (
             <Message message={message} key={i} />
           ))}
+      <Notifications />
     </div>
   );
 };

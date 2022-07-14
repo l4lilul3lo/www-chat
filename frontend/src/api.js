@@ -1,8 +1,11 @@
 // post request
 
-async function fetcher(endpoint, options) {
+async function fetcher(endpoint, options = {}) {
   const baseUrl = "http://localhost:9000/";
   const url = baseUrl + endpoint;
+  const response = await fetch(url, { ...options, credentials: "include" });
+  const data = await response.json();
+  return data;
   if (options) {
     const response = await fetch(url, options);
     const data = await response.json();
@@ -20,7 +23,7 @@ async function post(endpoint, content) {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
+
     body: JSON.stringify({ [content.name]: content.data }),
   };
   const data = await fetcher(endpoint, options);

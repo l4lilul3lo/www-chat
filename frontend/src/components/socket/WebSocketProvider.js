@@ -44,10 +44,10 @@ const WebSocketProvider = ({ children }) => {
       dispatch(setRoom(room));
     });
 
-    socket.on("user:userJoined", (user) => {
-      dispatch(addMessage({ username: user.name }));
-      dispatch(addUser(user));
-    });
+    // socket.on("user:userJoined", (user) => {
+    //   dispatch(addMessage({ username: user.name }));
+    //   dispatch(addUser(user));
+    // });
 
     socket.on("message:created", (messageObj, user) => {
       dispatch(addMessage({ ...messageObj, user }));

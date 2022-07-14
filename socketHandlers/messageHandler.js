@@ -4,7 +4,13 @@ module.exports = (io, socket) => {
   async function createMessage(messageObj, user) {
     try {
       await createMessageDB(messageObj);
-      io.to(messageObj.roomId).emit("message:created", messageObj, user);
+      const date = Date.now();
+
+      io.to(messageObj.roomId).emit(
+        "message:created",
+        { ...messageObj, createdAt: date },
+        user
+      );
     } catch (err) {
       console.log(err);
     }

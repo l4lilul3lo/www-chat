@@ -20,10 +20,7 @@ const CreateRoom = ({ toggleDisplay, display }) => {
 
   return (
     <div className="create-room-container">
-      <div
-        className="close-create-room-btn"
-        onClick={() => toggleDisplay(!display)}
-      >
+      <div className="x-close" onClick={() => toggleDisplay(!display)}>
         X
       </div>
       <form onSubmit={handleSubmit}>

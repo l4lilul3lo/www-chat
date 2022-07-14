@@ -10,6 +10,9 @@ import avatarUploadToggleReducer from "./features/toggles/avatarUploadToggleSlic
 import colorPickerToggleReducer from "./features/toggles/colorPickerToggleSlice";
 import roomClickedReducer from "./features/toggles/roomClickedSlice";
 import usersSlideReducer from "./features/toggles/usersSlideSlice";
+import togglesReducer from "./features/toggles/togglesSlice";
+import notificationsReducer from "./features/notifications/notificationsSlice";
+
 import logger from "redux-logger";
 
 export const store = configureStore({
@@ -25,6 +28,8 @@ export const store = configureStore({
     colorPickerToggle: colorPickerToggleReducer,
     roomClicked: roomClickedReducer,
     usersSlide: usersSlideReducer,
+    toggles: togglesReducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

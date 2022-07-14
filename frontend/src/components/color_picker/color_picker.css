@@ -1,13 +1,13 @@
 .color-picker {
-  position: absolute;
+  /* position: absolute; */
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   right: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  background: blue;
+  width: 30%;
+  height: 50%;
+
   padding: 10px;
   z-index: 5;
 }

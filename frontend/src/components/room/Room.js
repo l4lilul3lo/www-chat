@@ -3,6 +3,7 @@ import { WebSocketContext } from "../socket/WebSocketProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRoom } from "../../features/room/roomSlice";
 import "./room.css";
+import { toggleRooms } from "../../features/toggles/togglesSlice";
 
 const Room = ({ room }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const Room = ({ room }) => {
 
   async function handleRoomClick() {
     if (window.innerWidth <= 850) {
-      //closeRoomsSlider
+      dispatch(toggleRooms());
     }
     if (currentRoom.id !== room.id) {
       ws.leaveRoom(currentRoom.id);

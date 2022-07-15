@@ -1,9 +1,16 @@
+.room-selected,
 .room-not-selected {
   margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  background: #3e66f1;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.room-not-selected {
+  background: #3e66f1;
 }
 
 .room-not-selected:hover {
@@ -11,15 +18,20 @@
 }
 
 .room-selected {
-  margin-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background: red;
-  width: 100%;
+  background: blue;
 }
 
 .room-selected:hover {
   cursor: pointer;
+}
+
+.password-protected {
+  width: 20px;
+  height: 20px;
+}
+
+.password-protected img {
+  width: 100%;
 }
 
 .room-loading {

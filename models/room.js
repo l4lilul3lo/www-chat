@@ -20,6 +20,7 @@ const Room = sequelize.define("room", {
 });
 
 async function createRoomDB(roomObj) {
+  console.log("roomObj in createRoom db", roomObj);
   const roomInfo = roomObj.password
     ? { ...roomObj, passwordProtected: true }
     : roomObj;
@@ -30,28 +31,31 @@ async function createRoomDB(roomObj) {
 
 async function getRoomsDB() {
   const res = await Room.findAll({
-    attributes: ["id", "name"],
+    attributes: ["id", "name", "passwordProtected"],
   });
 
   return res;
 }
 
 async function getRoomByIdDB(roomId) {
-  const res = Room.findAll({
+  console.log("roomId", roomId);
+  const res = await Room.findOne({
     where: {
       id: roomId,
     },
   });
+
+  return res?.dataValues;
 }
 
 async function getCafeInfoDB() {
-  const res = await Room.findAll({
+  const res = await Room.findOne({
     where: {
       name: "cafe",
     },
     attributes: ["name", "id"],
   });
-  return res[0].dataValues;
+  return res.dataValues;
 }
 
 module.exports = {

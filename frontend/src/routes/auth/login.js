@@ -22,8 +22,9 @@ const Login = () => {
       const message = await login(formData);
 
       if (message === "success") {
-        navigate("/");
+        return navigate("/");
       }
+      setMessage("Username or Password is incorrect.");
     } catch (err) {
       console.log(err);
     }
@@ -38,31 +39,30 @@ const Login = () => {
       <div className="auth-background">
         <img src="logo-small.png" />
         <h1>Login</h1>
+        <div className="auth-message">{message}</div>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="name">name</label>
-            <input
-              type="text"
-              name="name"
-              id="username"
-              value={formData.name || ""}
-              onChange={handleChange}
-              required
-              autoComplete="on"
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="password">password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={formData.password || ""}
-              onChange={handleChange}
-              required
-              autoComplete="on"
-            />
-          </div>
+          <label htmlFor="name">Username</label>
+          <input
+            type="text"
+            name="name"
+            id="username"
+            value={formData.name || ""}
+            onChange={handleChange}
+            required
+            autoComplete="on"
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={formData.password || ""}
+            onChange={handleChange}
+            required
+            autoComplete="on"
+          />
+
           <input id="login-submit-btn" type="submit" />
         </form>
         <p>

@@ -22,6 +22,10 @@
     padding-top: 20px;
   }
 
+  .initial-messenger {
+    min-width: 100px;
+  }
+
   .users {
     display: none;
   }

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectRoom } from "../../features/room/roomSlice";
 import "./room.css";
 import { toggleRooms } from "../../features/toggles/togglesSlice";
+import passwordProtectedIcon from "./password-protected-icon.png";
 
 const Room = ({ room }) => {
   const dispatch = useDispatch();
@@ -17,9 +18,14 @@ const Room = ({ room }) => {
     if (currentRoom.id !== room.id) {
       ws.leaveRoom(currentRoom.id);
       ws.joinRoom(room);
-      localStorage.setItem("room", JSON.stringify(room));
     }
   }
+
+  const passwordProtectedElement = (
+    <div className="password-protected">
+      <img src={passwordProtectedIcon} alt="lock" />
+    </div>
+  );
 
   return (
     <div
@@ -28,7 +34,8 @@ const Room = ({ room }) => {
       }
       onClick={handleRoomClick}
     >
-      {room.name}
+      <div className="room-name">{room.name}</div>
+      {room.passwordProtected && passwordProtectedElement}
     </div>
   );
 };

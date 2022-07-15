@@ -16,6 +16,9 @@ const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
   const [content, setContent] = useState("");
   autosize(textAreaEl.current);
   function handleSubmit(e) {
+    if (content.length < 1) {
+      return;
+    }
     const messageObj = {
       userId: user.id,
       roomId: room.id,

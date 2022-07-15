@@ -22,10 +22,17 @@
   background: gray;
   width: 100%;
   height: 100%;
-  padding: 10px;
 }
 
 .image-uploader-loading {
+  margin-bottom: 10px;
+  background: gray;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.image-uploader-closing {
   margin-bottom: 10px;
   background: gray;
   width: 100%;
@@ -58,6 +65,12 @@
 
 .confirm {
   margin-right: 5px;
+}
+
+.confirm,
+.cancel {
+  font-size: 20px;
+  margin-top: 14px;
 }
 
 .close-image-upload {

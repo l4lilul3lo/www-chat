@@ -49,20 +49,20 @@ const userRoute = require("./routes/userRoute");
 const roomsRoute = require("./routes/roomsRoute");
 const messagesRoute = require("./routes/messagesRoute");
 const roomsUsersRoute = require("./routes/roomsUsersRoute");
-const checkId = (req, res, next) => {
+const authRoute = require("./routes/authRoute");
+const isAuth = async (req, res, next) => {
   if (req.session && req.session.userId) {
     return next();
   }
 
-  return res.send("unauthorized");
+  return res.status(401).json({ isAuth: false });
 };
 
-// app.use("/auth", authRoute);
-app.use("/users", userRoute);
-app.use("/rooms", roomsRoute);
-app.use("/messages", messagesRoute);
-app.use("/roomsUsers", roomsUsersRoute);
-
+app.use("/users", isAuth, userRoute);
+app.use("/rooms", isAuth, roomsRoute);
+app.use("/messages", isAuth, messagesRoute);
+app.use("/roomsUsers", isAuth, roomsUsersRoute);
+app.use("/auth", authRoute);
 if (process.env.PRODUCTION) {
   app.get("/", (req, res) => {
     res.sendFile(`${__dirname}/frontend/build/index.html`);

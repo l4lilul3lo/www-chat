@@ -5,6 +5,10 @@ const initialState = {
     name: "",
     id: "",
   },
+  pendingRoom: {
+    name: "",
+    id: "",
+  },
 };
 
 export const roomSlice = createSlice({
@@ -15,9 +19,13 @@ export const roomSlice = createSlice({
       state.room = action.payload;
       localStorage.setItem("storedRoom", JSON.stringify(action.payload));
     },
+    setPendingRoom: (state, action) => {
+      state.pendingRoom = action.payload;
+    },
   },
 });
 
-export const { setRoom } = roomSlice.actions;
+export const { setRoom, setPendingRoom } = roomSlice.actions;
 export const selectRoom = (state) => state.room.room;
+export const selectPendingRoom = (state) => state.room.pendingRoom;
 export default roomSlice.reducer;

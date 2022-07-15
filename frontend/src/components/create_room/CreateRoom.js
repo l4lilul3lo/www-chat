@@ -11,7 +11,8 @@ const CreateRoom = ({ toggleDisplay, display }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    ws.createRoom(room);
+    console.log(room.name, room.password);
+    ws.createRoom(room.name, room.password);
   }
 
   function handleChange(e) {

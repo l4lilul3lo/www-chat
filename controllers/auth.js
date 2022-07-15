@@ -5,6 +5,7 @@ const register = async (req, res) => {
   const { name, password } = req.body.formData;
 
   const user = await getUserByNameDB(name);
+  console.log(user);
   if (user) {
     return res.json({ message: "Username Taken" });
   }
@@ -44,4 +45,9 @@ const checkAuth = async (req, res, next) => {
   return res.status(401).json({ isAuth: false });
 };
 
-module.exports = { register, login, checkAuth };
+const logout = async (req, res) => {
+  req.session.destroy();
+  res.send("logged out");
+};
+
+module.exports = { register, login, checkAuth, logout };

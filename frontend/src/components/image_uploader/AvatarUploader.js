@@ -7,7 +7,7 @@ const AvatarUploader = ({
 }) => {
   const isVisible = avatarUploadIsToggled;
   const initial = { x: 0, y: 0, scale: 0 };
-  const duration = 1.2;
+  const duration = 0.2;
   const animate = { x: 50, y: 50, scale: 1 };
   const variants = {
     initial: {
@@ -40,10 +40,10 @@ const AvatarUploader = ({
       top: "30%",
       left: "50%",
       height: "30%",
-      width: "70%",
+      width: "100%",
       x: "-50%",
       y: "-50%",
-
+      padding: "10px",
       borderRadius: 0,
       transition: {
         top: {
@@ -112,6 +112,7 @@ const AvatarUploader = ({
           >
             <ImageUploader
               handleToggleAvatarUpload={handleToggleAvatarUpload}
+              avatarUploadIsToggled={avatarUploadIsToggled}
             />
           </m.div>
         )}

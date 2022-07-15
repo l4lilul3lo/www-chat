@@ -12,8 +12,8 @@ function createUsername() {
   return randomName;
 }
 
-function createHashedPassword() {
-  const password = faker.random.word();
+function createHashedPassword(password) {
+  console.log(password);
   const hashedPassword = bcrypt.hashSync(password, 10);
   return hashedPassword;
 }
@@ -29,14 +29,21 @@ function createImage() {
   return faker.image.avatar();
 }
 
+function createHex() {
+  return faker.color.rgb({ format: "hex", casing: "lower" });
+}
+
 function createUsers(n) {
   const users = [...new Array(n)].map((x) => {
     const name = createUsername();
-    const password = createHashedPassword();
+    const password = createHashedPassword(faker.random.word());
     const image = createImage();
     return { name, password, image };
   });
 
+  console.log("out of there");
+  users.push({ name: "dev", password: createHashedPassword("123") });
+  console.log("okay and then");
   return users;
 }
 
@@ -45,7 +52,11 @@ function createRooms(n) {
   const otherRooms = [...new Array(n - 1)].map((x, i) => {
     const name = createRoomName();
     if ([1, 3, 5].includes(i)) {
-      return { name, password: createHashedPassword() };
+      return {
+        name,
+        password: createHashedPassword(faker.random.word()),
+        passwordProtected: true,
+      };
     }
     return { name };
   });
@@ -55,6 +66,15 @@ function createRooms(n) {
 function createMessageContent() {
   const randomMessage = faker.lorem.text();
   return randomMessage;
+}
+
+function createSettings(userIds) {
+  const settings = userIds.map((userId) => {
+    const messageColor = createHex();
+    const messageBackground = createHex();
+    return { userId, messageColor, messageBackground };
+  });
+  return settings;
 }
 
 function createMessages(userIds, roomIds, n) {
@@ -75,4 +95,5 @@ module.exports = {
   createMessages,
   createUsername,
   createHashedPassword,
+  createSettings,
 };

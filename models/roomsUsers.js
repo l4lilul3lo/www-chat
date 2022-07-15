@@ -5,7 +5,7 @@ const { User } = require("./user");
 const { Room } = require("./room");
 const RoomsUsers = sequelize.define("rooms_users", {
   id: uuidPrimaryKey,
-  priviledge: {
+  privilege: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
@@ -13,13 +13,16 @@ const RoomsUsers = sequelize.define("rooms_users", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  isBlocked: {
+  isBanned: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
 });
 
-async function createRoomUserDB(userId, roomId) {
+async function createRoomUserDB(userId, roomId, privilege) {
+  if (privilege) {
+    return await RoomsUsers.create({ userId, roomId, privilege });
+  }
   await RoomsUsers.create({ userId, roomId });
 }
 

@@ -5,10 +5,13 @@ const { RoomsUsers } = require("../models/roomsUsers");
 const { Room } = require("../models/room");
 const { Message } = require("../models/message");
 const { Settings } = require("../models/settings");
+const Redis = require("ioredis");
+const redisClient = new Redis();
 const {
   createUsers,
   createRooms,
   createMessages,
+  createSettings,
 } = require("../utils/dataGenerator");
 
 const colors = require("colors");
@@ -69,6 +72,12 @@ async function dropTables() {
   console.log("tables dropped".magenta);
 }
 
+async function flushRedis() {
+  await redisClient.flushall();
+  await redisClient.disconnect();
+  console.log("redis flushed".magenta);
+}
+
 async function createTables() {
   try {
     await createTable(User);
@@ -83,6 +92,7 @@ async function createTables() {
 
 async function populateTable(model, dataArray) {
   try {
+    console.log("dataArray", dataArray);
     const res = await model.bulkCreate(dataArray);
     const rowIds = res.map((x) => x.dataValues.id);
     return rowIds;
@@ -94,6 +104,9 @@ async function populateTable(model, dataArray) {
 async function populateTables() {
   const users = createUsers(10);
   const userIds = await populateTable(User, users);
+  console.log("userIds", userIds);
+  const settings = await createSettings(userIds);
+  const settingsIds = await populateTable(Settings, settings);
   const rooms = createRooms(4);
   const roomIds = await populateTable(Room, rooms);
   const messages = createMessages(userIds, roomIds, 30);
@@ -102,6 +115,7 @@ async function populateTables() {
 }
 
 async function resetDB() {
+  await flushRedis();
   await dropTables();
   await createTables();
   await populateTables();

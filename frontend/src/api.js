@@ -1,33 +1,31 @@
-// post request
-
 async function fetcher(endpoint, options = {}) {
-  const baseUrl = "http://localhost:9000/";
-  const url = baseUrl + endpoint;
-  const response = await fetch(url, { ...options, credentials: "include" });
-  const data = await response.json();
-  return data;
-  if (options) {
-    const response = await fetch(url, options);
+  try {
+    const baseUrl = "http://localhost:9000/";
+    const url = baseUrl + endpoint;
+    const response = await fetch(url, { ...options, credentials: "include" });
     const data = await response.json();
     return data;
-  } else {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
+  } catch (err) {
+    console.log("ha!");
   }
 }
 
 async function post(endpoint, content) {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+  try {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-    body: JSON.stringify({ [content.name]: content.data }),
-  };
-  const data = await fetcher(endpoint, options);
-  return data;
+      body: JSON.stringify({ [content.name]: content.data }),
+    };
+    const data = await fetcher(endpoint, options);
+    console.log("data", data);
+    return data;
+  } catch (err) {
+    console.log("ha");
+  }
 }
 
 async function get(endpoint) {
@@ -39,7 +37,7 @@ async function get(endpoint) {
 
 async function checkAuth() {
   try {
-    const data = await get("users/checkAuth");
+    const data = await get("auth/checkAuth");
     return data;
   } catch (error) {
     console.log(error);
@@ -86,15 +84,16 @@ async function fetchUser() {
 }
 
 async function login(formData) {
-  const { message } = await post("users/login", {
+  const { message } = await post("auth/login", {
     name: "formData",
     data: formData,
   });
+  console.log(message);
   return message;
 }
 
 async function register(formData) {
-  const { message } = await post("users/register", {
+  const { message } = await post("auth/register", {
     name: "formData",
     data: formData,
   });

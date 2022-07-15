@@ -10,6 +10,7 @@ const initialState = {
     roomsOpen: false,
     usersOpen: false,
     settingsOpen: false,
+    roomPasswordFormOpen: false,
   },
 };
 
@@ -26,13 +27,21 @@ export const togglesSlice = createSlice({
     toggleSettings: (state) => {
       state.toggles = setOneTrue("settingsOpen", state, initialState);
     },
+    toggleRoomPasswordForm: (state) => {
+      state.toggles = setOneTrue("roomPasswordFormOpen", state, initialState);
+    },
     closeAll: (state) => {
       state.toggles = initialState.toggles;
     },
   },
 });
 
-export const { toggleRooms, toggleUsers, toggleSettings, closeAll } =
-  togglesSlice.actions;
+export const {
+  toggleRooms,
+  toggleUsers,
+  toggleSettings,
+  toggleRoomPasswordForm,
+  closeAll,
+} = togglesSlice.actions;
 export const selectToggles = (state) => state.toggles.toggles;
 export default togglesSlice.reducer;

@@ -10,12 +10,13 @@ import {
 } from "../../features/toggles/togglesSlice";
 import SmallScreen from "./SmallScreen";
 import SettingsModal from "./SettingsModal";
+import RoomPasswordModal from "./RoomPasswordModal";
 import "./overlay.css";
 const Overlay = () => {
   const dispatch = useDispatch();
   const roomClicked = useSelector(selectRoomClicked);
   const toggles = useSelector(selectToggles);
-  const { usersOpen, roomsOpen, settingsOpen } = toggles;
+  const { usersOpen, roomsOpen, settingsOpen, roomPasswordFormOpen } = toggles;
   const anyOpen = Object.values(toggles).includes(true);
 
   function handleRoomsToggle() {
@@ -51,6 +52,7 @@ const Overlay = () => {
       />
 
       <SettingsModal isVisible={settingsOpen} />
+      <RoomPasswordModal isVisible={roomPasswordFormOpen} />
       {anyOpen && <div className="grayed-out" onClick={handleCloseAll}></div>}
     </div>
   );

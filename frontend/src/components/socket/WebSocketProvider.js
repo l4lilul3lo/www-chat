@@ -7,14 +7,16 @@ import {
   setMessagesIsLoading,
 } from "../../features/messages/messagesSlice";
 import { setUsers, addUser } from "../../features/users/usersSlice";
-import { setRoom } from "../../features/room/roomSlice";
+import { setPendingRoom, setRoom } from "../../features/room/roomSlice";
 import {
   addRoom,
   setRoomsIsLoading,
   setRooms,
 } from "../../features/rooms/roomsSlice";
+import { toggleRoomPasswordForm } from "../../features/toggles/togglesSlice";
 import { useRef, useEffect } from "react";
 import { addNotification } from "../../features/notifications/notificationsSlice";
+import { setSocketMessage } from "../../features/socket_messages/socketMessageSlice";
 
 const WebSocketContext = createContext(null);
 
@@ -38,17 +40,26 @@ const WebSocketProvider = ({ children }) => {
       dispatch(setRoomsIsLoading(false));
     });
 
-    socket.on("user:joinRoomResponse", (users, messages, room) => {
+    socket.on("user:joinRoomSuccess", (users, messages, room) => {
+      console.log("success");
+      console.log(room.passwordProtected);
+      if (room.passwordProtected) {
+        dispatch(toggleRoomPasswordForm());
+      }
+      dispatch(setRoom(room));
       dispatch(setUsers(users));
       dispatch(setMessages(messages));
       dispatch(setMessagesIsLoading(false));
-      dispatch(setRoom(room));
+      localStorage.setItem("room", JSON.stringify(room));
     });
 
-    // socket.on("user:userJoined", (user) => {
-    //   dispatch(addMessage({ username: user.name }));
-    //   dispatch(addUser(user));
-    // });
+    socket.on("user:joinRoomFailure", (info) => {
+      dispatch(setSocketMessage(info.reason));
+    });
+
+    socket.on("user:passwordPrompt", () => {
+      dispatch(toggleRoomPasswordForm());
+    });
 
     socket.on("message:created", (messageObj, user) => {
       dispatch(addMessage({ ...messageObj, user }));
@@ -77,8 +88,9 @@ const WebSocketProvider = ({ children }) => {
     dispatch(setRoomsIsLoading(true));
   }
 
-  function joinRoom(room) {
-    socket.emit("user:joinRoom", room);
+  function joinRoom(room, password) {
+    dispatch(setPendingRoom(room));
+    socket.emit("user:joinRoom", room, password);
     dispatch(setMessagesIsLoading(true));
   }
 
@@ -86,8 +98,8 @@ const WebSocketProvider = ({ children }) => {
     socket.emit("user:connecting", user);
   }
 
-  function createRoom(room) {
-    socket.emit("room:create", room);
+  function createRoom(roomName, password) {
+    socket.emit("room:create", roomName, password);
   }
 
   function leaveRoom(roomId) {

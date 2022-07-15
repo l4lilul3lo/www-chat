@@ -91,6 +91,7 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
         disableAlpha
         color={determinePickerColor()}
         onChange={handleChange}
+        width={"100%"}
       />
       <div className="color-picker-buttons">
         <button

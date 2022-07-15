@@ -20,6 +20,7 @@ const Settings = () => {
     console.log(avatarUploadIsToggled);
     setAvatarUploadIsToggled(!avatarUploadIsToggled);
   }
+  const anyToggled = avatarUploadIsToggled || displayColorPicker;
 
   return (
     <div className="settings-container">
@@ -51,12 +52,10 @@ const Settings = () => {
             example text
           </div>
         </div>
-        {/* <button onClick={() => setDisplayColorPicker(!displayColorPicker)}>
+        <button onClick={() => setDisplayColorPicker(!displayColorPicker)}>
           edit
-        </button> */}
+        </button>
       </div>
-
-      <ColorPicker />
 
       <AvatarUploader
         handleToggleAvatarUpload={handleToggleAvatarUpload}
@@ -69,6 +68,10 @@ const Settings = () => {
           setDisplayColorPicker={setDisplayColorPicker}
         />
       )}
+
+      <button className="logout">Logout</button>
+
+      {anyToggled && <div className="gray-out-settings"></div>}
     </div>
   );
 };

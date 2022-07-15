@@ -4,7 +4,7 @@ import { selectUser, setUser } from "../../features/user/userSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./image_uploader.css";
 
-const ImageUploader = ({ handleToggleAvatarUpload }) => {
+const ImageUploader = ({ handleToggleAvatarUpload, avatarUploadIsToggled }) => {
   const lastFileName = useRef(null);
   const user = useSelector(selectUser);
 
@@ -108,23 +108,35 @@ const ImageUploader = ({ handleToggleAvatarUpload }) => {
   //     />
   //   );
   // }
+  let imageUploaderClass;
+  if (loading) {
+    imageUploaderClass = "image-uploader-loading";
+  } else if (!avatarUploadIsToggled) {
+    imageUploaderClass = "image-uploader-closing";
+  } else {
+    imageUploaderClass = "image-uploader";
+  }
 
+  console.log(imageUploaderClass);
   return (
     <div className="image-upload-container">
-      <div className={loading ? "image-uploader-loading" : "image-uploader"}>
+      <div className={imageUploaderClass}>
         <div className="preview-container">
-          {loading ? (
-            <ClipLoader />
-          ) : (
-            <img
-              className="preview"
-              src={previewImage.src ? previewImage.src : "image-upload.png"}
-              style={{
-                height: `${height > width ? "auto" : "100%"}`,
-                width: `${height > width ? "100%" : "auto"}`,
-              }}
+          {loading && (
+            <ClipLoader
+              color={"white"}
+              cssOverride={{ position: "absolute", opacity: 1 }}
             />
           )}
+
+          <img
+            className="preview"
+            src={previewImage.src ? previewImage.src : "image-upload.png"}
+            style={{
+              height: `${height > width ? "auto" : "100%"}`,
+              width: `${height > width ? "100%" : "auto"}`,
+            }}
+          />
         </div>
         <input
           className="file-upload"
@@ -133,6 +145,7 @@ const ImageUploader = ({ handleToggleAvatarUpload }) => {
           name="uploaded-file"
           title="hahaha"
           onChange={loadFile}
+          style={{ height: "30px", fontSize: "20px" }}
         />
 
         <div className="confirm-cancel">

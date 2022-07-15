@@ -15,8 +15,24 @@
   font-weight: bold;
 }
 
+.user-info {
+  display: flex;
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+}
+
 .users-avatar-container {
   margin-right: 10px;
   width: 50px;
   height: 50px;
+}
+
+.admin-badge {
+  width: 20px;
+  margin-left: 5px;
+}
+
+.admin-badge img {
+  width: 100%;
 }

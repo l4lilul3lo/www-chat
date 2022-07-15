@@ -63,7 +63,7 @@ const Login = () => {
             autoComplete="on"
           />
 
-          <input id="login-submit-btn" type="submit" />
+          <input id="auth-submit-btn" type="submit" />
         </form>
         <p>
           Don't have an account? You can sign-up{" "}

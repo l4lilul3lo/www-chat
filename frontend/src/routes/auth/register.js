@@ -59,7 +59,7 @@ const Register = () => {
           <input
             type="password"
             name="password2"
-            id="password"
+            id="password2"
             onChange={handleChange}
           />
           <input id="auth-submit-btn" type="submit" />

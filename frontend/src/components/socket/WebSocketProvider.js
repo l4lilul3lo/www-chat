@@ -40,12 +40,10 @@ const WebSocketProvider = ({ children }) => {
       dispatch(setRoomsIsLoading(false));
     });
 
+    socket.on("user:passwordSuccess", () => {
+      dispatch(toggleRoomPasswordForm());
+    });
     socket.on("user:joinRoomSuccess", (users, messages, room) => {
-      console.log("success");
-      console.log(room.passwordProtected);
-      if (room.passwordProtected) {
-        dispatch(toggleRoomPasswordForm());
-      }
       dispatch(setRoom(room));
       dispatch(setUsers(users));
       dispatch(setMessages(messages));
@@ -58,6 +56,7 @@ const WebSocketProvider = ({ children }) => {
     });
 
     socket.on("user:passwordPrompt", () => {
+      console.log("PASSWORD PROMPT");
       dispatch(toggleRoomPasswordForm());
     });
 

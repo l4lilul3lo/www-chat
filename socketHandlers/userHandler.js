@@ -38,6 +38,7 @@ module.exports = (io, socket) => {
     // edgey
     console.log("room", room);
     console.log("password", password);
+    console.log(socket.user);
     if (!socket.user) {
       console.log("No user attached to socket. Refresh page.");
       // socket emit request user. retry 0.
@@ -55,8 +56,13 @@ module.exports = (io, socket) => {
     const roomUserInfo = await getRoomUserInfoDB(userId, roomId);
     const passwordProtected = roomInfo.passwordProtected;
     const userIsAdmin = roomUserInfo?.privilege === 2;
-
+    socket.user.isAdmin = userIsAdmin ? true : false;
+    console.log(socket.user);
+    console.log("passwordProtected", passwordProtected);
+    console.log(roomUserInfo);
+    console.log("userIsAdmin", userIsAdmin);
     if (!userIsAdmin && passwordProtected) {
+      console.log("ACTIVATED");
       const authStatus = await determineAuthStatus(roomInfo, password);
       if (authStatus === "undetermined") {
         socket.emit("user:passwordPrompt");
@@ -68,6 +74,10 @@ module.exports = (io, socket) => {
           reason: "Password is incorrect.",
         });
         return;
+      }
+
+      if (authStatus === "authorized") {
+        socket.emit("user:passwordSuccess");
       }
     }
 

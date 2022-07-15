@@ -17,6 +17,7 @@ module.exports = (io, socket) => {
     }
     console.log(room);
     // create rooms_users entry with new room data and the user who created it, with priveledge set to 2.
+    createRoomUserDB(socket.user.id, room.id, 2);
     io.emit("room:created", room);
   }
 

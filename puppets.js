@@ -35,23 +35,26 @@ async function registerAndLogin(pages) {
     page.password = faker.random.word();
     await inputText(page, "#username", page.username);
     await inputText(page, "#password", page.password);
+    await inputText(page, "#password2", page.password);
     const usernameValue = await readValue(page, "#username");
     const passwordValue = await readValue(page, "#password");
+
     console.log("usernameValue", usernameValue);
     console.log("passwordValue", passwordValue);
     await page.screenshot({
       path: `./screenshots/register/screenshot${i}.png`,
     });
-    await page.click("#register-submit-btn");
+    await page.click("#auth-submit-btn");
     await page.goto("http://localhost:3000/login");
     await inputText(page, "#username", page.username);
     await inputText(page, "#password", page.password);
+
     const loginNameValue = await readValue(page, "#username");
     const loginPasswordValue = await readValue(page, "#password");
     console.log(loginNameValue);
     console.log(loginPasswordValue);
     await page.screenshot({ path: `./screenshots/login/screenshot${i}.png` });
-    await page.click("#login-submit-btn");
+    await page.click("#auth-submit-btn");
     setTimeout(async () => {
       const cookies = await page.cookies();
       console.log("cookies", cookies);

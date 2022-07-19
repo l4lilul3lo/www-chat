@@ -15,11 +15,16 @@ const Settings = () => {
   const [avatarUploadIsToggled, setAvatarUploadIsToggled] = useState(false);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
+  async function handleLogout() {
+    // const response = await
+  }
+
   function handleToggleAvatarUpload() {
     console.log("fired");
     console.log(avatarUploadIsToggled);
     setAvatarUploadIsToggled(!avatarUploadIsToggled);
   }
+
   const anyToggled = avatarUploadIsToggled || displayColorPicker;
 
   return (
@@ -69,7 +74,9 @@ const Settings = () => {
         />
       )}
 
-      <button className="logout">Logout</button>
+      <button className="logout" onClick={handleLogout}>
+        Logout
+      </button>
 
       {anyToggled && <div className="gray-out-settings"></div>}
     </div>

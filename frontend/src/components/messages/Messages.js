@@ -45,6 +45,8 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
     setMessagesIsAtBottom(isAtBottom);
   }, []);
 
+  const noMessagesYet = <div className="no-messages-yet"></div>;
+
   return (
     <div className="messages" onScroll={handleScroll} ref={messagesEl}>
       {messagesState.isLoading

@@ -40,10 +40,9 @@ const AvatarUploader = ({
       top: "30%",
       left: "50%",
       height: "30%",
-      width: "100%",
+      width: "90%",
       x: "-50%",
       y: "-50%",
-      padding: "10px",
       borderRadius: 0,
       transition: {
         top: {
@@ -102,12 +101,8 @@ const AvatarUploader = ({
             style={{
               position: "absolute",
               background: "gray",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               zIndex: 2,
               pointerEvents: "auto",
-              overflow: "hidden",
             }}
           >
             <ImageUploader

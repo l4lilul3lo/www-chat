@@ -32,42 +32,4 @@ async function get(endpoint) {
   return data;
 }
 
-async function checkAuth() {
-  try {
-    const data = await get("auth/checkAuth");
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function fetchCafeInfo() {
-  const { cafeInfo } = await get("rooms/getCafeInfo");
-
-  return cafeInfo;
-}
-
-async function fetchUser() {
-  const { user } = await get("users/getUser");
-
-  return user;
-}
-
-async function login(formData) {
-  const { message } = await post("auth/login", {
-    name: "formData",
-    data: formData,
-  });
-  console.log(message);
-  return message;
-}
-
-async function register(formData) {
-  const { message } = await post("auth/register", {
-    name: "formData",
-    data: formData,
-  });
-  return message;
-}
-
-export { fetchCafeInfo, fetchUser, checkAuth, login, register };
+export { get, post };

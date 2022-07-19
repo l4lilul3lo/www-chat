@@ -10,7 +10,8 @@
     "ioredis": "^5.0.5",
     "pg": "^8.7.3",
     "sequelize": "^6.21.0",
-    "socket.io": "^4.5.0"
+    "socket.io": "^4.5.0",
+    "unicode-chars": "^1.0.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.3.0",

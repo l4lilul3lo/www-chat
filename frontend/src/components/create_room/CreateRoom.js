@@ -12,7 +12,11 @@ const CreateRoom = ({ toggleDisplay, display }) => {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(room.name, room.password);
+    if (!room.name) {
+      return;
+    }
     ws.createRoom(room.name, room.password);
+    toggleDisplay(!display);
   }
 
   function handleChange(e) {

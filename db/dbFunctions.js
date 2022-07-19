@@ -7,6 +7,8 @@ const { Message } = require("../models/message");
 const { Settings } = require("../models/settings");
 const Redis = require("ioredis");
 const redisClient = new Redis();
+const unicodeChars = require("unicode-chars");
+const chars = unicodeChars();
 const {
   createUsers,
   createRooms,

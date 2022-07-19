@@ -71,6 +71,7 @@ const WebSocketProvider = ({ children }) => {
 
     socket.on("room:created", (room) => {
       dispatch(addRoom(room));
+      ws.joinRoom(room);
     });
 
     socket.on("disconnect", (reason) => {

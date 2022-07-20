@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { selectMessagesState } from "../../features/messages/messagesSlice";
 import { selectRoom } from "../../features/room/roomSlice";

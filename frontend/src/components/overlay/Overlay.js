@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectRoomClicked } from "../../features/toggles/roomClickedSlice";
 import { selectToggles } from "../../features/toggles/togglesSlice";
@@ -8,13 +8,14 @@ import {
   toggleSettings,
   closeAll,
 } from "../../features/toggles/togglesSlice";
+import { selectRoom } from "../../features/room/roomSlice";
 import SmallScreen from "./SmallScreen";
 import SettingsModal from "./SettingsModal";
 import RoomPasswordModal from "./RoomPasswordModal";
 import "./overlay.css";
 const Overlay = () => {
   const dispatch = useDispatch();
-  const roomClicked = useSelector(selectRoomClicked);
+  const roomClicked = useSelector(selectRoom);
   const toggles = useSelector(selectToggles);
   const { usersOpen, roomsOpen, settingsOpen, roomPasswordFormOpen } = toggles;
   const anyOpen = Object.values(toggles).includes(true);
@@ -35,12 +36,13 @@ const Overlay = () => {
     dispatch(closeAll());
   }
 
-  console.log("anyOpen", anyOpen);
-  useEffect(() => {
-    if (roomClicked !== null) {
-      handleRoomsToggle();
-    }
-  }, [roomClicked]);
+  // console.log("anyOpen", anyOpen);
+  // useEffect(() => {
+  //   if (roomClicked !== null) {
+  //     handleRoomsToggle();
+  //   }
+
+  // }, [roomClicked]);
 
   return (
     <div className="overlay">

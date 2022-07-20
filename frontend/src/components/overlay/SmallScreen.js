@@ -1,11 +1,17 @@
 import RoomsSlide from "./RoomsSlide";
 import UsersSlide from "./UsersSlide";
+import React, { useEffect } from "react";
 const SmallScreen = ({
   handleRoomsToggle,
   handleUsersToggle,
   roomsOpen,
   usersOpen,
 }) => {
+  useEffect(() => {
+    return () => {
+      console.log("dismounted");
+    };
+  });
   return (
     <div className="small-screen">
       <div className="slide-toggles">

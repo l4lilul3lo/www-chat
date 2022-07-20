@@ -1,3 +1,4 @@
+import React from "react";
 import "./rooms.css";
 const RoomsLoading = () => {
   return (

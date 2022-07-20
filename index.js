@@ -2,17 +2,18 @@
 const express = require("express");
 const app = express();
 const http = require("http");
+require("dotenv").config();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
     methods: ["GET", "POST"],
   },
 });
 
 // cors setup (development only)
 const cors = require("cors");
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "http://localhost:3001", credentials: true }));
 
 // helmet setup (security)
 const helmet = require("helmet");
@@ -84,4 +85,6 @@ io.on("connection", onConnection);
 
 // start server
 const port = process.env.PORT || 9000;
-server.listen(port, () => {});
+server.listen(port, () => {
+  console.log("listening on 9000");
+});

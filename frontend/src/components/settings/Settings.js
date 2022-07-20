@@ -2,7 +2,7 @@ import "./settings.css";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../features/user/userSlice";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import React, { useState } from "react";
 import Avatar from "../avatar/Avatar";
 import ImageUploader from "../image_uploader/ImageUploader.js";
 import AvatarUploader from "../image_uploader/AvatarUploader";

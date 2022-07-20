@@ -1,4 +1,5 @@
 import "./initial-loading.css";
+import React from "react";
 const InitialLoading = () => {
   return (
     <div class="initial-app">

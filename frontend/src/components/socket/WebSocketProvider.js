@@ -48,7 +48,6 @@ const WebSocketProvider = ({ children }) => {
       dispatch(setUsers(users));
       dispatch(setMessages(messages));
       dispatch(setMessagesIsLoading(false));
-      localStorage.setItem("room", JSON.stringify(room));
     });
 
     socket.on("user:joinRoomFailure", (info) => {

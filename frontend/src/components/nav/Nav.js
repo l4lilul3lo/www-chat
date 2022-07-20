@@ -2,6 +2,7 @@ import { addNotification } from "../../features/notifications/notificationsSlice
 import Profile from "../profile/Profile";
 import "./nav.css";
 import { useDispatch } from "react-redux";
+import React from "react";
 
 const Nav = () => {
   const dispatch = useDispatch();

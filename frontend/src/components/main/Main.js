@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import Rooms from "../rooms/Rooms";

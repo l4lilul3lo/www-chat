@@ -1,3 +1,4 @@
+import React from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import RoomPasswordForm from "../room_password_form/RoomPasswordForm";
 const RoomPasswordModal = ({ isVisible }) => {

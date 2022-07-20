@@ -1,4 +1,5 @@
 import "./avatar.css";
+import React from "react";
 
 const Avatar = ({ url, width, height }) => {
   return (

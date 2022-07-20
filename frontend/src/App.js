@@ -6,6 +6,7 @@ import { WebSocketProvider } from "./components/socket/WebSocketProvider";
 import { checkAuth } from "./api";
 import InitialLoading from "./components/initial_loading/InitialLoading";
 import Overlay from "./components/overlay/Overlay";
+import React from "react";
 import "./App.css";
 
 function App() {

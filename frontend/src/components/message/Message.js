@@ -1,3 +1,4 @@
+import React from "react";
 import "./message.css";
 import Avatar from "../avatar/Avatar";
 const Message = ({ message }) => {

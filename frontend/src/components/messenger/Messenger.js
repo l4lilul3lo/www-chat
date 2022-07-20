@@ -1,3 +1,4 @@
+import React from "react";
 import Messages from "../messages/Messages";
 import MessageForm from "../message_form/MessageForm";
 import { useState } from "react";

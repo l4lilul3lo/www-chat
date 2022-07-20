@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
 import { ChromePicker } from "react-color";

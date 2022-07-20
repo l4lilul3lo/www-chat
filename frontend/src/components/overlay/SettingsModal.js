@@ -1,4 +1,6 @@
+import React from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+
 import Settings from "../settings/Settings";
 const SettingsModal = ({ isVisible }) => {
   return (

@@ -1,3 +1,4 @@
+import React from "react";
 import "./message.css";
 const MessageLoading = () => {
   return (

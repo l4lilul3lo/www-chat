@@ -22,7 +22,7 @@ const WebSocketContext = createContext(null);
 
 const WebSocketProvider = ({ children }) => {
   const dispatch = useDispatch();
-  let socket = io("ws://localhost:9000");
+  let socket = io("ws://www-chat.herokuapp.com/");
 
   const renderCounter = useRef(0);
   renderCounter.current = renderCounter.current + 1;

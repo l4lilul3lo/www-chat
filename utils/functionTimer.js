@@ -25,6 +25,8 @@ function callFunctionAndTime(fnction, argsArray, n) {
     `${totalTime.toFixed(3)}ms`,
     "\x1b[0m"
   );
+  const averageTime = totalTime / n;
+  return { totalTime, averageTime };
 }
 
 module.exports = { callFunctionAndTime };

@@ -1,8 +1,13 @@
 // server setup
+const production = process.env.NODE_ENV === "production";
+const development = process.env.NODE_ENV === "development";
+const PORT = process.env.PORT || 9000;
+const origin = development ? "http://localhost:3000" : process.env.HOST;
 const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
+
 const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -10,10 +15,10 @@ const io = require("socket.io")(server, {
   },
 });
 
-// cors setup (development only)
-const cors = require("cors");
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-
+if (development) {
+  const cors = require("cors");
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+}
 // helmet setup (security)
 const helmet = require("helmet");
 app.use(helmet());
@@ -22,7 +27,7 @@ app.use(helmet());
 const session = require("express-session");
 let RedisStore = require("connect-redis")(session);
 const Redis = require("ioredis");
-let redisClient = new Redis();
+let redisClient = new Redis(process.env.REDIS_URL);
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -36,7 +41,7 @@ app.use(sessionMiddleware);
 // look into compressing text.
 
 // static serve build if in production.
-if (process.env.PRODUCTION) {
+if (production) {
   app.use(express.static(`${__dirname}/frontend/build`));
 }
 
@@ -63,11 +68,11 @@ app.use("/rooms", isAuth, roomsRoute);
 app.use("/messages", isAuth, messagesRoute);
 app.use("/roomsUsers", isAuth, roomsUsersRoute);
 app.use("/auth", authRoute);
-if (process.env.PRODUCTION) {
-  app.get("/", (req, res) => {
-    res.sendFile(`${__dirname}/frontend/build/index.html`);
-  });
-}
+
+app.get("/", (req, res) => {
+  res.sendFile(`${__dirname}/frontend/build/index.html`);
+});
+
 // import and register socket handlers
 const registerUserHandlers = require("./socketHandlers/userHandler");
 const registerRoomsHandlers = require("./socketHandlers/roomsHandlers");

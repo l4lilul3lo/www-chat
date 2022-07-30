@@ -24,7 +24,7 @@ const ImageUploader = ({ handleToggleAvatarUpload, avatarUploadIsToggled }) => {
   }
 
   async function updateUserImage(imageUrl) {
-    await fetch("http://localhost:9000/users/updateUserImage", {
+    await fetch("https://www-chat.herokuapp.com/users/updateUserImage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

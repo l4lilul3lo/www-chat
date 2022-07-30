@@ -1,6 +1,6 @@
 async function fetcher(endpoint, options = {}) {
   try {
-    const baseUrl = "http://localhost:9000/";
+    const baseUrl = "https://www-chat.herokuapp.com/";
     const url = baseUrl + endpoint;
     const response = await fetch(url, { ...options, credentials: "include" });
     const data = await response.json();

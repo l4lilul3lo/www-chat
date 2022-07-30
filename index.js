@@ -24,6 +24,15 @@ const io = require("socket.io")(server, {
 const helmet = require("helmet");
 app.use(helmet());
 
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "img-src": ["'self'", "https: data:"],
+    },
+  })
+);
+
 // session setup
 const session = require("express-session");
 let RedisStore = require("connect-redis")(session);

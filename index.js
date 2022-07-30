@@ -10,15 +10,16 @@ const server = http.createServer(app);
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://www-chat.herokuapp.com/",
     methods: ["GET", "POST"],
   },
 });
 
-if (development) {
-  const cors = require("cors");
-  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-}
+// if (development) {
+//   const cors = require("cors");
+//   app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// }
+
 // helmet setup (security)
 const helmet = require("helmet");
 app.use(helmet());

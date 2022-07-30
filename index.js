@@ -29,6 +29,11 @@ app.use(
     useDefaults: true,
     directives: {
       "img-src": ["'self'", "https: data: blob:"],
+      connectSrc: [
+        "'self'",
+        "https://imagehostingserver.l4lilul3lo.repl.co/",
+        "https://cloudflare-ipfs.com/",
+      ],
     },
   })
 );

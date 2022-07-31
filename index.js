@@ -12,13 +12,6 @@ if (development) {
   app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 }
 
-app.use(
-  cors({
-    origin: "https://windows98box.l4lilul3lo.repl.co/",
-    credentials: true,
-  })
-);
-
 const io = require("socket.io")(server, {
   cors: {
     origin: development
@@ -66,6 +59,7 @@ const sessionMiddleware = session({
     sameSite: "none",
   },
 });
+app.set("trust proxy", 1);
 app.use(sessionMiddleware);
 
 // look into compressing text.

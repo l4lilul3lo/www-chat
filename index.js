@@ -28,7 +28,12 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      "img-src": ["'self'", "https: data: blob:"],
+      "img-src": [
+        "'self'",
+        "https: data: blob:",
+        "https://imagehostingserver.l4lilul3lo.repl.co/",
+        "https://cloudflare-ipfs.com/",
+      ],
       connectSrc: [
         "'self'",
         "https://imagehostingserver.l4lilul3lo.repl.co/",

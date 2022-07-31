@@ -63,6 +63,7 @@ const sessionMiddleware = session({
     httpOnly: true,
     maxAge: 2 * 24 * 60 * 60 * 1000,
     secure: development ? false : true,
+    sameSite: "none",
   },
 });
 app.use(sessionMiddleware);

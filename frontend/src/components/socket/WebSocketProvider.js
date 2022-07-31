@@ -22,7 +22,9 @@ const WebSocketContext = createContext(null);
 
 const WebSocketProvider = ({ children }) => {
   const dispatch = useDispatch();
-  let socket = io("ws://localhost:9000");
+  const host = window.location.host;
+  const destination = host === "localhost:3000" ? "localhost:9000" : host;
+  let socket = io(`ws://${destination}`);
 
   useEffect(() => {
     socket.on("connect", () => {

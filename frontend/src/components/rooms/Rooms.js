@@ -1,25 +1,24 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { selectRoomsState } from "../../features/rooms/roomsSlice";
 import CreateRoom from "../create_room/CreateRoom";
 import RoomLoading from "../room/RoomLoading";
 import Room from "../room/Room";
 import "./rooms.css";
+import { toggleCreateRoom } from "../../features/toggles/createRoomToggleSlice";
 
 const Rooms = ({ slideIn }) => {
+  const dispatch = useDispatch();
   const roomsState = useSelector(selectRoomsState);
-  const [display, toggleDisplay] = useState(false);
 
   return (
     <div className={`rooms ${slideIn}`}>
-      {display && (
-        <CreateRoom toggleDisplay={toggleDisplay} display={display} />
-      )}
+      <CreateRoom />
       <div className="rooms-header">
         <div>Rooms</div>
         <span
           className="material-symbols-outlined"
-          onClick={() => toggleDisplay(!display)}
+          onClick={() => dispatch(toggleCreateRoom())}
         >
           add
         </span>

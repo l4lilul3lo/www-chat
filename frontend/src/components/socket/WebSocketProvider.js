@@ -17,6 +17,7 @@ import { toggleRoomPasswordForm } from "../../features/toggles/togglesSlice";
 import { useRef, useEffect } from "react";
 import { addNotification } from "../../features/notifications/notificationsSlice";
 import { setSocketMessage } from "../../features/socket_messages/socketMessageSlice";
+import { toggleCreateRoom } from "../../features/toggles/createRoomToggleSlice";
 
 const WebSocketContext = createContext(null);
 
@@ -36,6 +37,10 @@ const WebSocketProvider = ({ children }) => {
     socket.on("rooms:getRoomsResponse", (rooms) => {
       dispatch(setRooms(rooms));
       dispatch(setRoomsIsLoading(false));
+    });
+
+    socket.on("room:roomExists", (info) => {
+      dispatch(setSocketMessage(info.reason));
     });
 
     socket.on("user:passwordSuccess", () => {
@@ -67,6 +72,7 @@ const WebSocketProvider = ({ children }) => {
     });
 
     socket.on("room:created", (room) => {
+      dispatch(toggleCreateRoom());
       dispatch(addRoom(room));
       ws.joinRoom(room);
     });

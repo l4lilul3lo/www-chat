@@ -1,4 +1,4 @@
-const { createRoomDB, getRoomsDB } = require("../models/room");
+const { createRoomDB, getRoomsDB, getRoomByNameDB } = require("../models/room");
 const bcrypt = require("bcrypt");
 const { createRoomUserDB } = require("../models/roomsUsers");
 module.exports = (io, socket) => {
@@ -6,6 +6,12 @@ module.exports = (io, socket) => {
     console.log("roomName", roomName);
     console.log("password", password);
     if (!socket.user) {
+      return;
+    }
+    const roomExists = await getRoomByNameDB(roomName);
+    console.log("roomExists", roomExists);
+    if (roomExists) {
+      socket.emit("room:roomExists", { reason: "Room name already taken" });
       return;
     }
     let room;

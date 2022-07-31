@@ -12,6 +12,7 @@ import roomClickedReducer from "./features/toggles/roomClickedSlice";
 import togglesReducer from "./features/toggles/togglesSlice";
 import notificationsReducer from "./features/notifications/notificationsSlice";
 import socketMessageReducer from "./features/socket_messages/socketMessageSlice";
+import createRoomToggleReducer from "./features/toggles/createRoomToggleSlice";
 
 import logger from "redux-logger";
 
@@ -25,6 +26,7 @@ export const store = configureStore({
     auth: authReducer,
     settings: settingsReducer,
     avatarUploadToggle: avatarUploadToggleReducer,
+    createRoomToggle: createRoomToggleReducer,
     colorPickerToggle: colorPickerToggleReducer,
     roomClicked: roomClickedReducer,
     toggles: togglesReducer,

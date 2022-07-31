@@ -29,6 +29,17 @@ async function createRoomDB(roomObj) {
   return { id, name, passwordProtected };
 }
 
+async function getRoomByNameDB(roomName) {
+  const res = await Room.findOne({
+    where: {
+      name: roomName,
+    },
+    attributes: ["id", "name"],
+  });
+
+  return res?.dataValues;
+}
+
 async function getRoomsDB() {
   const res = await Room.findAll({
     attributes: ["id", "name", "passwordProtected"],
@@ -64,4 +75,5 @@ module.exports = {
   getRoomsDB,
   getRoomByIdDB,
   getCafeInfoDB,
+  getRoomByNameDB,
 };

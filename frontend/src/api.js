@@ -1,9 +1,10 @@
 // so we can say if window location is 3000, forward requests to 9000,
 //otherwise forward them to window location.
 const baseUrl =
-  window.location.href === "http://localhost:3000/"
-    ? "http://localhost:9000/"
-    : window.location.href;
+  window.location.origin === "http://localhost:3000"
+    ? "http://localhost:9000"
+    : window.location.origin;
+
 async function fetcher(endpoint, options = {}) {
   try {
     const url = baseUrl + endpoint;
@@ -39,7 +40,7 @@ async function get(endpoint) {
 
 async function checkAuth() {
   try {
-    const data = await get("auth/checkAuth");
+    const data = await get("/auth/checkAuth");
     return data;
   } catch (error) {
     console.log(error);
@@ -47,19 +48,19 @@ async function checkAuth() {
 }
 
 async function fetchCafeInfo() {
-  const { cafeInfo } = await get("rooms/getCafeInfo");
+  const { cafeInfo } = await get("/rooms/getCafeInfo");
 
   return cafeInfo;
 }
 
 async function fetchUser() {
-  const { user } = await get("users/getUser");
+  const { user } = await get("/users/getUser");
 
   return user;
 }
 
 async function login(formData) {
-  const { message } = await post("auth/login", {
+  const { message } = await post("/auth/login", {
     name: "formData",
     data: formData,
   });
@@ -68,7 +69,7 @@ async function login(formData) {
 }
 
 async function register(formData) {
-  const { message } = await post("auth/register", {
+  const { message } = await post("/auth/register", {
     name: "formData",
     data: formData,
   });
@@ -76,7 +77,7 @@ async function register(formData) {
 }
 
 async function updateUserImage(imageUrl) {
-  await post("users/updateUserImage", {
+  await post("/users/updateUserImage", {
     name: "imageUrl",
     data: imageUrl,
   });
@@ -85,7 +86,7 @@ async function updateUserImage(imageUrl) {
 }
 
 async function updateUserSettings(settings) {
-  await post("users/updateSettings", {
+  await post("/users/updateSettings", {
     name: "settings",
     data: settings,
   });

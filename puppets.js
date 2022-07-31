@@ -30,6 +30,19 @@ async function readValue(page, selector) {
 async function registerAndLogin(pages) {
   for (let i = 0; i < pages.length; i++) {
     const page = pages[i];
+    page
+      .on("console", (message) =>
+        console.log(
+          `${message.type().substr(0, 3).toUpperCase()} ${message.text()}`
+        )
+      )
+      .on("pageerror", ({ message }) => console.log(message))
+      .on("response", (response) =>
+        console.log(`${response.status()} ${response.url()}`)
+      )
+      .on("requestfailed", (request) =>
+        console.log(`${request.failure().errorText} ${request.url()}`)
+      );
     await page.goto("http://localhost:3000/register");
     page.username = faker.name.findName();
     page.password = faker.random.word();
@@ -70,7 +83,7 @@ async function simulation() {
 
   setTimeout(async () => {
     await registerAndLogin(pages);
-  }, 1000);
+  }, 2000);
 }
 
 simulation();

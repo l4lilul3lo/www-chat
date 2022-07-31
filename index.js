@@ -34,11 +34,6 @@ app.use(
         "https://imagehostingserver.l4lilul3lo.repl.co/",
         "https://cloudflare-ipfs.com/",
       ],
-      connectSrc: [
-        "'self'",
-        "https://imagehostingserver.l4lilul3lo.repl.co/",
-        "https://cloudflare-ipfs.com/",
-      ],
     },
   })
 );

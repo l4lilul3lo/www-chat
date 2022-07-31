@@ -5,6 +5,7 @@
   max-width: 260px;
   height: 100%;
   position: relative;
+  overflow-y: auto;
 }
 
 .rooms-header {

@@ -23,15 +23,21 @@ const io = require("socket.io")(server, {
 
 // helmet setup (security)
 const helmet = require("helmet");
-app.use(helmet());
 
 app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      "img-src": ["'self'", "https: data: blob:"],
-      connectSrc: ["'self'", "https://imagehostingserver.l4lilul3lo.repl.co/"],
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        frameAncestors: ["https://foo.example.com", "https://boo.example.com"],
+        "img-src": ["'self'", "https: data: blob:"],
+        connectSrc: [
+          "'self'",
+          "https://imagehostingserver.l4lilul3lo.repl.co/",
+        ],
+        frameAncestors: ["https://windows98box.l4lilul3lo.repl.co/"],
+      },
     },
+    frameguard: false,
   })
 );
 

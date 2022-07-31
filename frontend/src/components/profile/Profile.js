@@ -6,6 +6,7 @@ import Settings from "../settings/Settings";
 import { toggleSettings } from "../../features/toggles/togglesSlice";
 import "./profile.css";
 import { v4 as uuidv4 } from "uuid";
+import gearIcon from "./gear-icon.png";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -20,9 +21,7 @@ const Profile = () => {
           onClick={() => dispatch(toggleSettings())}
         >
           <Avatar key={uuidv4()} height={50} width={50} url={user.image} />
-          <span className="material-symbols-outlined settings-gear">
-            settings
-          </span>
+          <img src={gearIcon} className="gear-icon" alt="settings gear" />
         </div>
       </div>
       {displaySettings && <Settings />}

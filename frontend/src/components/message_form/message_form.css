@@ -25,7 +25,6 @@
   outline: none;
 }
 
-.send-btn {
-  color: blue;
-  height: 100%;
+.send-icon {
+  width: 25px;
 }

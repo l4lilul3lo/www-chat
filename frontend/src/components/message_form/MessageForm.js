@@ -6,6 +6,7 @@ import { useContext } from "react";
 import autosize from "autosize";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import "./message_form.css";
+import sendIcon from "./send-icon.png";
 const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
   const ws = useContext(WebSocketContext);
   const user = useSelector(selectUser);
@@ -59,7 +60,7 @@ const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
         value={content}
       ></textarea>
       <div className="send-btn-container">
-        <span className="material-symbols-outlined send-btn">send</span>
+        <img src={sendIcon} alt="send message" className="send-icon" />
       </div>
     </div>
   );

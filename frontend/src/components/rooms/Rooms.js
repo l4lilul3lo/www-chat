@@ -5,7 +5,7 @@ import RoomLoading from "../room/RoomLoading";
 import Room from "../room/Room";
 import "./rooms.css";
 import { toggleCreateRoom } from "../../features/toggles/createRoomToggleSlice";
-
+import addIcon from "./add_icon.png";
 const Rooms = ({ slideIn }) => {
   const dispatch = useDispatch();
   const roomsState = useSelector(selectRoomsState);
@@ -15,12 +15,12 @@ const Rooms = ({ slideIn }) => {
       <CreateRoom />
       <div className="rooms-header">
         <div>Rooms</div>
-        <span
-          className="material-symbols-outlined"
+        <img
+          className="add-icon"
+          src={addIcon}
           onClick={() => dispatch(toggleCreateRoom())}
-        >
-          add
-        </span>
+          alt="create room"
+        />
       </div>
 
       {roomsState.isLoading

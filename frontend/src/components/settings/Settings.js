@@ -8,6 +8,7 @@ import AvatarUploader from "../image_uploader/AvatarUploader";
 import { logout } from "../../api";
 import { useNavigate } from "react-router-dom";
 import ColorPicker from "../color_picker/ColorPicker";
+import addPhotoIcon from "./add-photo-icon.png";
 const Settings = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
@@ -35,9 +36,7 @@ const Settings = () => {
             <Avatar key={uuidv4()} url={user.image} />
           </div>
 
-          <span className="material-symbols-outlined image-upload-icon">
-            add_photo_alternate
-          </span>
+          <img src={addPhotoIcon} alt="add photo" className="add-photo-icon" />
         </div>
 
         <h1>{user.name}</h1>

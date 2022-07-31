@@ -49,7 +49,7 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
   return (
     <div className="messages" onScroll={handleScroll} ref={messagesEl}>
       {messagesState.isLoading
-        ? [...new Array(40)].map((x) => <MessageLoading />)
+        ? [...new Array(40)].map((x, i) => <MessageLoading key={i} />)
         : messagesState.messages.map((message, i) => (
             <Message message={message} key={i} />
           ))}

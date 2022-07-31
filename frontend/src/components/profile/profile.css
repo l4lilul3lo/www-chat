@@ -6,25 +6,19 @@
   justify-content: flex-end;
 }
 
-.profile:hover {
-  cursor: pointer;
-}
-
 .profile-toggle {
   height: 100%;
   position: relative;
 }
 
-.profile-toggle span {
-  font-size: 90%;
-  position: absolute;
-  z-index: 1;
-  color: black;
-  right: 0%;
-  bottom: 0%;
+.profile-toggle:hover {
+  cursor: pointer;
 }
 
-.settings-gear {
-  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
-  opacity: 0.75;
+.gear-icon {
+  width: 20px;
+  position: absolute;
+  z-index: 1;
+  right: 0%;
+  bottom: 0%;
 }

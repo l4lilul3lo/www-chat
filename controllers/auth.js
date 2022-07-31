@@ -47,7 +47,7 @@ const checkAuth = async (req, res, next) => {
 
 const logout = async (req, res) => {
   req.session.destroy();
-  res.send("logged out");
+  res.json({ message: "logged out" });
 };
 
 module.exports = { register, login, checkAuth, logout };

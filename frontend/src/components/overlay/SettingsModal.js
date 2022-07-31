@@ -16,8 +16,9 @@ const SettingsModal = ({ isVisible }) => {
               width: "80%",
               height: "90%",
               zIndex: 2,
-              background: "black",
+              background: "#1f3378",
               pointerEvents: "auto",
+              overflowY: "auto",
             }}
           >
             <Settings />

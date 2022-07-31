@@ -1,12 +1,12 @@
 import "./initial-loading.css";
 const InitialLoading = () => {
   return (
-    <div class="initial-app">
-      <div class="initial-nav"></div>
-      <div class="initial-main">
-        <div class="initial-rooms"></div>
-        <div class="initial-messenger"></div>
-        <div class="initial-users"></div>
+    <div className="initial-app">
+      <div className="initial-nav"></div>
+      <div className="initial-main">
+        <div className="initial-rooms"></div>
+        <div className="initial-messenger"></div>
+        <div className="initial-users"></div>
       </div>
     </div>
   );

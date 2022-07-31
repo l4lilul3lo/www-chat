@@ -4,6 +4,8 @@
   height: 100%;
   position: relative;
   color: black;
+  overflow-y: auto;
+  user-select: none;
 }
 
 .user-info {

@@ -39,7 +39,7 @@ const AvatarUploader = ({
     animate: {
       top: "30%",
       left: "50%",
-      height: "30%",
+      height: "200px",
       width: "90%",
       x: "-50%",
       y: "-50%",

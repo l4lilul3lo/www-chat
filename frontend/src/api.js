@@ -92,11 +92,16 @@ async function updateUserSettings(settings) {
   });
 }
 
+async function logout() {
+  await get("/auth/logout");
+}
+
 export {
   fetchCafeInfo,
   fetchUser,
   checkAuth,
   login,
+  logout,
   register,
   updateUserImage,
   updateUserSettings,

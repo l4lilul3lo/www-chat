@@ -30,6 +30,7 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
         },
       })
     );
+    setDisplayColorPicker(false);
   }
 
   useEffect(() => {

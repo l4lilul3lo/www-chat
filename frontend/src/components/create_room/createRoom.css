@@ -1,11 +1,10 @@
 .create-room-container {
   width: 100%;
-  height: 30%;
   display: flex;
   padding: 20px;
   flex-direction: column;
   position: absolute;
-  background: blue;
+  background: gray;
   color: white;
   font-size: 20px;
 }
@@ -13,7 +12,6 @@
 .create-room-container form {
   display: flex;
   justify-content: space-between;
-  height: 70%;
   flex-direction: column;
 }
 
@@ -24,10 +22,14 @@
 
 .x-close:hover {
   cursor: pointer;
-  color: gray;
+  text-shadow: 1px 1px 2px pink;
 }
 
 .socket-message {
   height: 20px;
   font-size: 12px;
+}
+
+.create-room-container input[type="submit"] {
+  margin-top: 10px;
 }

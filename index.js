@@ -56,10 +56,13 @@ const sessionMiddleware = session({
     httpOnly: true,
     maxAge: 2 * 24 * 60 * 60 * 1000,
     secure: development ? false : true,
-    sameSite: "none",
+    sameSite: development ? true : "none",
   },
 });
-app.set("trust proxy", 1);
+if (!development) {
+  app.set("trust proxy", 1);
+}
+
 app.use(sessionMiddleware);
 
 // look into compressing text.

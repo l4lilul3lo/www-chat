@@ -8,15 +8,19 @@ import ImageUploader from "../image_uploader/ImageUploader.js";
 import AvatarUploader from "../image_uploader/AvatarUploader";
 import { toggleAvatarUpload } from "../../features/toggles/avatarUploadToggleSlice";
 import { selectAvatarUploadIsToggled } from "../../features/toggles/avatarUploadToggleSlice";
+import { logout } from "../../api";
+import { useNavigate } from "react-router-dom";
 import ColorPicker from "../color_picker/ColorPicker";
 const Settings = () => {
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [avatarUploadIsToggled, setAvatarUploadIsToggled] = useState(false);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   async function handleLogout() {
-    // const response = await
+    await logout();
+    navigate("/login");
   }
 
   function handleToggleAvatarUpload() {

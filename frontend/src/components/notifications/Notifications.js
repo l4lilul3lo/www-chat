@@ -2,7 +2,6 @@ import "./notifications.css";
 import { useSelector, useDispatch } from "react-redux";
 import { selectNotifications } from "../../features/notifications/notificationsSlice";
 import { removeNotification } from "../../features/notifications/notificationsSlice";
-import { useRef } from "react";
 
 const Notifications = () => {
   const dispatch = useDispatch();

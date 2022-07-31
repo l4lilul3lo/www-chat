@@ -1,24 +1,18 @@
-import { addNotification } from "../../features/notifications/notificationsSlice";
 import Profile from "../profile/Profile";
 import "./nav.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  toggleRooms,
-  toggleUsers,
-  toggleSettings,
-  closeAll,
-} from "../../features/toggles/togglesSlice";
+import { toggleRooms, toggleUsers } from "../../features/toggles/togglesSlice";
 import { selectToggles } from "../../features/toggles/togglesSlice";
 
 const Nav = () => {
   const dispatch = useDispatch();
   const toggles = useSelector(selectToggles);
-  const { usersOpen, roomsOpen, settingsOpen, roomPasswordFormOpen } = toggles;
+  const { usersOpen, roomsOpen } = toggles;
   return (
     <div className="nav">
       <div className="nav-top">
         <div className="nav-left">
-          <img src="logo-small.png" />
+          <img src="logo-small.png" alt="www-chat" />
         </div>
 
         <div className="nav-right">

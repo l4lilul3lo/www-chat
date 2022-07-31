@@ -6,9 +6,7 @@ const AvatarUploader = ({
   avatarUploadIsToggled,
 }) => {
   const isVisible = avatarUploadIsToggled;
-  const initial = { x: 0, y: 0, scale: 0 };
   const duration = 0.2;
-  const animate = { x: 50, y: 50, scale: 1 };
   const variants = {
     initial: {
       top: 10,

@@ -16,7 +16,7 @@ const Users = ({ slideIn }) => {
     <div className={`users ${slideIn}`}>
       {users.map((user) => {
         return (
-          <div className="users-user">
+          <div className="users-user" key={user.name}>
             <div className="users-avatar-container">
               <Avatar url={user.image} />
             </div>

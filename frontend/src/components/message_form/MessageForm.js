@@ -6,7 +6,6 @@ import { useContext } from "react";
 import autosize from "autosize";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import "./message_form.css";
-import Notifications from "../notifications/Notifications";
 const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
   const ws = useContext(WebSocketContext);
   const user = useSelector(selectUser);

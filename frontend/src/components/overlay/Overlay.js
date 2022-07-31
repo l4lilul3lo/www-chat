@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectRoomClicked } from "../../features/toggles/roomClickedSlice";
 import { selectToggles } from "../../features/toggles/togglesSlice";
 import {
   toggleRooms,
   toggleUsers,
-  toggleSettings,
   closeAll,
 } from "../../features/toggles/togglesSlice";
 import SmallScreen from "./SmallScreen";
@@ -25,10 +24,6 @@ const Overlay = () => {
 
   function handleUsersToggle() {
     dispatch(toggleUsers());
-  }
-
-  function handleSettingsToggle() {
-    dispatch(toggleSettings());
   }
 
   function handleCloseAll() {

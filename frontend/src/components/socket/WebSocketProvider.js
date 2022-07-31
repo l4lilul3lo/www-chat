@@ -14,7 +14,7 @@ import {
   setRooms,
 } from "../../features/rooms/roomsSlice";
 import { toggleRoomPasswordForm } from "../../features/toggles/togglesSlice";
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import { addNotification } from "../../features/notifications/notificationsSlice";
 import { setSocketMessage } from "../../features/socket_messages/socketMessageSlice";
 import { toggleCreateRoom } from "../../features/toggles/createRoomToggleSlice";

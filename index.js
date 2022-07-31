@@ -2,6 +2,7 @@
 require("dotenv").config();
 const development = process.env.NODE_ENV === "development";
 const PORT = process.env.PORT || 9000;
+const expressStaticGzip = require("express-static-gzip");
 const cors = require("cors");
 const express = require("express");
 const app = express();
@@ -69,10 +70,9 @@ app.use(sessionMiddleware);
 
 // static serve build if in production or build mode.
 
-app.use(express.static(`${__dirname}/frontend/build/`));
-app.get("/", (req, res) => {
-  res.sendFile(`${__dirname}/frontend/build/index.html`);
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(`${__dirname}/frontend/build/index.html`);
+// });
 
 // essential/additional middleware
 app.use(express.json());
@@ -110,6 +110,8 @@ const onConnection = (socket) => {
 };
 
 io.on("connection", onConnection);
+
+app.use("/", expressStaticGzip(`${__dirname}/frontend/build/`));
 
 // start server
 server.listen(PORT, () => {});

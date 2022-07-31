@@ -23,24 +23,6 @@ const ImageUploader = ({ handleToggleAvatarUpload, avatarUploadIsToggled }) => {
     }
   }
 
-  // async function updateUserImage(imageUrl) {
-  //   await fetch("https://www-chat.herokuapp.com/users/updateUserImage", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include",
-  //     body: JSON.stringify({ imageUrl }),
-  //   });
-  //   // refresh cache
-  //   await fetch(imageUrl);
-  // }
-
-  function cancelSelection() {
-    setFile(false);
-    setPreviewImage("");
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
@@ -96,17 +78,9 @@ const ImageUploader = ({ handleToggleAvatarUpload, avatarUploadIsToggled }) => {
 
     return () => {
       URL.revokeObjectURL(objectUrl);
-      // setFile(null);
     };
   }, [file]);
 
-  // if (loading) {
-  //   return (
-  //     <ClipLoader
-  //       cssOverride={{ position: "absolute", top: "10px", left: "10px" }}
-  //     />
-  //   );
-  // }
   let imageUploaderClass;
   if (loading) {
     imageUploaderClass = "image-uploader-loading";

@@ -14,8 +14,6 @@ import notificationsReducer from "./features/notifications/notificationsSlice";
 import socketMessageReducer from "./features/socket_messages/socketMessageSlice";
 import createRoomToggleReducer from "./features/toggles/createRoomToggleSlice";
 
-import logger from "redux-logger";
-
 export const store = configureStore({
   reducer: {
     roomsState: roomsReducer,
@@ -33,5 +31,4 @@ export const store = configureStore({
     notifications: notificationsReducer,
     socketMessage: socketMessageReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

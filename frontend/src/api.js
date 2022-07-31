@@ -1,6 +1,11 @@
+// so we can say if window location is 3000, forward requests to 9000,
+//otherwise forward them to window location.
+const baseUrl =
+  window.location.href === "http://localhost:3000/"
+    ? "http://localhost:9000/"
+    : window.location.href;
 async function fetcher(endpoint, options = {}) {
   try {
-    const baseUrl = "https://www-chat.herokuapp.com/";
     const url = baseUrl + endpoint;
     const response = await fetch(url, { ...options, credentials: "include" });
     const data = await response.json();
@@ -70,4 +75,28 @@ async function register(formData) {
   return message;
 }
 
-export { fetchCafeInfo, fetchUser, checkAuth, login, register };
+async function updateUserImage(imageUrl) {
+  await post("users/updateUserImage", {
+    name: "imageUrl",
+    data: imageUrl,
+  });
+  // refresh cache
+  await fetch(imageUrl);
+}
+
+async function updateUserSettings(settings) {
+  await post("users/updateSettings", {
+    name: "settings",
+    data: settings,
+  });
+}
+
+export {
+  fetchCafeInfo,
+  fetchUser,
+  checkAuth,
+  login,
+  register,
+  updateUserImage,
+  updateUserSettings,
+};

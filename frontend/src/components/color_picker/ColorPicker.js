@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
 import { ChromePicker } from "react-color";
+import { updateUserSettings } from "../../api";
 import "./color_picker.css";
 const ColorPicker = ({ setDisplayColorPicker }) => {
   const user = useSelector(selectUser);
@@ -15,17 +16,11 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
   }
 
   async function handleSave() {
-    const response = await fetch("http://localhost:9000/users/updateSettings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        settings: {
-          messageColor: determineColor(),
-          messageBackground: determineBackground(),
-        },
-      }),
-    });
+    const settings = {
+      messageColor: determineColor(),
+      messageBackground: determineBackground(),
+    };
+    await updateUserSettings(settings);
     dispatch(
       setUser({
         ...user,

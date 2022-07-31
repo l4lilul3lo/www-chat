@@ -30,15 +30,13 @@ async function determineAuthStatus(roomInfo, password) {
     return "undetermined";
   }
   const isCorrectPassword = await bcrypt.compare(password, roomInfo.password);
-  console.log(isCorrectPassword);
+
   return isCorrectPassword ? "authorized" : "unauthorized";
 }
 module.exports = (io, socket) => {
   async function joinRoom(room, password) {
     // edgey
-    console.log("room", room);
-    console.log("password", password);
-    console.log(socket.user);
+
     if (!socket.user) {
       console.log("No user attached to socket. Refresh page.");
       // socket emit request user. retry 0.
@@ -57,12 +55,8 @@ module.exports = (io, socket) => {
     const passwordProtected = roomInfo.passwordProtected;
     const userIsAdmin = roomUserInfo?.privilege === 2;
     socket.user.isAdmin = userIsAdmin ? true : false;
-    console.log(socket.user);
-    console.log("passwordProtected", passwordProtected);
-    console.log(roomUserInfo);
-    console.log("userIsAdmin", userIsAdmin);
+
     if (!userIsAdmin && passwordProtected) {
-      console.log("ACTIVATED");
       const authStatus = await determineAuthStatus(roomInfo, password);
       if (authStatus === "undetermined") {
         socket.emit("user:passwordPrompt");
@@ -84,7 +78,6 @@ module.exports = (io, socket) => {
     if (!roomUserInfo) {
       await createRoomUserDB(userId, roomId);
     }
-    console.log("this far");
 
     if (roomUserInfo?.isBanned) {
       socket.emit("user:joinRoomFailure", { reason: "You were banned." });
@@ -96,7 +89,6 @@ module.exports = (io, socket) => {
     const { uniqueUsers, isUserDuplicate } = await scanRoom(io, userId, roomId);
     socket.emit("user:joinRoomSuccess", uniqueUsers, roomMessages, room);
     socket.join(roomId);
-    console.log("that far");
 
     if (!isUserDuplicate) {
       io.to(room.id).emit("allUsers:joinNotification", socket.user);

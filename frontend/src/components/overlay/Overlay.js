@@ -35,7 +35,6 @@ const Overlay = () => {
     dispatch(closeAll());
   }
 
-  console.log("anyOpen", anyOpen);
   useEffect(() => {
     if (roomClicked !== null) {
       handleRoomsToggle();

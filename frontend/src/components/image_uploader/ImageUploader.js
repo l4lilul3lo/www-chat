@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
+import { updateUserImage } from "../../api";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./image_uploader.css";
 
@@ -16,28 +17,26 @@ const ImageUploader = ({ handleToggleAvatarUpload, avatarUploadIsToggled }) => {
   const [loading, setLoading] = useState(false);
 
   function loadFile(e) {
-    console.log(e.target.files[0]);
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
       lastFileName.current = e.target.files[0].name;
     }
   }
 
-  async function updateUserImage(imageUrl) {
-    await fetch("https://www-chat.herokuapp.com/users/updateUserImage", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ imageUrl }),
-    });
-    // refresh cache
-    await fetch(imageUrl);
-  }
+  // async function updateUserImage(imageUrl) {
+  //   await fetch("https://www-chat.herokuapp.com/users/updateUserImage", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "include",
+  //     body: JSON.stringify({ imageUrl }),
+  //   });
+  //   // refresh cache
+  //   await fetch(imageUrl);
+  // }
 
   function cancelSelection() {
-    console.log("cancel selection");
     setFile(false);
     setPreviewImage("");
   }
@@ -117,7 +116,6 @@ const ImageUploader = ({ handleToggleAvatarUpload, avatarUploadIsToggled }) => {
     imageUploaderClass = "image-uploader";
   }
 
-  console.log(imageUploaderClass);
   return (
     <div className="image-upload-container">
       <div className={imageUploaderClass}>

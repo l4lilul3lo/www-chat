@@ -44,11 +44,9 @@ const login = async (req, res) => {
 
 const checkAuth = async (req, res, next) => {
   if (req.session && req.session.userId) {
-    console.log(true);
     res.json({ isAuth: true });
     return next();
   }
-  console.log(false);
   return res.status(401).json({ isAuth: false });
 };
 
@@ -60,7 +58,6 @@ const getUser = async (req, res) => {
 
 const updateUserImage = async (req, res) => {
   const userId = req.session.userId;
-  console.log("userId", userId);
   const { imageUrl } = req.body;
   await updateUserImageDB(imageUrl, userId);
   res.json({ message: "success" });

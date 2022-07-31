@@ -41,9 +41,8 @@ function createUsers(n) {
     return { name, password, image };
   });
 
-  console.log("out of there");
   users.push({ name: "dev", password: createHashedPassword("123") });
-  console.log("okay and then");
+
   return users;
 }
 

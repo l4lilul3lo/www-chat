@@ -9,15 +9,6 @@ import "./rooms.css";
 const Rooms = ({ slideIn }) => {
   const roomsState = useSelector(selectRoomsState);
   const [display, toggleDisplay] = useState(false);
-  const renderCounter = useRef(0);
-  renderCounter.current = renderCounter.current + 1;
-  console.log("rooms renders", renderCounter.current);
-
-  useEffect(() => {
-    return () => {
-      console.log("ROOMS DISMOUNTED");
-    };
-  }, []);
 
   return (
     <div className={`rooms ${slideIn}`}>

@@ -8,14 +8,14 @@ const SmallScreen = ({
 }) => {
   return (
     <div className="small-screen">
-      <div className="slide-toggles">
+      {/* <div className="slide-toggles">
         <div className="rooms-toggle" onClick={handleRoomsToggle}>
           Rooms {roomsOpen ? "<" : ">"}
         </div>
         <div className="users-toggle" onClick={handleUsersToggle}>
           {usersOpen ? ">" : "<"} Users
         </div>
-      </div>
+      </div> */}
       <RoomsSlide isVisible={roomsOpen} />
       <UsersSlide isVisible={usersOpen} />
     </div>

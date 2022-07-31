@@ -1,19 +1,49 @@
 .nav {
   display: flex;
   background: #3e66f1;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  height: 8%;
+  flex-direction: column;
   width: 100%;
+  height: 70px;
+}
+
+.nav-top {
+  display: flex;
+  height: 100%;
   padding: 5px;
+}
+
+.nav-bottom {
+  display: flex;
+
+  width: 100%;
+  flex-basis: 20px;
+  flex: 1;
+}
+
+.slide-toggles-1 {
+  height: 20px;
+  background: gray;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5px;
+  padding-right: 5px;
+  display: none;
+  user-select: none;
+}
+
+.rooms-toggle-1:hover {
+  cursor: pointer;
+}
+
+.users-toggle-1:hover {
+  cursor: pointer;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
   width: 50%;
-
   height: 100%;
 }
 
@@ -34,4 +64,14 @@
 
 .nav-links a {
   padding-left: 10px;
+}
+
+@media only screen and (max-width: 850px) {
+  .slide-toggles-1 {
+    display: flex;
+  }
+
+  .nav-top {
+    height: 50px;
+  }
 }

@@ -22,11 +22,7 @@ const WebSocketContext = createContext(null);
 
 const WebSocketProvider = ({ children }) => {
   const dispatch = useDispatch();
-  let socket = io("ws://www-chat.herokuapp.com/");
-
-  const renderCounter = useRef(0);
-  renderCounter.current = renderCounter.current + 1;
-  console.log("websocket renders", renderCounter.current);
+  let socket = io("ws://localhost:9000");
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -56,7 +52,6 @@ const WebSocketProvider = ({ children }) => {
     });
 
     socket.on("user:passwordPrompt", () => {
-      console.log("PASSWORD PROMPT");
       dispatch(toggleRoomPasswordForm());
     });
 
@@ -124,9 +119,3 @@ const WebSocketProvider = ({ children }) => {
 };
 
 export { WebSocketProvider, WebSocketContext };
-
-// when a user joins or leaves, add to sliding text state array.
-
-// then in sliding text component, listen for state changes.
-
-// the animation will run once, and on animation end, p

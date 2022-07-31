@@ -7,9 +7,6 @@ import { useRef } from "react";
 const Notifications = () => {
   const dispatch = useDispatch();
   const notifications = useSelector(selectNotifications);
-  const renders = useRef(1);
-  renders.current += 1;
-  console.log("notifications renders", renders);
 
   const isActive = notifications.length > 0;
 
@@ -19,7 +16,6 @@ const Notifications = () => {
       <div
         className={`notification ${isActive ? "is-active" : ""}`}
         onAnimationIteration={() => {
-          console.log("iteration");
           dispatch(removeNotification());
         }}
       >

@@ -20,8 +20,6 @@ const Settings = () => {
   }
 
   function handleToggleAvatarUpload() {
-    console.log("fired");
-    console.log(avatarUploadIsToggled);
     setAvatarUploadIsToggled(!avatarUploadIsToggled);
   }
 

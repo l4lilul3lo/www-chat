@@ -19,7 +19,6 @@
   .messenger {
     min-width: 100px;
     pointer-events: auto;
-    padding-top: 20px;
   }
 
   .initial-messenger {

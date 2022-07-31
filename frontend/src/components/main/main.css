@@ -1,4 +1,4 @@
 main {
   display: flex;
-  height: 92%;
+  height: calc(100% - 70px);
 }

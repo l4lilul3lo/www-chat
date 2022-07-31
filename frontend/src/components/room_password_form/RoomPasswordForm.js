@@ -21,7 +21,6 @@ const RoomPasswordForm = () => {
   }
 
   function handleSubmit(e) {
-    console.log("password before submit", password);
     e.preventDefault();
     ws.joinRoom(pendingRoom, password);
   }

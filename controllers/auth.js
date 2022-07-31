@@ -5,7 +5,6 @@ const register = async (req, res) => {
   const { name, password } = req.body.formData;
 
   const user = await getUserByNameDB(name);
-  console.log(user);
   if (user) {
     return res.json({ message: "Username Taken" });
   }

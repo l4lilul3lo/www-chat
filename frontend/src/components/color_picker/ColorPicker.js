@@ -2,35 +2,30 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setUser } from "../../features/user/userSlice";
 import { ChromePicker } from "react-color";
-import { updateUserSettings } from "../../api";
+import { updateServerUserSettings } from "../../api";
 import "./color_picker.css";
 const ColorPicker = ({ setDisplayColorPicker }) => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [background, setBackground] = useState();
-  const [color, setColor] = useState();
-  const [selected, setSelected] = useState("color");
+  const [messageBackground, setMessageBackground] = useState(
+    user.settings.messageBackground
+  );
+  const [messageColor, setMessageColor] = useState(user.settings.messageColor);
+  const [selected, setSelected] = useState("messageColor");
+
+  async function handleSave() {
+    const settings = { messageColor, messageBackground };
+
+    await updateServerUserSettings(settings);
+
+    const updatedUser = { ...user, settings };
+    dispatch(setUser(updatedUser));
+    setDisplayColorPicker(false);
+  }
+
   function handleTouchHold() {
     const clickEvent = new Event("touchStart", { bubbles: true });
     window.dispatchEvent(clickEvent);
-  }
-
-  async function handleSave() {
-    const settings = {
-      messageColor: determineColor(),
-      messageBackground: determineBackground(),
-    };
-    await updateUserSettings(settings);
-    dispatch(
-      setUser({
-        ...user,
-        settings: {
-          messageColor: determineColor(),
-          messageBackground: determineBackground(),
-        },
-      })
-    );
-    setDisplayColorPicker(false);
   }
 
   useEffect(() => {
@@ -38,36 +33,10 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
     element.addEventListener("mousedown", handleTouchHold);
   }, []);
 
-  function determineColor() {
-    return color ? color : user.settings.messageColor;
-  }
-
-  function determineBackground() {
-    return background ? background : user.settings.messageBackground;
-  }
-
-  function determinePickerColor() {
-    if (selected === "color") {
-      if (!color) {
-        return user.settings.messageColor;
-      }
-      return color;
-    }
-
-    if (selected === "background") {
-      if (!background) {
-        return user.settings.messageBackground;
-      }
-      return background;
-    }
-  }
-
   function handleChange(color) {
-    if (selected === "color") {
-      setColor(color.hex);
-    } else {
-      setBackground(color.hex);
-    }
+    selected === "messageColor"
+      ? setMessageColor(color.hex)
+      : setMessageBackground(color.hex);
   }
 
   return (
@@ -75,8 +44,8 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
       <div className="current-message-style">
         <div
           style={{
-            color: determineColor(),
-            background: determineBackground(),
+            color: messageColor,
+            background: messageBackground,
           }}
         >
           example text
@@ -85,19 +54,21 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
 
       <ChromePicker
         disableAlpha
-        color={determinePickerColor()}
+        color={selected === "messageColor" ? messageColor : messageBackground}
         onChange={handleChange}
         width={"100%"}
       />
       <div className="color-picker-buttons">
         <button
-          style={{ background: selected === "color" ? "gray" : "white" }}
+          style={{ background: selected === "messageColor" ? "gray" : "white" }}
           onClick={() => setSelected("color")}
         >
           color
         </button>
         <button
-          style={{ background: selected === "background" ? "gray" : "white" }}
+          style={{
+            background: selected === "messageBackground" ? "gray" : "white",
+          }}
           onClick={() => setSelected("background")}
         >
           background

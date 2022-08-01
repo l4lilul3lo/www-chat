@@ -97,6 +97,7 @@ module.exports = (io, socket) => {
 
   function leaveRoom(roomId) {
     socket.leave(roomId);
+    io.to(roomId).emit("allUsers:leaveNotification", socket.user);
   }
 
   function userConnecting(user) {

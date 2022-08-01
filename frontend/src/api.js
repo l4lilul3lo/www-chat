@@ -85,7 +85,7 @@ async function updateUserImage(imageUrl) {
   await fetch(imageUrl);
 }
 
-async function updateUserSettings(settings) {
+async function updateServerUserSettings(settings) {
   await post("/users/updateSettings", {
     name: "settings",
     data: settings,
@@ -104,5 +104,5 @@ export {
   logout,
   register,
   updateUserImage,
-  updateUserSettings,
+  updateServerUserSettings,
 };

@@ -27,6 +27,7 @@ const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
       background: user.settings.messageBackground,
     };
     ws.sendMessage(messageObj, user);
+    setContent("");
   }
 
   function handleKeyDown(e) {
@@ -60,7 +61,12 @@ const MessageForm = ({ messagesEl, messagesIsAtBottom }) => {
         value={content}
       ></textarea>
       <div className="send-btn-container">
-        <img src={sendIcon} alt="send message" className="send-icon" />
+        <img
+          src={sendIcon}
+          onClick={handleSubmit}
+          alt="send message"
+          className="send-icon"
+        />
       </div>
     </div>
   );

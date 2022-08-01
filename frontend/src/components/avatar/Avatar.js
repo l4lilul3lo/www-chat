@@ -1,8 +1,8 @@
 import "./avatar.css";
 
-const Avatar = ({ url, width, height }) => {
+const Avatar = ({ url }) => {
   return (
-    <div className="avatar-container" style={{}}>
+    <div className="avatar-container">
       <img
         crossOrigin="anonymous"
         src={url ? url : "default-avatar.webp"}

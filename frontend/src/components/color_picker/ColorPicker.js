@@ -61,7 +61,7 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
       <div className="color-picker-buttons">
         <button
           style={{ background: selected === "messageColor" ? "gray" : "white" }}
-          onClick={() => setSelected("color")}
+          onClick={() => setSelected("messageColor")}
         >
           color
         </button>
@@ -69,7 +69,7 @@ const ColorPicker = ({ setDisplayColorPicker }) => {
           style={{
             background: selected === "messageBackground" ? "gray" : "white",
           }}
-          onClick={() => setSelected("background")}
+          onClick={() => setSelected("messageBackground")}
         >
           background
         </button>

@@ -71,9 +71,12 @@ const WebSocketProvider = ({ children }) => {
       dispatch(addUser(user));
     });
 
+    socket.on("allUsers:roomCreated", (room) => {
+      dispatch(addRoom(room));
+    });
+
     socket.on("room:created", (room) => {
       dispatch(toggleCreateRoom());
-      dispatch(addRoom(room));
       ws.joinRoom(room);
     });
 

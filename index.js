@@ -8,6 +8,7 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
+const { instrument } = require("@socket.io/admin-ui");
 
 if (development) {
   app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -17,10 +18,20 @@ const io = require("socket.io")(server, {
   cors: {
     origin: development
       ? ["http://localhost:3000", "https://www-chat.herokuapp.com"]
-      : "https://www-chat.herokuapp.com",
+      : ["https://www-chat.herokuapp.com"],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
+
+// todo:
+//   overall admin
+//   room admin
+
+// overall admin setup:
+// instrument(io, {
+//   auth: false,
+// });
 
 // helmet setup (security)
 const helmet = require("helmet");

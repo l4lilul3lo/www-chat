@@ -1,4 +1,4 @@
-# WWW Chat
+# WWW Chat - https://www-chat.herokuapp.com/
 
 **Project stack**
 

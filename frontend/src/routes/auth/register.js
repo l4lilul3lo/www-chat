@@ -17,6 +17,11 @@ const Register = () => {
       return;
     }
 
+    if (formData.name.length < 2 || formData.name.length > 32) {
+      setMessage("Username must between 2 and 32 characters");
+      return;
+    }
+
     const message = await register(formData);
     setMessage(message);
   }

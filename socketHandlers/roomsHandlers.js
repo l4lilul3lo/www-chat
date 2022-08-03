@@ -6,6 +6,12 @@ module.exports = (io, socket) => {
     if (!socket.user) {
       return;
     }
+
+    if (roomName.length < 2 || roomName.length > 32) {
+      console.log("room length is wrong");
+      return;
+    }
+
     const roomExists = await getRoomByNameDB(roomName);
     if (roomExists) {
       socket.emit("room:roomExists", { reason: "Room name already taken" });

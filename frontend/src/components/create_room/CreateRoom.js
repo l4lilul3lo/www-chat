@@ -16,6 +16,7 @@ const CreateRoom = () => {
   const createRoomIsToggled = useSelector(selectCreateRoomIsToggled);
   const socketMessage = useSelector(selectSocketMessage);
   const ws = useContext(WebSocketContext);
+  const [message, setMessage] = useState("");
   const [room, setRoom] = useState({
     name: "",
     password: null,
@@ -23,7 +24,8 @@ const CreateRoom = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!room.name) {
+    if (room.name.length < 2 || room.name.length > 32) {
+      setMessage("Room name must be between 2 and 32 characters");
       return;
     }
     ws.createRoom(room.name, room.password);
@@ -48,6 +50,7 @@ const CreateRoom = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="socket-message">{socketMessage}</div>
+        <div>{message}</div>
         <label for="room-name">Room Name</label>
         <input type="text" id="name" onChange={handleChange} />
         <label for="room-password">Password</label>

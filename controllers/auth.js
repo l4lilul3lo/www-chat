@@ -3,6 +3,11 @@ const { getUserByNameDB, createUserDB } = require("../models/user");
 
 const register = async (req, res) => {
   const { name, password } = req.body.formData;
+  if (name.length < 2 || name.length > 32) {
+    return res.json({
+      message: "Username must be between 2 and 32 characters",
+    });
+  }
   const user = await getUserByNameDB(name);
   if (user) {
     return res.json({ message: "Username Taken" });

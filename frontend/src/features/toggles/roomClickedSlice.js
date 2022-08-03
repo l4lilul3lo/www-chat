@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-// We just change back and forth to always accomplish the same thing. Close overlay roomsSlide when a room is clicked.
+
 const initialState = {
   roomClicked: null,
 };

@@ -19,14 +19,14 @@ const RoomsUsers = sequelize.define("rooms_users", {
   },
 });
 
-async function createRoomUserDB(userId, roomId, privilege) {
+async function createRoomUserDB(roomId, userId, privilege) {
   if (privilege) {
     return await RoomsUsers.create({ userId, roomId, privilege });
   }
-  await RoomsUsers.create({ userId, roomId });
+  return await RoomsUsers.create({ userId, roomId });
 }
 
-async function getRoomUserInfoDB(userId, roomId) {
+async function getRoomUserDB(roomId, userId) {
   const res = await RoomsUsers.findOne({
     where: { userId, roomId },
   });
@@ -46,6 +46,18 @@ async function getUsersDB(roomId) {
   });
 }
 
+async function updateRoomUserPrivilege(roomId, userId, privilege) {
+  await RoomsUsers.update(
+    { privilege },
+    {
+      where: {
+        roomId,
+        userId,
+      },
+    }
+  );
+}
+
 User.belongsToMany(Room, {
   through: RoomsUsers,
 });
@@ -56,6 +68,7 @@ Room.belongsToMany(User, {
 module.exports = {
   RoomsUsers,
   getUsersDB,
-  getRoomUserInfoDB,
+  getRoomUserDB,
   createRoomUserDB,
+  updateRoomUserPrivilege,
 };

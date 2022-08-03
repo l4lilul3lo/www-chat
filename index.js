@@ -71,6 +71,7 @@ const sessionMiddleware = session({
     sameSite: development ? true : "none",
   },
 });
+
 if (!development) {
   app.set("trust proxy", 1);
 }
@@ -88,7 +89,12 @@ app.use(sessionMiddleware);
 // essential/additional middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+if (development) {
+  app.use(express.static(`${__dirname}/puppeteer/public`));
+  app.get("/puppeteer", (req, res) => {
+    res.sendFile(`${__dirname}/puppeteer/index.html`);
+  });
+}
 // import and apply routes.
 const userRoute = require("./routes/userRoute");
 const roomsRoute = require("./routes/roomsRoute");
@@ -122,7 +128,9 @@ const onConnection = (socket) => {
 
 io.on("connection", onConnection);
 
-app.use("/", expressStaticGzip(`${__dirname}/frontend/build/`));
+if (!development) {
+  app.use("/", expressStaticGzip(`${__dirname}/frontend/build/`));
+}
 
 // start server
 server.listen(PORT, () => {});

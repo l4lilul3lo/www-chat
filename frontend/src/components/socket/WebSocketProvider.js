@@ -6,8 +6,8 @@ import {
   setMessages,
   setMessagesIsLoading,
 } from "../../features/messages/messagesSlice";
-import { setUsers, addUser } from "../../features/users/usersSlice";
-import { setPendingRoom, setRoom } from "../../features/room/roomSlice";
+import { setUsers, addUser, removeUser } from "../../features/users/usersSlice";
+import { setPendingRoomId, setRoom } from "../../features/room/roomSlice";
 import {
   addRoom,
   setRoomsIsLoading,
@@ -18,6 +18,8 @@ import { useEffect } from "react";
 import { addNotification } from "../../features/notifications/notificationsSlice";
 import { setSocketMessage } from "../../features/socket_messages/socketMessageSlice";
 import { toggleCreateRoom } from "../../features/toggles/createRoomToggleSlice";
+import { setSocketId } from "../../features/socketIdSlice";
+import { current } from "@reduxjs/toolkit";
 
 const WebSocketContext = createContext(null);
 
@@ -29,7 +31,7 @@ const WebSocketProvider = ({ children }) => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("socket connected: ", socket.id);
+      dispatch(setSocketId(socket.id));
     });
 
     socket.on("user:joinSuccess");
@@ -46,12 +48,13 @@ const WebSocketProvider = ({ children }) => {
     socket.on("user:passwordSuccess", () => {
       dispatch(toggleRoomPasswordForm());
     });
+
     socket.on("user:joinRoomSuccess", (users, messages, room) => {
       dispatch(setRoom(room));
       dispatch(setUsers(users));
       dispatch(setMessages(messages));
       dispatch(setMessagesIsLoading(false));
-      localStorage.setItem("room", JSON.stringify(room));
+      localStorage.setItem("storedRoomId", JSON.stringify(room.id));
     });
 
     socket.on("user:joinRoomFailure", (info) => {
@@ -71,13 +74,18 @@ const WebSocketProvider = ({ children }) => {
       dispatch(addUser(user));
     });
 
+    socket.on("allUsers:leaveNotification", (user) => {
+      dispatch(addNotification(`***${user.name} left***`));
+      dispatch(removeUser(user));
+    });
+
     socket.on("allUsers:roomCreated", (room) => {
       dispatch(addRoom(room));
     });
 
     socket.on("room:created", (room) => {
       dispatch(toggleCreateRoom());
-      ws.joinRoom(room);
+      ws.joinRoom(room.id);
     });
 
     socket.on("disconnect", (reason) => {
@@ -94,9 +102,9 @@ const WebSocketProvider = ({ children }) => {
     dispatch(setRoomsIsLoading(true));
   }
 
-  function joinRoom(room, password) {
-    dispatch(setPendingRoom(room));
-    socket.emit("user:joinRoom", room, password);
+  function joinRoom(pendingRoomId, currentRoomId, password) {
+    dispatch(setPendingRoomId(pendingRoomId));
+    socket.emit("user:joinRoom", pendingRoomId, currentRoomId, password);
     dispatch(setMessagesIsLoading(true));
   }
 

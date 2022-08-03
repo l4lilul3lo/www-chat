@@ -23,7 +23,6 @@ const CreateRoom = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(room.name, room.password);
     if (!room.name) {
       return;
     }
@@ -33,6 +32,7 @@ const CreateRoom = () => {
   useEffect(() => {
     return () => dispatch(setSocketMessage(""));
   }, []);
+
   function handleChange(e) {
     setRoom((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   }

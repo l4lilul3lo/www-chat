@@ -6,7 +6,10 @@ const connectionString = development ? localString : herokuString;
 const dialectOptions = development
   ? {}
   : { ssl: { required: true, rejectUnauthorized: false } };
-const sequelize = new Sequelize(connectionString, { dialectOptions });
+const sequelize = new Sequelize(connectionString, {
+  dialectOptions,
+  logging: false,
+});
 
 sequelize
   .authenticate()

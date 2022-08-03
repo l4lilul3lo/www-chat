@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const { faker } = require("@faker-js/faker");
+const cron = require("node-cron");
 
 function createUser() {
   const username = faker.name.findName();

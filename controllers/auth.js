@@ -3,7 +3,6 @@ const { getUserByNameDB, createUserDB } = require("../models/user");
 
 const register = async (req, res) => {
   const { name, password } = req.body.formData;
-  console.log("register hit", name, password);
   const user = await getUserByNameDB(name);
   if (user) {
     return res.json({ message: "Username Taken" });
@@ -15,7 +14,6 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { name, password } = req.body.formData;
-  console.log("login hit", name, password);
   const user = await getUserByNameDB(name);
   if (!user) {
     return res

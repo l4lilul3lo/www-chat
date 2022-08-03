@@ -52,6 +52,4 @@ const Overlay = () => {
   );
 };
 
-// all toggles can now be put in a single feature.
-// toggleStates can be an object with properties.
 export default Overlay;

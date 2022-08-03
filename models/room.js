@@ -20,7 +20,6 @@ const Room = sequelize.define("room", {
 });
 
 async function createRoomDB(roomObj) {
-  console.log("roomObj in createRoom db", roomObj);
   const roomInfo = roomObj.password
     ? { ...roomObj, passwordProtected: true }
     : roomObj;
@@ -49,7 +48,6 @@ async function getRoomsDB() {
 }
 
 async function getRoomByIdDB(roomId) {
-  console.log("roomId", roomId);
   const res = await Room.findOne({
     where: {
       id: roomId,

@@ -16,8 +16,7 @@ const Room = ({ room }) => {
       dispatch(toggleRooms());
     }
     if (currentRoom.id !== room.id) {
-      ws.leaveRoom(currentRoom.id);
-      ws.joinRoom(room);
+      ws.joinRoom(room.id, currentRoom.id);
     }
   }
 

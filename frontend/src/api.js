@@ -64,7 +64,6 @@ async function login(formData) {
     name: "formData",
     data: formData,
   });
-  console.log(message);
   return message;
 }
 

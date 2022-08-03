@@ -4,7 +4,11 @@ const {
   arrCheckObjectValueExists,
 } = require("../utils/general");
 
-const { getRoomUserInfoDB, createRoomUserDB } = require("../models/roomsUsers");
+const {
+  getRoomUserDB,
+  createRoomUserDB,
+  updateRoomUserPrivilege,
+} = require("../models/roomsUsers");
 
 const { getMessagesDB } = require("../models/message");
 const { getRoomByIdDB, getCafeInfoDB } = require("../models/room");
@@ -13,91 +17,90 @@ async function scanRoom(io, userId, roomId) {
   const sockets = await io.in(roomId).fetchSockets();
   const users = sockets.map((socket) => socket.user);
   const uniqueUsers = arrUniqueByObjectValue(users, "id");
-  const isUserDuplicate = arrCheckObjectValueExists(users, "id", userId);
-  return { uniqueUsers, isUserDuplicate };
+  const userExists = arrCheckObjectValueExists(users, "id", userId);
+  return { uniqueUsers, userExists };
 }
 
-async function determineRoomInfo(roomId) {
-  let roomInfo = await getRoomByIdDB(roomId);
-  if (!roomInfo) {
-    roomInfo = await getCafeInfoDB();
-  }
-  return roomInfo;
-}
-
-async function determineAuthStatus(roomInfo, password) {
-  if (!password) {
-    return "undetermined";
-  }
-  const isCorrectPassword = await bcrypt.compare(password, roomInfo.password);
-
-  return isCorrectPassword ? "authorized" : "unauthorized";
-}
 module.exports = (io, socket) => {
-  async function joinRoom(room, password) {
-    // edgey
-
+  async function joinRoom(pendingRoomId, currentRoomId, password) {
     if (!socket.user) {
       console.log("No user attached to socket. Refresh page.");
-      // socket emit request user. retry 0.
       return;
     }
 
-    if (!room || !room.id) {
-      console.log("Room object is malformed");
-      return;
-    }
-
+    const room = pendingRoomId
+      ? await getRoomByIdDB(pendingRoomId)
+      : await getCafeInfoDB();
+    const roomId = room.id;
     const userId = socket.user.id;
-    const roomInfo = await determineRoomInfo(room.id);
-    const roomId = roomInfo.id;
-    const roomUserInfo = await getRoomUserInfoDB(userId, roomId);
-    const passwordProtected = roomInfo.passwordProtected;
-    const userIsAdmin = roomUserInfo?.privilege === 2;
-    socket.user.isAdmin = userIsAdmin ? true : false;
 
-    if (!userIsAdmin && passwordProtected) {
-      const authStatus = await determineAuthStatus(roomInfo, password);
-      if (authStatus === "undetermined") {
-        socket.emit("user:passwordPrompt");
-        return;
-      }
+    let roomUser = await getRoomUserDB(roomId, userId);
 
-      if (authStatus === "unauthorized") {
-        socket.emit("user:joinRoomFailure", {
-          reason: "Password is incorrect.",
-        });
-        return;
-      }
-
-      if (authStatus === "authorized") {
-        socket.emit("user:passwordSuccess");
-      }
+    if (!roomUser) {
+      roomUser = await createRoomUserDB(roomId, userId);
     }
 
-    if (!roomUserInfo) {
-      await createRoomUserDB(userId, roomId);
+    if (roomUser.isBanned) {
+      return socket.emit("user:joinRoomFailure", { reason: "You were banned" });
     }
 
-    if (roomUserInfo?.isBanned) {
-      socket.emit("user:joinRoomFailure", { reason: "You were banned." });
-      return;
+    socket.user.privilege = roomUser.privilege;
+
+    if (room.passwordProtected) {
+      if (socket.user.privilege === 0) {
+        if (!password) {
+          return socket.emit("user:passwordPrompt");
+        } else {
+          const isCorrectPassword = await bcrypt.compare(
+            password,
+            room.password
+          );
+          if (!isCorrectPassword) {
+            return socket.emit("user:joinRoomFailure", {
+              reason: "Password is incorrect",
+            });
+          } else {
+            updateRoomUserPrivilege(roomId, userId, 1);
+            socket.emit("user:passwordSuccess");
+          }
+        }
+      }
     }
 
     const roomMessages = await getMessagesDB(roomId);
+    const { uniqueUsers, userExists } = await scanRoom(io, userId, roomId);
+    const publicRoomInfo = {
+      id: room.id,
+      name: room.name,
+      passwordProtected: room.passwordProtected,
+    };
 
-    const { uniqueUsers, isUserDuplicate } = await scanRoom(io, userId, roomId);
-    socket.emit("user:joinRoomSuccess", uniqueUsers, roomMessages, room);
+    if (currentRoomId) {
+      socket.leave(currentRoomId);
+    }
+
+    socket.emit(
+      "user:joinRoomSuccess",
+      uniqueUsers,
+      roomMessages,
+      publicRoomInfo
+    );
+
     socket.join(roomId);
-
-    if (!isUserDuplicate) {
+    if (currentRoomId) {
+      leaveRoom(currentRoomId);
+    }
+    if (!userExists) {
       io.to(room.id).emit("allUsers:joinNotification", socket.user);
     }
   }
 
-  function leaveRoom(roomId) {
+  async function leaveRoom(roomId) {
     socket.leave(roomId);
-    io.to(roomId).emit("allUsers:leaveNotification", socket.user);
+    const { userExists } = await scanRoom(io, socket.user.id, roomId);
+    if (!userExists) {
+      io.to(roomId).emit("allUsers:leaveNotification", socket.user);
+    }
   }
 
   function userConnecting(user) {

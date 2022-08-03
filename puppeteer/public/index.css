@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+
+h1 {
+  color: green;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: green;
+  padding: 5px;
+}
+
+.create-puppets {
+  display: flex;
+  flex-direction: column;
+  background: #282b30;
+  color: white;
+}
+
+.create-puppets form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.create-puppets form input {
+  max-width: 200px;
+}
+
+.puppets {
+  width: 100%;
+  display: flex;
+  background: blue;
+}

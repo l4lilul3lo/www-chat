@@ -13,7 +13,6 @@ function createUsername() {
 }
 
 function createHashedPassword(password) {
-  console.log(password);
   const hashedPassword = bcrypt.hashSync(password, 10);
   return hashedPassword;
 }

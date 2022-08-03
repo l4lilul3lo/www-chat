@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setMessagesIsLoading } from "../../features/messages/messagesSlice";
-import { selectPendingRoom, selectRoom } from "../../features/room/roomSlice";
+import { selectPendingRoomId, selectRoom } from "../../features/room/roomSlice";
 import { WebSocketContext } from "../socket/WebSocketProvider";
 import { selectSocketMessage } from "../../features/socket_messages/socketMessageSlice";
 import { setSocketMessage } from "../../features/socket_messages/socketMessageSlice";
@@ -13,7 +13,7 @@ const RoomPasswordForm = () => {
   const dispatch = useDispatch();
   const room = useSelector(selectRoom);
   const socketMessage = useSelector(selectSocketMessage);
-  const pendingRoom = useSelector(selectPendingRoom);
+  const pendingRoomId = useSelector(selectPendingRoomId);
   const ws = useContext(WebSocketContext);
 
   function handleChange(e) {
@@ -22,12 +22,12 @@ const RoomPasswordForm = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    ws.joinRoom(pendingRoom, password);
+    ws.joinRoom(pendingRoomId, room.id, password);
   }
 
   useEffect(() => {
     return () => {
-      if (room !== pendingRoom) {
+      if (room.id !== pendingRoomId) {
         dispatch(setMessagesIsLoading(false));
       }
       dispatch(setSocketMessage(""));

@@ -32,5 +32,3 @@ export const { addNotification, removeNotification, repeatAnimation } =
 export const selectNotifications = (state) => state.notifications.notifications;
 export const selectRepeatAnimation = (state) => state.notifications.repeater;
 export default notificationsSlice.reducer;
-
-// onAnimationComplete={onComplete}

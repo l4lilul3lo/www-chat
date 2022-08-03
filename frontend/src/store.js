@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
 import roomsReducer from "./features/rooms/roomsSlice";
 import usersReducer from "./features/users/usersSlice";
 import messagesReducer from "./features/messages/messagesSlice";
@@ -13,6 +13,8 @@ import togglesReducer from "./features/toggles/togglesSlice";
 import notificationsReducer from "./features/notifications/notificationsSlice";
 import socketMessageReducer from "./features/socket_messages/socketMessageSlice";
 import createRoomToggleReducer from "./features/toggles/createRoomToggleSlice";
+import socketIdReducer from "./features/socketIdSlice";
+import logger from "redux-logger";
 
 export const store = configureStore({
   reducer: {
@@ -30,5 +32,7 @@ export const store = configureStore({
     toggles: togglesReducer,
     notifications: notificationsReducer,
     socketMessage: socketMessageReducer,
+    socketId: socketIdReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

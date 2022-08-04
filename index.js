@@ -18,7 +18,10 @@ const io = require("socket.io")(server, {
   cors: {
     origin: development
       ? ["http://localhost:3000", "https://www-chat.herokuapp.com"]
-      : ["https://www-chat.herokuapp.com"],
+      : [
+          "https://windows98box.l4lilul3lo.repl.co",
+          "https://www-chat.herokuapp.com",
+        ],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -87,8 +90,10 @@ app.use(sessionMiddleware);
 // });
 
 // essential/additional middleware
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 if (development) {
   app.use(express.static(`${__dirname}/puppeteer/public`));
   app.get("/puppeteer", (req, res) => {
@@ -114,6 +119,9 @@ app.use("/rooms", isAuth, roomsRoute);
 app.use("/messages", isAuth, messagesRoute);
 app.use("/roomsUsers", isAuth, roomsUsersRoute);
 app.use("/auth", authRoute);
+app.post("/nice", (req, res) => {
+  res.send("hello");
+});
 
 // import and register socket handlers
 const registerUserHandlers = require("./socketHandlers/userHandler");

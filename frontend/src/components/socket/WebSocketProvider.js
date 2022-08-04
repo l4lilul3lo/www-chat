@@ -27,6 +27,7 @@ const WebSocketProvider = ({ children }) => {
   const dispatch = useDispatch();
   const host = window.location.host;
   const destination = host === "localhost:3000" ? "localhost:9000" : host;
+  window.disconnectSocket = disconnectSocket;
   let socket = io(`ws://${destination}`);
 
   useEffect(() => {
@@ -118,6 +119,11 @@ const WebSocketProvider = ({ children }) => {
 
   function leaveRoom(roomId) {
     socket.emit("user:leaveRoom", roomId);
+  }
+
+  function disconnectSocket() {
+    const storedRoomId = localStorage.getItem("storedRoomId");
+    socket.emit("disconnectSocket", storedRoomId);
   }
 
   const ws = {

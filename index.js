@@ -17,7 +17,7 @@ if (development) {
 const io = require("socket.io")(server, {
   cors: {
     origin: development
-      ? ["http://localhost:3000", "https://www-chat.herokuapp.com"]
+      ? ["http://localhost:3000"]
       : [
           "https://windows98box.l4lilul3lo.repl.co",
           "https://www-chat.herokuapp.com",
@@ -43,7 +43,6 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        frameAncestors: ["https://foo.example.com", "https://boo.example.com"],
         "img-src": ["'self'", "https: data: blob:"],
         connectSrc: [
           "'self'",

@@ -46,6 +46,7 @@ app.use(
         "img-src": ["'self'", "https: data: blob:"],
         connectSrc: [
           "'self'",
+          "ws://www-chat.herokuapp.com",
           "https://imagehostingserver.l4lilul3lo.repl.co/",
         ],
         frameAncestors: ["https://windows98box.l4lilul3lo.repl.co/"],

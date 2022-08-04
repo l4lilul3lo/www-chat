@@ -49,6 +49,7 @@ const Messages = ({ textAreaHeight, setMessagesEl, setMessagesIsAtBottom }) => {
       <div className="no-messages-yet">
         There are no messages yet. Send a message to get started.
       </div>
+      <hr style={{ width: "100%" }} />
     </div>
   );
 

@@ -25,7 +25,7 @@ module.exports = (io, socket) => {
       room = await createRoomDB({ name: roomName, password: hashedPassword });
     }
 
-    createRoomUserDB(socket.user.id, room.id, 2);
+    createRoomUserDB(room.id, socket.user.id, 2);
     io.emit("allUsers:roomCreated", room);
     socket.emit("room:created", room);
   }

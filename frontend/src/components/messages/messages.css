@@ -3,6 +3,7 @@
   min-height: 50%;
   width: 100%;
   padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -16,4 +17,8 @@
 
 .message-loading {
   width: 90%;
+}
+
+.no-messages-yet {
+  margin: 0 auto;
 }

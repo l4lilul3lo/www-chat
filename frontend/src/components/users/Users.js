@@ -22,7 +22,7 @@ const Users = ({ slideIn }) => {
             </div>
             <div className="user-info">
               {user.name}
-              {user.isAdmin && adminBadge}
+              {user.privilege >= 2 && adminBadge}
             </div>
           </div>
         );

@@ -83,12 +83,6 @@ app.use(sessionMiddleware);
 
 // look into compressing text.
 
-// static serve build if in production or build mode.
-
-// app.get("/", (req, res) => {
-//   res.sendFile(`${__dirname}/frontend/build/index.html`);
-// });
-
 // essential/additional middleware
 
 app.use(express.json());
@@ -119,9 +113,6 @@ app.use("/rooms", isAuth, roomsRoute);
 app.use("/messages", isAuth, messagesRoute);
 app.use("/roomsUsers", isAuth, roomsUsersRoute);
 app.use("/auth", authRoute);
-app.post("/nice", (req, res) => {
-  res.send("hello");
-});
 
 // import and register socket handlers
 const registerUserHandlers = require("./socketHandlers/userHandler");
@@ -136,9 +127,7 @@ const onConnection = (socket) => {
 
 io.on("connection", onConnection);
 
-if (!development) {
-  app.use("/", expressStaticGzip(`${__dirname}/frontend/build/`));
-}
+app.use("/", expressStaticGzip(`${__dirname}/frontend/build/`));
 
 // start server
 server.listen(PORT, () => {});

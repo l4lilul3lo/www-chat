@@ -92,16 +92,6 @@ const WebSocketProvider = ({ children }) => {
     socket.on("disconnect", (reason) => {
       console.log("socket disconnected:", reason);
     });
-
-    window.addEventListener("message", (event) => {
-      if (event.origin !== "https://windows98box.l4lilul3lo.repl.co") {
-        return;
-      }
-
-      if (event.data === "disconnectSocket") {
-        disconnectSocket();
-      }
-    });
   }, []);
 
   function sendMessage(messageObj, user) {
@@ -129,11 +119,6 @@ const WebSocketProvider = ({ children }) => {
 
   function leaveRoom(roomId) {
     socket.emit("user:leaveRoom", roomId);
-  }
-
-  function disconnectSocket() {
-    const storedRoomId = localStorage.getItem("storedRoomId");
-    socket.emit("disconnectSocket", storedRoomId);
   }
 
   const ws = {

@@ -27,7 +27,7 @@ const WebSocketProvider = ({ children }) => {
   const dispatch = useDispatch();
   const host = window.location.host;
   const destination = host === "localhost:3000" ? "localhost:9000" : host;
-  window.disconnectSocket = disconnectSocket;
+
   let socket = io(`ws://${destination}`);
 
   useEffect(() => {
@@ -91,6 +91,16 @@ const WebSocketProvider = ({ children }) => {
 
     socket.on("disconnect", (reason) => {
       console.log("socket disconnected:", reason);
+    });
+
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "https://windows98box.l4lilul3lo.repl.co") {
+        return;
+      }
+
+      if (event.data === "disconnectSocket") {
+        disconnectSocket();
+      }
     });
   }, []);
 

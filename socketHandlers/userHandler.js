@@ -87,6 +87,7 @@ module.exports = (io, socket) => {
     );
 
     socket.join(roomId);
+    socket.room = publicRoomInfo;
     if (currentRoomId) {
       leaveRoom(currentRoomId);
     }
@@ -110,7 +111,10 @@ module.exports = (io, socket) => {
   socket.on("user:connecting", userConnecting);
   socket.on("user:joinRoom", joinRoom);
   socket.on("user:leaveRoom", leaveRoom);
-  socket.on("disconnectSocket", (storedRoomId) => {
-    socket.disconnect();
+  socket.on("disconnect", () => {
+    console.log(socket.user);
+    console.log(socket.room);
+    console.log("socket disconnected");
+    leaveRoom(socket.room.id);
   });
 };

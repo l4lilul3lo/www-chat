@@ -34,5 +34,4 @@ export const store = configureStore({
     socketMessage: socketMessageReducer,
     socketId: socketIdReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

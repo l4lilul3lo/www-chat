@@ -49,6 +49,7 @@ app.use(
           "ws://www-chat.herokuapp.com",
           "https://imagehostingserver.l4lilul3lo.repl.co/",
         ],
+        "script-src-attr": null,
         frameAncestors: ["https://windows98box.l4lilul3lo.repl.co/"],
       },
     },

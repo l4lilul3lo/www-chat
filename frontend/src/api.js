@@ -1,18 +1,19 @@
 // so we can say if window location is 3000, forward requests to 9000,
 //otherwise forward them to window location.
-const baseUrl =
-  window.location.origin === "http://localhost:3000"
-    ? "http://localhost:9000"
-    : window.location.origin;
 
 async function fetcher(endpoint, options = {}) {
+  const baseUrl =
+    window.location.origin === "http://localhost:3000"
+      ? "http://localhost:9000"
+      : window.location.origin;
+
   try {
     const url = baseUrl + endpoint;
     const response = await fetch(url, { ...options, credentials: "include" });
     const data = await response.json();
     return data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(error);
   }
 }
 

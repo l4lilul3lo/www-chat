@@ -75,10 +75,6 @@ module.exports = (io, socket) => {
       passwordProtected: room.passwordProtected,
     };
 
-    if (currentRoomId) {
-      socket.leave(currentRoomId);
-    }
-
     socket.emit(
       "user:joinRoomSuccess",
       uniqueUsers,
@@ -118,3 +114,7 @@ module.exports = (io, socket) => {
     leaveRoom(socket.room.id);
   });
 };
+
+// when an admin joins the room, users should be returned with actions.
+// then and only then will those actions be available on the front end.
+//

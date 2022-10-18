@@ -17,7 +17,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
           source: "."
-          target: "/data/www"
+          target: "/data/www/www-chat"
 
       - name: Executing remote command
         uses: appleboy/ssh-action@master
